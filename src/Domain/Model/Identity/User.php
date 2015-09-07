@@ -10,6 +10,7 @@ namespace Bakgat\Notos\Domain\Model\Identity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\CanResetPassword;
 
 /**
  * @ORM\Entity
