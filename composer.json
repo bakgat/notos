@@ -1,0 +1,28 @@
+{
+  "description": "Notos Core package",
+  "authors": [
+    {
+      "name": "bakgat",
+      "email": "karl.vaniseghem@klimtoren.be"
+    }
+  ],
+  "minimum-stability": "dev",
+  "name": "bakgat/notos",
+  "autoload": {
+    "psr-4": {
+      "Bakgat\\Notos\\": "src/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.*"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Bakgat\\Notos\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "beberlei/assert": "^2.4",
+    "doctrine/orm": "^2.5"
+  }
+}
