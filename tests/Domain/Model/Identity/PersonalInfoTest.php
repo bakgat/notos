@@ -36,8 +36,6 @@ class PersonalInfoTest extends \PHPUnit_Framework_TestCase
         $this->lastName = new Name('Van Iseghem');
         $this->gender = new Gender('Male');
         $this->birthDay = new DateTime('1979-11-30', new DateTimeZone('Europe/Brussels'));
-
-
     }
 
     /**
