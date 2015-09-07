@@ -35,6 +35,11 @@ class Party
      * @ORM\Column(type="string")
      */
     protected $lastName;
+    /**
+     * @ORM\OneToOne(targetEntity="PersonalInfo",inversedBy="party", cascade={"persist"})
+     * @ORM\JoinColumn(name="personal_info", referencedColumnName="id")
+     */
+    protected $personalInfo;
 
     public function __construct($name)
     {
@@ -81,5 +86,22 @@ class Party
     public function lastName()
     {
         return $this->lastName;
+    }
+    /**
+     * @param PersonalInfo personalInfo
+     * @return void
+     */
+    public function setPersonalInfo(PersonalInfo $personalInfo)
+    {
+        $this->personalInfo = $personalInfo;
+        return $this;
+    }
+
+    /**
+     * @return PersonalInfo
+     */
+    public function personalInfo()
+    {
+        return $this->personalInfo;
     }
 }
