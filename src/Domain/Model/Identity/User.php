@@ -16,7 +16,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
  * @ORM\Table(name="users", indexes={@ORM\Index(columns={"username", "reset_email"})})
  * @ExclusionPolicy("none")
  */
-class User extends Party implements Authenticatable
+class User extends Party implements Authenticatable, CanResetPassword
 {
 
     /** @ORM\Column(type="string", unique=true) */
@@ -72,9 +72,124 @@ class User extends Party implements Authenticatable
         $personalInfo->setGender($gender);
         $user->setPersonalInfo($personalInfo);
 
-        $user->record(new UserHasRegistered);
 
         return $user;
+    }
+
+    /**
+     * @param Username username
+     * @return void
+     */
+    public function setUsername(Username $username)
+    {
+        $this->username = $username->toString();
+    }
+
+    /**
+     * @return Username
+     */
+    public function username()
+    {
+        return Username ::fromNative($this->username);
+    }
+
+    /**
+     * @param Email $reset_email
+     * @return void
+     */
+    public function setResetEmail(Email $reset_email)
+    {
+        $this->reset_email = $reset_email->toString();
+    }
+
+    /**
+     * Sets the user's hashed password
+     *
+     * @param HashedPassword $password
+     */
+    public function setPassword(HashedPassword $password)
+    {
+        $this->password = $password->toString();
+    }
+
+    /**
+     * @param locked
+     * @return void
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function locked()
+    {
+        return $this->locked;
+    }
+
+    /**
+     * @param DateTime last_login
+     * @return void
+     */
+    public function setLastLogin(DateTime $last_login)
+    {
+        $this->last_login = $last_login;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function lastLogin()
+    {
+        return $this->last_login;
+    }
+
+    /**
+     * @param DateTime last_attempt
+     * @return void
+     */
+    public function setLastAttempt(DateTime $last_attempt)
+    {
+        $this->last_attempt = $last_attempt;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function lastAttempt()
+    {
+        return $this->last_attempt;
+    }
+
+    /**
+     * Updates the user's username
+     * @param Username $username
+     */
+    public function updateUsername(Username $username)
+    {
+        $this->setUsername($username);
+
+        $this->record(new UsernameWasUpdated);
+    }
+
+    /**
+     * Locks a user
+     */
+    public function lock()
+    {
+        $this->setLocked(true);
+
+        $this->record(new UserWasLocked);
+    }
+
+    /**
+     * Unlocks a user
+     */
+    public function unlock()
+    {
+        $this->setLocked(false);
     }
 
     /**
@@ -84,7 +199,7 @@ class User extends Party implements Authenticatable
      */
     public function getAuthIdentifier()
     {
-        // TODO: Implement getAuthIdentifier() method.
+        return $this->id();
     }
 
     /**
@@ -94,7 +209,7 @@ class User extends Party implements Authenticatable
      */
     public function getAuthPassword()
     {
-        // TODO: Implement getAuthPassword() method.
+        return $this->password;
     }
 
     /**
@@ -104,7 +219,7 @@ class User extends Party implements Authenticatable
      */
     public function getRememberToken()
     {
-        // TODO: Implement getRememberToken() method.
+        return $this->{$this->getRememberToken()};
     }
 
     /**
@@ -115,7 +230,7 @@ class User extends Party implements Authenticatable
      */
     public function setRememberToken($value)
     {
-        // TODO: Implement setRememberToken() method.
+        $this->{$this->getRememberTokenName()} = $value;
     }
 
     /**
@@ -125,6 +240,16 @@ class User extends Party implements Authenticatable
      */
     public function getRememberTokenName()
     {
-        // TODO: Implement getRememberTokenName() method.
+        return 'remember_token';
+    }
+
+    /**
+     * Get the e-mail address where password reset links are sent.
+     *
+     * @return string
+     */
+    public function getEmailForPasswordReset()
+    {
+        return $this->reset_email;
     }
 }
