@@ -53,13 +53,63 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function should_register_new_user()
     {
+        $user = $this->registerUser();
+
+        $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\User', $user);
+    }
+
+    /**
+     * @test
+     * @group user-model
+     */
+    public function should_update_name()
+    {
+        $user = $this->registerUser();
+
+        $user->updateUsername(new Username('ulrike.drieskens@gmail.com'));
+
+        $this->assertEquals('ulrike.drieskens@gmail.com', $user->username()->toString());
+
+    }
+
+    /**
+     * @test
+     * @group user-model
+     */
+    public function should_lock_user()
+    {
+        $user = $this->registerUser();
+
+        $user->lock();
+
+        $this->assertTrue($user->locked());
+    }
+
+    /**
+     * @test
+     * @group user-model
+     */
+    public function should_unlock_user()
+    {
+        $user = $this->registerUser();
+
+        $user->setLocked(true);
+        $user->unlock();
+
+        $this->assertFalse($user->locked());
+    }
+
+    /**
+     * @return User
+     */
+    private function registerUser()
+    {
         $user = User::register($this->firstName,
             $this->lastName,
             $this->username,
             $this->password,
             $this->email,
             $this->gender);
-
-        $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\User', $user);
+        return $user;
     }
 }

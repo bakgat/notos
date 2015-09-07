@@ -171,8 +171,6 @@ class User extends Party implements Authenticatable, CanResetPassword
     public function updateUsername(Username $username)
     {
         $this->setUsername($username);
-
-        $this->record(new UsernameWasUpdated);
     }
 
     /**
@@ -182,7 +180,6 @@ class User extends Party implements Authenticatable, CanResetPassword
     {
         $this->setLocked(true);
 
-        $this->record(new UserWasLocked);
     }
 
     /**
