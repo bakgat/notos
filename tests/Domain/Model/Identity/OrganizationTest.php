@@ -12,8 +12,9 @@ namespace Bakgat\Notos\Tests\Domain\Model\Identity;
 use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
+use Orchestra\Testbench\TestCase;
 
-class OrganizationTest extends \PHPUnit_Framework_TestCase
+class OrganizationTest extends TestCase
 {
 
     /** @var  Name */

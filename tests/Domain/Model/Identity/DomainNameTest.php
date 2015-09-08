@@ -10,8 +10,9 @@ namespace Bakgat\Notos\Tests\Domain\Model\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Identity\DomainName;
+use Orchestra\Testbench\TestCase;
 
-class DomainNameTest extends \PHPUnit_Framework_TestCase {
+class DomainNameTest extends TestCase {
 
     /**
      * @test

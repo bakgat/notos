@@ -17,8 +17,9 @@ use Bakgat\Notos\Domain\Model\Identity\User;
 use Bakgat\Notos\Domain\Model\Identity\Username;
 use DateTime;
 use DateTimeZone;
+use Orchestra\Testbench\TestCase;
 
-class UserTest extends \PHPUnit_Framework_TestCase
+class UserTest extends TestCase
 {
     /** @var Name $firstName */
     private $firstName;

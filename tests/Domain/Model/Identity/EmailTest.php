@@ -10,8 +10,9 @@ namespace Bakgat\Notos\Tests\Domain\Model\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Email;
+use Orchestra\Testbench\TestCase;
 
-class EmailTest extends \PHPUnit_Framework_TestCase
+class EmailTest extends TestCase
 {
 
     /**

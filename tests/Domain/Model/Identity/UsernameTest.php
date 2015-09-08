@@ -10,8 +10,9 @@ namespace Bakgat\Notos\Tests\Domain\Model\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Username;
+use Orchestra\Testbench\TestCase;
 
-class UsernameTest extends \PHPUnit_Framework_TestCase
+class UsernameTest extends TestCase
 {
 
     /**

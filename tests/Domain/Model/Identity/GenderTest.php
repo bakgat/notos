@@ -10,8 +10,9 @@ namespace Bakgat\Notos\Tests\Domain\Model\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Gender;
+use Orchestra\Testbench\TestCase;
 
-class GenderTest extends \PHPUnit_Framework_TestCase
+class GenderTest extends TestCase
 {
     /**
      * @test

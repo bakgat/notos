@@ -40,6 +40,14 @@ class Party
      * @ORM\JoinColumn(name="personal_info", referencedColumnName="id")
      */
     protected $personalInfo;
+    /**
+     * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\Relations\PartyRelation", mappedBy="reference")
+     */
+    protected $references;
+    /**
+     * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\Relations\PartyRelation", mappedBy="context")
+     */
+    protected $relatedTo;
 
     public function __construct($name)
     {
@@ -103,5 +111,21 @@ class Party
     public function personalInfo()
     {
         return $this->personalInfo;
+    }
+
+    /**
+     *
+     */
+    public function references()
+    {
+        return $this->references;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function relatedTo()
+    {
+        return $this->relatedTo;
     }
 }

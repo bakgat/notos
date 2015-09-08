@@ -10,8 +10,9 @@ namespace Bakgat\Notos\Tests\Domain\Model\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Identity\HashedPassword;
+use Orchestra\Testbench\TestCase;
 
-class HashedPasswordTest extends \PHPUnit_Framework_TestCase
+class HashedPasswordTest extends TestCase
 {
     private $pwdTest;
     private $pwdOther;

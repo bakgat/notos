@@ -16,8 +16,9 @@ use Bakgat\Notos\Domain\Model\Identity\Party;
 use Bakgat\Notos\Domain\Model\Identity\PersonalInfo;
 use DateTime;
 use DateTimeZone;
+use Orchestra\Testbench\TestCase;
 
-class PersonalInfoTest extends \PHPUnit_Framework_TestCase
+class PersonalInfoTest extends TestCase
 {
 
     /** @var Name $firstName */

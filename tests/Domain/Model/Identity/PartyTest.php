@@ -11,8 +11,9 @@ namespace Bakgat\Notos\Tests\Domain\Model\Identity;
 
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\Party;
+use Orchestra\Testbench\TestCase;
 
-class PartyTest extends \PHPUnit_Framework_TestCase
+class PartyTest extends TestCase
 {
     /** @var Name $firstName */
     private $firstName;
