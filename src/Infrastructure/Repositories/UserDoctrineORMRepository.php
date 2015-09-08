@@ -16,7 +16,7 @@ use Bakgat\Notos\Domain\Model\Identity\User;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 
 class UserDoctrineORMRepository implements UserRepository
 {
@@ -32,7 +32,7 @@ class UserDoctrineORMRepository implements UserRepository
     /** @var  @var string */
     private $kindClass;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
         $this->class = 'Bakgat\Notos\Domain\Model\Identity\User';

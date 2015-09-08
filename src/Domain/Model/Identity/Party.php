@@ -8,6 +8,7 @@
 
 namespace Bakgat\Notos\Domain\Model\Identity;
 
+use Bakgat\Notos\Domain\Model\Kind;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"party"="Party","personalInfo" = "PersonalInfo",
- *                      "organization"="Organization","group"="Group",
+ *                      "organization"="Organization",
  *                      "user"="User"})
  * @ORM\Table(name="parties")
  */
@@ -35,6 +36,8 @@ class Party
      * @ORM\Column(type="string")
      */
     protected $lastName;
+    /** @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Kind") */
+    protected $kind;
     /**
      * @ORM\OneToOne(targetEntity="PersonalInfo",inversedBy="party", cascade={"persist"})
      * @ORM\JoinColumn(name="personal_info", referencedColumnName="id")
@@ -95,6 +98,25 @@ class Party
     {
         return $this->lastName;
     }
+
+    /**
+     * @param Kind kind
+     * @return void
+     */
+    public function setKind(Kind $kind)
+    {
+        $this->kind = $kind;
+        return $this;
+    }
+
+    /**
+     * @return Kind
+     */
+    public function kind()
+    {
+        return $this->kind;
+    }
+
     /**
      * @param PersonalInfo personalInfo
      * @return void

@@ -10,11 +10,10 @@ namespace Bakgat\Notos\Infrastructure\Repositories;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Domain;
-use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Session;
 
 class OrganizationDoctrineORMRepository implements OrganizationRepository
@@ -25,7 +24,7 @@ class OrganizationDoctrineORMRepository implements OrganizationRepository
     /** @var  string */
     protected $class;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
         $this->class = 'Bakgat\Notos\Domain\Model\Identity\Organization';

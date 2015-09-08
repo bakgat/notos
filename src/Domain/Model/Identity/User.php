@@ -15,7 +15,6 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 /**
  * @ORM\Entity
  * @ORM\Table(name="users", indexes={@ORM\Index(columns={"username", "reset_email"})})
- * @ExclusionPolicy("none")
  */
 class User extends Party implements Authenticatable, CanResetPassword
 {
@@ -26,7 +25,6 @@ class User extends Party implements Authenticatable, CanResetPassword
     private $reset_email;
     /**
      * @ORM\Column(type="string", length=60)
-     * @Exclude
      */
     private $password;
     /** @ORM\Column(type="string", length=60, nullable=true) */
