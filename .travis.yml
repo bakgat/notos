@@ -6,9 +6,9 @@ php:  5.6
 before_script:
   - composer self-update
   - composer install --no-interaction --prefer-source
-  #- cp .env.travis .env
-  #- mysql -e 'create database notosplus;'
-  #- php artisan doctrine:schema:update
+  - cp .env.travis .env
+  - mysql -e 'create database notosplus;'
+  - php artisan doctrine:schema:update
 
 script:
   - phpunit
