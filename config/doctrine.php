@@ -33,7 +33,7 @@
             'driver' => 'mysqli',
             'host'      => env('DB_HOST', 'localhost'),
             'dbname'  => env('DB_DATABASE', 'notosplus'),
-            'user'  => env('DB_USERNAME', 'travis'),
+            'user'  => env('DB_USERNAME', 'root'),
             'password'  => env('DB_PASSWORD', ''),
             'prefix' => ''
         ],
