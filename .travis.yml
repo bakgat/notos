@@ -8,7 +8,7 @@ before_script:
   - composer install --no-interaction --prefer-source
   - cp .env.travis .env
   - mysql -e 'create database notosplus;'
-  - php artisan doctrine:schema:update
+  - ./vendor/bin/doctrine orm:schema-tool:create
 
 script:
   - phpunit
