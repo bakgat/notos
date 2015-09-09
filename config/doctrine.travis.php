@@ -34,7 +34,7 @@
             'host'      => env('DB_HOST', 'localhost'),
             'dbname'  => env('DB_DATABASE', 'notosplus'),
             'user'  => env('DB_USERNAME', 'root'),
-            'password'  => env('DB_PASSWORD', 'root'),
+            'password'  => env('DB_PASSWORD', ''),
             'prefix' => ''
         ],
     ],

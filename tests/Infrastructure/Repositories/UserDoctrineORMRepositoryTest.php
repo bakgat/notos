@@ -106,9 +106,9 @@ class UserDoctrineORMRepositoryTest extends EmTestCase
     public function should_update_user()
     {
         $this->executor->execute($this->loader->getFixtures());
-        $user = $this->repository->userOfUsername(new Username('karl.vaniseghem@klimtoren.be'));
+        $user = $this->repository->userOfUsername(new Username('karl.vaniseghem@klimtoren.bez'));
 
-        $username = new Username('nieuwe.gebruikersnaam@klimtoren.be');
+        $username = new Username('nieuwe.gebruikersnaam@klimtoren.bez');
         $user->updateUsername($username);
         $this->repository->update($user);
 
@@ -129,7 +129,7 @@ class UserDoctrineORMRepositoryTest extends EmTestCase
     {
         $this->executor->execute($this->loader->getFixtures());
 
-        $username = new Username('karl.vaniseghem@klimtoren.be');
+        $username = new Username('karl.vaniseghem@klimtoren.bez');
         $user = $this->repository->userOfUsername($username);
 
         $user->lock();

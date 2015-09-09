@@ -42,9 +42,9 @@ class UserTest extends TestCase
         $this->lastName = new Name('Van Iseghem');
         $this->gender = new Gender('Male');
         $this->birthDay = new DateTime('1979-11-30', new DateTimeZone('Europe/Brussels'));
-        $this->username = new Username('karl.vaniseghem@klimtoren.be');
+        $this->username = new Username('karl.vaniseghem@klimtoren.bez');
         $this->password = new HashedPassword(md5('mypassword'));
-        $this->email = new Email('karl.vaniseghem@klimtoren.be');
+        $this->email = new Email('karl.vaniseghem@klimtoren.bez');
 
     }
 

@@ -31,7 +31,7 @@ class UsernameTest extends TestCase
      */
     public function should_accept_valid_username()
     {
-        $username = new Username('karl.vaniseghem@klimtoren.be');
+        $username = new Username('karl.vaniseghem@klimtoren.bez');
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\Username', $username);
     }
 
@@ -41,7 +41,7 @@ class UsernameTest extends TestCase
      */
     public function should_create_from_native()
     {
-        $username = Username::fromNative('philipbrown@klimtoren.be');
+        $username = Username::fromNative('philipbrown@klimtoren.bez');
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\Username', $username);
     }
 
@@ -51,9 +51,9 @@ class UsernameTest extends TestCase
      */
     public function should_test_equality()
     {
-        $one = new Username('karl.vaniseghem@klimtoren.be');
-        $two = new Username('karl.vaniseghem@klimtoren.be');
-        $three = new Username('john@klimtoren.be');
+        $one = new Username('karl.vaniseghem@klimtoren.bez');
+        $two = new Username('karl.vaniseghem@klimtoren.bez');
+        $three = new Username('john@klimtoren.bez');
         $this->assertTrue($one->equals($two));
         $this->assertFalse($one->equals($three));
     }
@@ -64,8 +64,8 @@ class UsernameTest extends TestCase
      */
     public function should_return_as_string()
     {
-        $username = new Username('karl.vaniseghem@klimtoren.be');
-        $this->assertEquals('karl.vaniseghem@klimtoren.be', $username->toString());
-        $this->assertEquals('karl.vaniseghem@klimtoren.be', (string)$username);
+        $username = new Username('karl.vaniseghem@klimtoren.bez');
+        $this->assertEquals('karl.vaniseghem@klimtoren.bez', $username->toString());
+        $this->assertEquals('karl.vaniseghem@klimtoren.bez', (string)$username);
     }
 }

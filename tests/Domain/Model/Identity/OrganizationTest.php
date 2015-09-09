@@ -27,7 +27,7 @@ class OrganizationTest extends TestCase
     public function setUp()
     {
         $this->name = new Name('VBS De Klimtoren');
-        $this->domain_name = new DomainName('klimtoren.be');
+        $this->domain_name = new DomainName('klimtoren.bez');
         $this->avatar = null; //TODO: support avatars
     }
 

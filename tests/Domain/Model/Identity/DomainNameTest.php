@@ -28,7 +28,7 @@ class DomainNameTest extends TestCase {
      * @group domainname
      */
     public function should_accept_valid_domainname() {
-        $domain = new DomainName('klimtoren.be');
+        $domain = new DomainName('klimtoren.bez');
 
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\DomainName', $domain);
     }
@@ -38,9 +38,9 @@ class DomainNameTest extends TestCase {
      * @group domainname
      */
     public function should_test_equality() {
-        $one = new DomainName('klimtoren.be');
-        $two = new DomainName('klimtoren.be');
-        $three = new DomainName('www.klimtoren.be');
+        $one = new DomainName('klimtoren.bez');
+        $two = new DomainName('klimtoren.bez');
+        $three = new DomainName('www.klimtoren.bez');
 
         $this->assertTrue($one->equals($two));
         $this->assertFalse($three->equals($one));
@@ -51,9 +51,9 @@ class DomainNameTest extends TestCase {
      * @group domainname
      */
     public function should_return_as_string() {
-        $klimtoren = new DomainName('klimtoren.be');
+        $klimtoren = new DomainName('klimtoren.bez');
 
-        $this->assertEquals('klimtoren.be', $klimtoren->toString());
-        $this->assertEquals('klimtoren.be', (string)$klimtoren);
+        $this->assertEquals('klimtoren.bez', $klimtoren->toString());
+        $this->assertEquals('klimtoren.bez', (string)$klimtoren);
     }
 }

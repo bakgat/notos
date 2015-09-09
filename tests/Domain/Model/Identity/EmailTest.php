@@ -31,7 +31,7 @@ class EmailTest extends TestCase
      */
     public function should_accept_valid_email()
     {
-        $email = new Email('karl.vaniseghem@klimtoren.be');
+        $email = new Email('karl.vaniseghem@klimtoren.bez');
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\Email', $email);
     }
 
@@ -41,7 +41,7 @@ class EmailTest extends TestCase
      */
     public function should_create_from_native()
     {
-        $email = Email::fromNative('karl.vaniseghem@klimtoren.be');
+        $email = Email::fromNative('karl.vaniseghem@klimtoren.bez');
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\Email', $email);
     }
 
@@ -51,8 +51,8 @@ class EmailTest extends TestCase
      */
     public function should_test_equality()
     {
-        $one = new Email('karl.vaniseghem@klimtoren.be');
-        $two = new Email('karl.vaniseghem@klimtoren.be');
+        $one = new Email('karl.vaniseghem@klimtoren.bez');
+        $two = new Email('karl.vaniseghem@klimtoren.bez');
         $three = new Email('ulrike.drieksens@gmail.com');
 
         $this->assertTrue($one->equals($two));
@@ -65,8 +65,8 @@ class EmailTest extends TestCase
      */
     public function should_return_string()
     {
-        $email = new Email('karl.vaniseghem@klimtoren.be');
-        $this->assertEquals('karl.vaniseghem@klimtoren.be', $email->toString());
-        $this->assertEquals('karl.vaniseghem@klimtoren.be', (string)$email);
+        $email = new Email('karl.vaniseghem@klimtoren.bez');
+        $this->assertEquals('karl.vaniseghem@klimtoren.bez', $email->toString());
+        $this->assertEquals('karl.vaniseghem@klimtoren.bez', (string)$email);
     }
 }
