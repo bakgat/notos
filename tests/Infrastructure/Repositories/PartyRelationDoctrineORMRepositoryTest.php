@@ -22,7 +22,7 @@ use Bakgat\Notos\Infrastructure\Repositories\KindCacheRepository;
 use Bakgat\Notos\Infrastructure\Repositories\OrganizationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\PartyRelationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\UserDoctrineORMRepository;
-use Bakgat\Notos\Test\EmTestCase;
+use Bakgat\Notos\Tests\EmTestCase;
 use Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures\KindFixtures;
 use Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures\OrganizationFixtures;
 use Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures\PartyRelationFixtures;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bakgat\Notos\Test;
+namespace Bakgat\Notos\Tests;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;

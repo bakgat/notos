@@ -61,12 +61,13 @@ interface UserRepository {
     public function userOfUsername($username);
 
     /**
-     * Find a user by their username and load the entire profile
+     * Find a user by their username and load all ACL
      *
-     * @param string $username
+     * @param Username|string $username
+     * @param Organization $organization
      * @return mixed
      */
-    public function authOfUsername($username);
+    public function userOfUsernameWithACL(Username $username, Organization $organization);
 
     /**
      * Finds the organizations in which the given user is registered.

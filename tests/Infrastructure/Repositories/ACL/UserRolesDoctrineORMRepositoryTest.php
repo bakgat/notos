@@ -14,7 +14,7 @@ use Bakgat\Notos\Domain\Model\Identity\Username;
 use Bakgat\Notos\Infrastructure\Repositories\ACL\UserRolesDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\OrganizationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\UserDoctrineORMRepository;
-use Bakgat\Notos\Test\EmTestCase;
+use Bakgat\Notos\Tests\EmTestCase;
 use Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures\ACLFixtures;
 use Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures\OrganizationFixtures;
 use Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures\UserFixtures;

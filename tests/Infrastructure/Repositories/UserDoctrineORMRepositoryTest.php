@@ -18,7 +18,8 @@ use Bakgat\Notos\Domain\Model\Identity\User;
 use Bakgat\Notos\Domain\Model\Identity\Username;
 use Bakgat\Notos\Infrastructure\Repositories\OrganizationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\UserDoctrineORMRepository;
-use Bakgat\Notos\Test\EmTestCase;
+use Bakgat\Notos\Tests\EmTestCase;
+use Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures\ACLFixtures;
 use Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures\OrganizationFixtures;
 use Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures\PartyRelationFixtures;
 use Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures\UserFixtures;
@@ -42,6 +43,7 @@ class UserDoctrineORMRepositoryTest extends EmTestCase
         $this->loader->addFixture(new UserFixtures);
         $this->loader->addFixture(new OrganizationFixtures);
         $this->loader->addFixture(new PartyRelationFixtures);
+        $this->loader->addFixture(new ACLFixtures);
     }
 
     /**
@@ -153,4 +155,16 @@ class UserDoctrineORMRepositoryTest extends EmTestCase
         $this->assertFalse($user->locked());
     }
 
+    /**
+     * @test
+     * @group userRoles
+     */
+    public function should_have_the_roles() {
+        $this->executor->execute($this->loader->getFixtures());
+
+        $username = new Username('karl.vaniseghem@klimtoren.bez');
+        $user = $this->repository->userOfUsername($username);
+
+        $this->assertCount(2, $user->userRoles());
+    }
 }

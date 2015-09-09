@@ -36,6 +36,10 @@ class User extends Party implements Authenticatable, CanResetPassword
     /**  @ORM\Column(type="datetime", nullable=true) */
     private $last_attempt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\ACL\UserRole", mappedBy="user")
+     */
+    private $user_roles;
 
     /**
      * constructor
@@ -186,6 +190,14 @@ class User extends Party implements Authenticatable, CanResetPassword
     public function unlock()
     {
         $this->setLocked(false);
+    }
+
+    /**
+     * Get all the user roles
+     * @return mixed
+     */
+    public function userRoles() {
+        return $this->user_roles;
     }
 
     /**

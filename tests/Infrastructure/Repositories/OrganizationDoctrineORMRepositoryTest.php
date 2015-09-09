@@ -13,7 +13,7 @@ use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Infrastructure\Repositories\OrganizationDoctrineORMRepository;
-use Bakgat\Notos\Test\EmTestCase;
+use Bakgat\Notos\Tests\EmTestCase;
 use Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures\OrganizationFixtures;
 
 use Doctrine\ORM\EntityManager;

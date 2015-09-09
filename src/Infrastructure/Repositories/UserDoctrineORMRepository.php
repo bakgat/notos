@@ -13,6 +13,7 @@ use Bakgat\Notos\Domain\Model\Identity\Email;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\PartyRepository;
 use Bakgat\Notos\Domain\Model\Identity\User;
+use Bakgat\Notos\Domain\Model\Identity\Username;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -57,7 +58,7 @@ class UserDoctrineORMRepository implements UserRepository
             //->join('pr.kind', 'k')
             ->where(
                 $qb->expr()->eq('pr.reference', '?1')
-               // $qb->expr()->eq('k.name', '?2')
+            // $qb->expr()->eq('k.name', '?2')
             )
             ->setParameter(1, $organization->id())
             //->setParameter(2, 'USER')
@@ -125,21 +126,29 @@ class UserDoctrineORMRepository implements UserRepository
             ->findOneBy(['username' => strtolower($username)]);
     }
 
-    public function authOfUsername($username)
+    /**
+     * Find a user by their username and load all ACL along
+     * @param string $username
+     * @param Organization $organization
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function userOfUsernameWithACL(Username $username, Organization $organization)
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->select('u, p, r, up')
+        $qb->select('u, ur, r')
             ->from($this->class, 'u')
-            ->join('u.user_roles', 'r')
-            ->join('u.permissions', 'up')
-            ->join('r.permissions', 'p')
+            ->join('u.user_roles', 'ur')
+            ->join('ur.role', 'r')
             ->where(
-                $qb->expr()->eq('u.username', '?1')
+                $qb->expr()->eq('u.username', '?1'),
+                $qb->expr()->eq('ur.organization', '?2')
             )
-            ->setParameter(1, strtolower($username));
+            ->setParameter(1, strtolower($username))
+            ->setParameter(2, $organization->id());
 
         return $qb->getQuery()->getSingleResult();
-
     }
 
     /**
@@ -159,10 +168,10 @@ class UserDoctrineORMRepository implements UserRepository
             ->join('pr.kind', 'k')
             ->where(
                 $qb->expr()->eq('pr.context', '?1')
-                //$qb->expr()->eq('k.name', '?2')
+            //$qb->expr()->eq('k.name', '?2')
             )
             ->setParameter(1, $user->id());
-            //->setParameter(2, 'USER');
+        //->setParameter(2, 'USER');
 
         return $qb->getQuery()->getResult();
     }
