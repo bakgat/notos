@@ -33,7 +33,7 @@ abstract class EmTestCase extends TestCase
 
     public function tearDown()
     {
-        //$this->em->getConnection()->rollback();
+        $this->em->getConnection()->rollback();
     }
 
     protected function getPackageProviders($app)
