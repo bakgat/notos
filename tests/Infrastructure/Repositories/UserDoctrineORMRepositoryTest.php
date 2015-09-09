@@ -155,16 +155,5 @@ class UserDoctrineORMRepositoryTest extends EmTestCase
         $this->assertFalse($user->locked());
     }
 
-    /**
-     * @test
-     * @group userRoles
-     */
-    public function should_have_the_roles() {
-        $this->executor->execute($this->loader->getFixtures());
 
-        $username = new Username('karl.vaniseghem@klimtoren.bez');
-        $user = $this->repository->userOfUsername($username);
-
-        $this->assertCount(2, $user->userRoles());
-    }
 }
