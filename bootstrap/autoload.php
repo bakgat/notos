@@ -11,9 +11,9 @@ $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/../src/
 // database configuration parameters
 $conn = [
     'driver' => 'mysqli',
-    'host' => 'localhost',
+    'host' => '127.0.0.1',
     'dbname' =>'notosplus',
-    'user' => 'root',
+    'user' => 'travis',
     'password' => '',
     'prefix' => ''
 ];
