@@ -12,3 +12,7 @@ composer.lock
 # OS
 .DS_Store 
 .idea/
+
+#travis
+bootstrap/autoload.php
+config/doctrine.php

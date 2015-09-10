@@ -13,8 +13,8 @@ $conn = [
     'driver' => 'mysqli',
     'host' => '127.0.0.1',
     'dbname' =>'notosplus',
-    'user' => 'root',
-    'password' => 'root',
+    'user' => 'travis',
+    'password' => '',
     'prefix' => ''
 ];
 // obtaining the entity manager
