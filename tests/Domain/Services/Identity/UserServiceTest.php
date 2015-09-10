@@ -63,7 +63,10 @@ class UserServiceTest extends EmTestCase
         $username = new Username('karl.vaniseghem@klimtoren.bez');
         $domain = new DomainName('klimtoren.bez');
 
-        $user = $this->service->getUserWithACL($username, $domain);
+        $user = $this->userRepo->userOfUsername($username);
+        $org = $this->orgRepo->organizationOfDomain($domain);
+
+        $user = $this->service->getUserWithACL($user->id(), $org->id());
 
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\User', $user);
         $this->assertCount(2, $user->userRoles());
