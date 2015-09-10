@@ -3,13 +3,16 @@
 namespace Bakgat\Notos;
 
 
+use Atrauzzi\LaravelDoctrine\DoctrineRegistry;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelationRepository;
 use Bakgat\Notos\Infrastructure\Repositories\OrganizationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\PartyRelationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\UserDoctrineORMRepository;
+use Bakgat\Notos\Providers\NotosUserProvider;
 use Doctrine\ORM\EntityManager;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,10 +31,8 @@ class NotosServiceProvider extends ServiceProvider
         ]);
 
 
-        $this->extendAuthManager();*/
-        //$this->register(\Atrauzzi\LaravelDoctrine\ServiceProvider::class);
-
-        //$this->publishes([__DIR__ .'/..'. '/config/app.php'=> config_path('app.php')], 'app');
+        */
+        $this->extendAuthManager();
     }
 
     /**
@@ -44,6 +45,7 @@ class NotosServiceProvider extends ServiceProvider
         include __DIR__ . '/Http/routes.php';
 
         $this->app->register(\Atrauzzi\LaravelDoctrine\ServiceProvider::class);
+        //$this->app->register(\Atrauzzi\LaravelSerializer\ServiceProvider::class);
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('EntityManager', \Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::class);
@@ -117,6 +119,7 @@ class NotosServiceProvider extends ServiceProvider
             );
         });
     }
+
     /*
           private function bindUserService()
           {
@@ -141,15 +144,17 @@ class NotosServiceProvider extends ServiceProvider
                   );
               });
           }
+*/
 
-          private function extendAuthManager()
-          {
-              $this->app[AuthManager::class]->extend('notos', function ($app) {
-                  return new NotosUserProvider(
-                      $app['Illuminate\Contracts\Hashing\Hasher'],
-                      $app[IlluminateRegistry::class],
-                      config('auth.model')
-                  );
-              });
-          }*/
+
+    private function extendAuthManager()
+    {
+        $this->app[AuthManager::class]->extend('notos', function ($app) {
+            return new NotosUserProvider(
+                $app['Illuminate\Contracts\Hashing\Hasher'],
+                $app[EntityManager::class],
+                config('auth.model')
+            );
+        });
+    }
 }

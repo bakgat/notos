@@ -8,6 +8,7 @@
 
 namespace Bakgat\Notos\Domain\Model\Identity;
 
+use Bakgat\Notos\Domain\Model\ACL\HasRole;
 use Doctrine\ORM\Mapping as ORM;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword;
@@ -19,6 +20,7 @@ use \DateTime;
  */
 class User extends Party implements Authenticatable, CanResetPassword
 {
+    use HasRole;
 
     /** @ORM\Column(type="string", unique=true) */
     private $username;

@@ -9,9 +9,13 @@
 namespace Bakgat\Notos\Domain\Services\Identity;
 
 
+use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
+use Bakgat\Notos\Domain\Model\Identity\User;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserService
 {
@@ -22,12 +26,35 @@ class UserService
     /** @var OrganizationRepository $orgRepo */
     private $orgRepo;
 
-    public function __construct(/*Guard $guard, */UserRepository $userRepository, OrganizationRepository $organizationRepository)
+    public function __construct(/*Guard $guard, */
+        UserRepository $userRepository, OrganizationRepository $organizationRepository)
     {
         //$this->guard = $guard;
 
         $this->userRepo = $userRepository;
         $this->orgRepo = $organizationRepository;
+    }
+
+    public function login($credentials, $remember)
+    {
+        if (Auth::attempt($credentials, $remember)) {
+            $user = Auth::user();
+
+            $loggedInto = $this->organizationsOfUser($user)[0];
+
+            Auth::setUser($this->getUserWithACL($user->id(), $loggedInto->id()));
+
+            Session::put('loggedInto', $loggedInto);
+
+            return true;
+        }
+        return false;
+    }
+
+    public function getUsers($orgId)
+    {
+        $organization = $this->orgRepo->organizationOfId($orgId);
+        return $this->userRepo->all($organization);
     }
 
     /**
@@ -37,22 +64,24 @@ class UserService
      * @throws NoCurrentOrganizationLoggedInto
      * @throws NoCurrentUserFoundException
      */
-    public function getUserWithACL($username = null, $domainname = null)
+    public function getUserWithACL($id = null, $orgId = null)
     {
         $user = null;
         $organization = null;
 
-        if (!$username) {
-            /*if (!$this->guard->user()) {
-                throw new NoCurrentUserFoundException;
-            }*/
-            $username = $this->guard->user()->username();
+        if (!$id) {
+
+            $user = $this->guard->user();
+        } else {
+            $user = $this->userRepo->userOfId($id);
         }
 
-        if (!$domainname) {
-            if (!$this->guard->user()) {
-                throw new NoCurrentUserFoundException;
-            }
+        if (!$user) {
+            throw new NoCurrentUserFoundException;
+        }
+
+        if (!$orgId) {
+
             $organization = $this->guard->user()->loggedInto();
             if (!$organization) {
                 throw new NoCurrentOrganizationLoggedInto;
@@ -60,12 +89,18 @@ class UserService
         }
 
         if (!$organization) {
-            $organization = $this->orgRepo->organizationOfDomain($domainname);
+            $organization = $this->orgRepo->organizationOfId($orgId);
         }
 
-        $user = $this->userRepo->userOfUsernameWithACL($username, $organization);
+        $user = $this->userRepo->userWithACL($user, $organization);
 
 
         return $user;
+    }
+
+    public function organizationsOfUser(User $user)
+    {
+        $orgs = $this->userRepo->organizationsOfUser($user);
+        return $orgs;
     }
 }

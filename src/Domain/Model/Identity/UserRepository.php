@@ -63,11 +63,11 @@ interface UserRepository {
     /**
      * Find a user by their username and load all ACL
      *
-     * @param Username|string $username
+     * @param User $user
      * @param Organization $organization
      * @return mixed
      */
-    public function userOfUsernameWithACL(Username $username, Organization $organization);
+    public function userWithACL(User $user, Organization $organization);
 
     /**
      * Finds the organizations in which the given user is registered.

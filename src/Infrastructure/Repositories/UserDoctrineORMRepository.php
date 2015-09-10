@@ -128,13 +128,11 @@ class UserDoctrineORMRepository implements UserRepository
 
     /**
      * Find a user by their username and load all ACL along
-     * @param string $username
+     * @param User $user
      * @param Organization $organization
      * @return mixed
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function userOfUsernameWithACL(Username $username, Organization $organization)
+    public function userWithACL(User $user, Organization $organization)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('u, ur, r')
@@ -142,10 +140,10 @@ class UserDoctrineORMRepository implements UserRepository
             ->join('u.user_roles', 'ur')
             ->join('ur.role', 'r')
             ->where(
-                $qb->expr()->eq('u.username', '?1'),
+                $qb->expr()->eq('u.id', '?1'),
                 $qb->expr()->eq('ur.organization', '?2')
             )
-            ->setParameter(1, strtolower($username))
+            ->setParameter(1, $user->id())
             ->setParameter(2, $organization->id());
 
         return $qb->getQuery()->getSingleResult();

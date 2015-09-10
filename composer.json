@@ -27,7 +27,8 @@
   },
   "require": {
     "beberlei/assert": "^2.4",
-    "atrauzzi/laravel-doctrine": "dev-master"
+    "atrauzzi/laravel-doctrine": "dev-master",
+    "atrauzzi/laravel-serializer": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

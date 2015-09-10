@@ -92,13 +92,13 @@
     | http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/configuration.html
     |
     */
-    /*
+
     'proxy_classes' => [
-        'auto_generate' => false,
-        'directory' => null,
-        'namespace' => null,
+        'auto_generate' => true,
+        'directory' => storage_path('doctrine/proxies/'),
+        'namespace' => 'Bakgat\Notos',
     ],
-    */
+
 
 
     'migrations' => [
