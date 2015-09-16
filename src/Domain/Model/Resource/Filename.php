@@ -2,23 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: karlvaniseghem
- * Date: 17/06/15
- * Time: 22:54
+ * Date: 27/06/15
+ * Time: 21:30
  */
 
-namespace Bakgat\Notos\Domain\Model\Identity;
+namespace Bakgat\Notos\Domain\Model\Resource;
 
 
 use Assert\Assertion;
 use Bakgat\Notos\Domain\Model\ValueObject;
 
-class Username implements ValueObject {
+class Filename implements ValueObject {
 
     private $value;
 
     public function __construct($value) {
 
-        Assertion::regex($value, '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}^');
+        //Filenames must be md5 followed by jpg, gif, bmp, png
+        Assertion::regex($value, '/^[a-f0-9]{32}\.(jpg|png|gif|bmp)^/i');
 
         $this->value = $value;
     }
@@ -29,7 +30,7 @@ class Username implements ValueObject {
      * @return string
      */
     public function __toString() {
-        return strtolower($this->value);
+        return $this->value;
     }
 
     /**
@@ -40,7 +41,7 @@ class Username implements ValueObject {
      */
     public static function fromNative($native)
     {
-        return new Username($native);
+        return new Filename($native);
     }
 
 
@@ -62,6 +63,14 @@ class Username implements ValueObject {
      */
     public function toString()
     {
-        return strtolower($this->value);
+        return $this->value;
+    }
+
+    public function directory() {
+        $first = str_split($this->value, 4)[0];
+        $splitted = str_split($first);
+        $dir_path = implode('/', $splitted);
+
+        return $dir_path;
     }
 }

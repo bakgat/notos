@@ -54,11 +54,11 @@ class Permission
      * @ORM\ManyToMany(targetEntity="Role", mappedBy="permissions")
      */
     private $roles;
-
     /**
      * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Identity\User", mappedBy="permissions")
      */
     private $users;
+
 
     public function __construct($name, $slug)
     {
@@ -72,6 +72,7 @@ class Permission
         $this->setUpdatedAt(new DateTime);
 
         $this->roles = new ArrayCollection;
+        $this->users = new ArrayCollection;
     }
 
 
@@ -176,11 +177,6 @@ class Permission
         return $this->roles;
     }
 
-    /**
-     * Return all the users that has this permission
-     *
-     * @return mixed
-     */
     public function users() {
         return $this->users;
     }

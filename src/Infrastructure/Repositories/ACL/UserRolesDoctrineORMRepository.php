@@ -9,6 +9,8 @@
 namespace Bakgat\Notos\Infrastructure\Repositories\ACL;
 
 
+use Bakgat\Notos\Domain\Model\ACL\Role;
+use Bakgat\Notos\Domain\Model\ACL\UserRole;
 use Bakgat\Notos\Domain\Model\ACL\UserRolesRepository;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\User;
@@ -54,5 +56,31 @@ class UserRolesDoctrineORMRepository implements UserRolesRepository
 
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Adds an created UserRole
+     *
+     * @param UserRole $userRole
+     * @return mixed
+     */
+    public function add(UserRole $userRole)
+    {
+        $this->em->persist($userRole);
+        $this->em->flush();
+    }
+
+    /**
+     * Register a new UserRole and saves it.
+     *
+     * @param User $user
+     * @param Role $role
+     * @param Organization $organization
+     * @return mixed
+     */
+    public function register(User $user, Role $role, Organization $organization)
+    {
+        $user_role = UserRole::register($user, $role, $organization);
+        $this->add($user_role);
     }
 }

@@ -30,6 +30,8 @@ class UserDoctrineORMRepository implements UserRepository
     private $relClass;
     /** @var string */
     private $orgClass;
+    /** @var string */
+    private $urClass;
     /** @var  @var string */
     private $kindClass;
 
@@ -39,6 +41,7 @@ class UserDoctrineORMRepository implements UserRepository
         $this->class = 'Bakgat\Notos\Domain\Model\Identity\User';
         $this->orgClass = 'Bakgat\Notos\Domain\Model\Identity\Organization';
         $this->relClass = 'Bakgat\Notos\Domain\Model\Relations\PartyRelation';
+        $this->urClass = 'Bakgat\Notos\Domain\Model\ACL\UserRole';
     }
 
     /**
@@ -117,22 +120,28 @@ class UserDoctrineORMRepository implements UserRepository
     /**
      * Find a user by their username
      *
-     * @param string $username
+     * @param Username $username
      * @return User
      */
-    public function userOfUsername($username)
+    public function userOfUsername(Username $username)
     {
-        return $this->em->getRepository($this->class)
-            ->findOneBy(['username' => strtolower($username)]);
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('u, p, pi')
+            ->from($this->class, 'u')
+            ->where(
+                $qb->expr()->eq('u.username', '?1')
+            )
+            ->setParameter(1, $username->toString());
+        return $qb->getQuery()->getSingleResult();
     }
 
     /**
      * Find a user by their username and load all ACL along
-     * @param User $user
+     * @param Username $username
      * @param Organization $organization
      * @return mixed
      */
-    public function userWithACL(User $user, Organization $organization)
+    public function userWithACL(Username $username, Organization $organization)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('u, ur, r')
@@ -140,10 +149,10 @@ class UserDoctrineORMRepository implements UserRepository
             ->join('u.user_roles', 'ur')
             ->join('ur.role', 'r')
             ->where(
-                $qb->expr()->eq('u.id', '?1'),
+                $qb->expr()->eq('u.username', '?1'),
                 $qb->expr()->eq('ur.organization', '?2')
             )
-            ->setParameter(1, $user->id())
+            ->setParameter(1, $username->toString())
             ->setParameter(2, $organization->id());
 
         return $qb->getQuery()->getSingleResult();
@@ -158,19 +167,29 @@ class UserDoctrineORMRepository implements UserRepository
     public function organizationsOfUser(User $user)
     {
         //TODO where user has role USER in organization that's alive
-
         $qb = $this->em->createQueryBuilder();
-        $qb->select('o')
-            ->from($this->orgClass, 'o')
-            ->join('o.references', 'pr')
-            ->join('pr.kind', 'k')
+        $qb->select('ur, o')
+            ->from($this->urClass, 'ur')
+            ->join('ur.organization', 'o')
+            ->join('ur.role', 'r')
             ->where(
-                $qb->expr()->eq('pr.context', '?1')
-            //$qb->expr()->eq('k.name', '?2')
+                $qb->expr()->eq('ur.user', '?1'),
+                $qb->expr()->eq('r.slug', '?2')
             )
-            ->setParameter(1, $user->id());
-        //->setParameter(2, 'USER');
+            ->setParameter(1, $user->id())
+            ->setParameter(2, 'user');
 
-        return $qb->getQuery()->getResult();
+        $userRoles = $qb->getQuery()->getResult();
+
+        //convert to only organizations
+        $result = [];
+        foreach ($userRoles as $userRole) {
+            if (!in_array($userRole->organization(), $result)) {
+                $result[] = $userRole->organization();
+            }
+        }
+
+        return $result;
+
     }
 }

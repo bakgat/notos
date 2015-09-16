@@ -9,14 +9,18 @@
 namespace Bakgat\Notos\Domain\Model\Identity;
 
 use Bakgat\Notos\Domain\Model\ACL\HasRole;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword;
+
+use JMS\Serializer\Annotation as JMS;
 use \DateTime;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="users", indexes={@ORM\Index(columns={"username", "reset_email"})})
+ * @JMS\ExclusionPolicy("none")
  */
 class User extends Party implements Authenticatable, CanResetPassword
 {
@@ -24,25 +28,64 @@ class User extends Party implements Authenticatable, CanResetPassword
 
     /** @ORM\Column(type="string", unique=true) */
     private $username;
-    /** @ORM\Column(type="string") */
+    /**
+     * @ORM\Column(type="string")
+     */
     private $reset_email;
     /**
      * @ORM\Column(type="string", length=60)
+     * @JMS\Exclude
      */
     private $password;
-    /** @ORM\Column(type="string", length=60, nullable=true) */
+    /**
+     * @ORM\Column(type="string", length=60, nullable=true)
+     * @JMS\Exclude
+     */
     private $remember_token;
-    /** @ORM\Column(type="boolean") */
+    /**
+     * @ORM\Column(type="boolean")
+     */
     private $locked;
-    /** @ORM\Column(type="datetime", nullable=true) */
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
     private $last_login;
-    /**  @ORM\Column(type="datetime", nullable=true) */
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Exclude
+     */
     private $last_attempt;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $gender;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $birthday;
+
+    /**
      * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\ACL\UserRole", mappedBy="user")
+     * @JMS\Exclude
      */
     private $user_roles;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\ACL\Permission", inversedBy="users", cascade={"persist"})
+     * @ORM\JoinTable(name="user_permissions")
+     */
+    private $permissions;
+
+    /**
+     * @var ArrayCollection
+     */
+    private $organizations;
+
+    /**
+     * @var Organization
+     */
+    private $realm;
 
     /**
      * constructor
@@ -73,11 +116,7 @@ class User extends Party implements Authenticatable, CanResetPassword
         $user->setPassword($password);
         $user->setResetEmail($resetEmail);
         $user->setLocked(false);
-
-        $personalInfo = new PersonalInfo($user);
-        $personalInfo->setGender($gender);
-        $user->setPersonalInfo($personalInfo);
-
+        $user->setGender($gender);
 
         return $user;
     }
@@ -96,7 +135,7 @@ class User extends Party implements Authenticatable, CanResetPassword
      */
     public function username()
     {
-        return Username ::fromNative($this->username);
+        return Username::fromNative($this->username);
     }
 
     /**
@@ -170,6 +209,40 @@ class User extends Party implements Authenticatable, CanResetPassword
     }
 
     /**
+     * @param Gender gender
+     * @return void
+     */
+    public function setGender(Gender $gender)
+    {
+        $this->gender = $gender;
+    }
+
+    /**
+     * @return Gender
+     */
+    public function gender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param DateTime birthday
+     * @return void
+     */
+    public function setBirthday(DateTime $birthday)
+    {
+        $this->birthday = $birthday;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function birthday()
+    {
+        return $this->birthday;
+    }
+
+    /**
      * Updates the user's username
      * @param Username $username
      */
@@ -199,8 +272,36 @@ class User extends Party implements Authenticatable, CanResetPassword
      * Get all the user roles
      * @return mixed
      */
-    public function userRoles() {
+    public function userRoles()
+    {
         return $this->user_roles;
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     */
+    public function getOrganizations()
+    {
+        return $this->organizations;
+    }
+
+    public function setOrganizations($organizations)
+    {
+        $this->organizations = $organizations;
+    }
+
+    /**
+     * @return mixed
+     * @JMS\VirtualProperty
+     */
+    public function getRealm()
+    {
+        return $this->realm;
+    }
+
+    public function setRealm(Organization $organization)
+    {
+        $this->realm = $organization;
     }
 
     /**

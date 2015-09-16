@@ -36,13 +36,13 @@ class UserRole implements \JsonSerializable
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\ACL\Role")
+     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\ACL\Role", inversedBy="user_roles", fetch="EAGER")
      * @ORM\JoinColumn(name="role_id")
      */
     private $role;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization")
+     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization", inversedBy="user_roles")
      * @ORM\JoinColumn(name="organization_id")
      */
     private $organization;

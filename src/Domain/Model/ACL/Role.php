@@ -46,15 +46,12 @@ class Role
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Permission", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Permission", inversedBy="roles", cascade={"persist"})
      * @ORM\JoinTable(name="role_permissions")
      */
     private $permissions;
 
-    /*
-     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Identity\User", mappedBy="user_roles")
-     */
-    //private $users;
+
     /**
      * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\ACL\UserRole", mappedBy="role")
      */

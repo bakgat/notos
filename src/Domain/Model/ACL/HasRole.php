@@ -8,6 +8,7 @@
 
 namespace Bakgat\Notos\Domain\Model\ACL;
 
+use JMS\Serializer\Annotation as JMS;
 
 trait HasRole
 {
@@ -17,6 +18,7 @@ trait HasRole
      * Returns an array of slugs of all user_roles.
      *
      * @return array
+     * @JMS\VirtualProperty
      */
     public function getRoles()
     {

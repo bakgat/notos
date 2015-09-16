@@ -9,16 +9,20 @@
 namespace Bakgat\Notos\Domain\Model\Identity;
 
 use Bakgat\Notos\Domain\Model\Kind;
+use JMS\Serializer\Annotation as JMS;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"party"="Party","personalInfo" = "PersonalInfo",
+ * @ORM\DiscriminatorMap({"party"="Party",
  *                      "organization"="Organization",
  *                      "user"="User"})
  * @ORM\Table(name="parties")
+ *
+ * @JMS\ExclusionPolicy("none")
  */
 class Party
 {
@@ -36,19 +40,19 @@ class Party
      * @ORM\Column(type="string")
      */
     protected $lastName;
-    /** @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Kind") */
+    /**
+     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Kind")
+     */
     protected $kind;
     /**
-     * @ORM\OneToOne(targetEntity="PersonalInfo",inversedBy="party", cascade={"persist"})
-     * @ORM\JoinColumn(name="personal_info", referencedColumnName="id")
-     */
-    protected $personalInfo;
-    /**
      * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\Relations\PartyRelation", mappedBy="reference")
+     * @JMS\Exclude
+     *
      */
     protected $references;
     /**
      * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\Relations\PartyRelation", mappedBy="context")
+     * @JMS\Exclude
      */
     protected $relatedTo;
 
@@ -115,24 +119,6 @@ class Party
     public function kind()
     {
         return $this->kind;
-    }
-
-    /**
-     * @param PersonalInfo personalInfo
-     * @return void
-     */
-    public function setPersonalInfo(PersonalInfo $personalInfo)
-    {
-        $this->personalInfo = $personalInfo;
-        return $this;
-    }
-
-    /**
-     * @return PersonalInfo
-     */
-    public function personalInfo()
-    {
-        return $this->personalInfo;
     }
 
     /**

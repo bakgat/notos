@@ -4,13 +4,18 @@ namespace Bakgat\Notos;
 
 
 use Atrauzzi\LaravelDoctrine\DoctrineRegistry;
+use Bakgat\Notos\Domain\Model\ACL\RoleRepository;
+use Bakgat\Notos\Domain\Model\ACL\UserRolesRepository;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelationRepository;
+use Bakgat\Notos\Infrastructure\Repositories\ACL\RoleDoctrineORMRepository;
+use Bakgat\Notos\Infrastructure\Repositories\ACL\UserRolesDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\OrganizationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\PartyRelationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\UserDoctrineORMRepository;
 use Bakgat\Notos\Providers\NotosUserProvider;
+use Bakgat\Notos\Tests\Infrastructure\Repositories\ACL\UserRolesDoctrineORMRepositoryTest;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Support\Facades\App;
@@ -42,6 +47,12 @@ class NotosServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Bootstrap the JMS custom annotations for Object to Json mapping
+        \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
+            'JMS\Serializer\Annotation',
+            __DIR__ . '/../vendor/jms/serializer/src'
+        );
+
         include __DIR__ . '/Http/routes.php';
 
         $this->app->register(\Atrauzzi\LaravelDoctrine\ServiceProvider::class);
@@ -63,11 +74,22 @@ class NotosServiceProvider extends ServiceProvider
          */
 
         /*$this->bindKindRepository();*/
-
+        $repos = [
+            [UserRepository::class, UserDoctrineORMRepository::class],
+            [OrganizationRepository::class, OrganizationDoctrineORMRepository::class],
+            [PartyRelationRepository::class, PartyRelationDoctrineORMRepository::class],
+            [RoleRepository::class, RoleDoctrineORMRepository::class],
+            [UserRolesRepository::class, UserRolesDoctrineORMRepository::class]
+        ];
+        $this->simpleBindRepositories($repos);
+        /*
         $this->bindUserRepository();
         $this->bindOrganizationRepository();
 
         $this->bindPartyRelationRepository();
+
+        $this->bindRoleRepository();
+        $this->bindUserRoleRepository();*/
 
         /*
          |----------------------------------------------------------------------------------------------
@@ -84,6 +106,18 @@ class NotosServiceProvider extends ServiceProvider
     /* ***************************************************
      * Private methods
      * **************************************************/
+    private function simpleBindRepositories($repos)
+    {
+        foreach ($repos as $repo) {
+            $this->app->bind($repo[0], function ($app) use($repo) {
+                return new $repo[1](
+                    $app->make(EntityManager::class)
+                );
+            });
+        }
+
+    }
+
     /*  private function bindKindRepository()
       {
           $this->app->bind(KindRepository::class, function ($app) {
@@ -92,7 +126,7 @@ class NotosServiceProvider extends ServiceProvider
               );
           });
       }
-*/
+
     private function bindUserRepository()
     {
         $this->app->bind(UserRepository::class, function ($app) {
@@ -115,6 +149,15 @@ class NotosServiceProvider extends ServiceProvider
     {
         $this->app->bind(PartyRelationRepository::class, function ($app) {
             return new PartyRelationDoctrineORMRepository(
+                $app->make(EntityManager::class)
+            );
+        });
+    }
+
+    private function bindRoleRepository()
+    {
+        $this->app->bind(RoleRepository::class, function ($app) {
+            return new RoleDoctrineORMRepository(
                 $app->make(EntityManager::class)
             );
         });

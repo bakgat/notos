@@ -43,7 +43,9 @@ Route::post('password/reset', [
  * API
  * ---------------------- */
 Route::group(['prefix' => '/api', 'namespace'=>'Bakgat\Notos\Http\Controllers'], function() {
-    Route::group(['prefix'=>'/organization/{orgId}/user', 'namespace' => 'Identity'], function() {
+    Route::group(['prefix'=>'/organization/{domain}/user', 'namespace' => 'Identity'], function() {
         include_once __DIR__.'/Routes/UserRoutes.php';
     });
+
+    Route::get('/user/profile', 'Identity\UserController@auth');
 });

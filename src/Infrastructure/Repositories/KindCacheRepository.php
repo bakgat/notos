@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Cache;
 class KindCacheRepository implements KindRepository
 {
 
-    /** @var  EntityManagerInterface */
+    /** @var  EntityManager */
     private $em;
     /** @var  string */
     private $class;

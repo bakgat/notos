@@ -55,19 +55,19 @@ interface UserRepository {
     /**
      * Find a user by their username
      *
-     * @param string $username
+     * @param Username $username
      * @return User
      */
-    public function userOfUsername($username);
+    public function userOfUsername(Username $username);
 
     /**
      * Find a user by their username and load all ACL
      *
-     * @param User $user
+     * @param Username $user
      * @param Organization $organization
      * @return mixed
      */
-    public function userWithACL(User $user, Organization $organization);
+    public function userWithACL(Username $user, Organization $organization);
 
     /**
      * Finds the organizations in which the given user is registered.

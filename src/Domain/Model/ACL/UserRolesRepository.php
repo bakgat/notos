@@ -21,4 +21,22 @@ interface UserRolesRepository
      * @return mixed
      */
     public function rolesOfUser(User $user, Organization $organization);
+
+    /**
+     * Adds an created UserRole
+     *
+     * @param UserRole $userRole
+     * @return mixed
+     */
+    public function add(UserRole $userRole);
+
+    /**
+     * Register a new UserRole and saves it.
+     *
+     * @param User $user
+     * @param Role $role
+     * @param Organization $organization
+     * @return mixed
+     */
+    public function register(User $user, Role $role , Organization $organization);
 }
