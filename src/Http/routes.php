@@ -11,7 +11,7 @@
  * ---------------------- */
 use Illuminate\Support\Facades\Auth;
 
-Route::group(['prefix'=>'/auth', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function() {
+Route::group(['prefix' => '/auth', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
     Route::get('/login', [
         'uses' => 'Identity\AuthController@getLogin',
         'as' => 'login'
@@ -26,6 +26,10 @@ Route::group(['prefix'=>'/auth', 'namespace' => 'Bakgat\Notos\Http\Controllers']
     ]);
 });
 
+Route::get('/seed/all', function () {
+    $seed = new \Bakgat\Notos\Seeds\Seed();
+    $seed->SeedAll();
+});
 
 
 //Reset routes
@@ -42,9 +46,9 @@ Route::post('password/reset', [
 /* ------------------------
  * API
  * ---------------------- */
-Route::group(['prefix' => '/api', 'namespace'=>'Bakgat\Notos\Http\Controllers'], function() {
-    Route::group(['prefix'=>'/organization/{domain}/user', 'namespace' => 'Identity'], function() {
-        include_once __DIR__.'/Routes/UserRoutes.php';
+Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
+    Route::group(['prefix' => '/organization/{domain}/user', 'namespace' => 'Identity'], function () {
+        include_once __DIR__ . '/Routes/UserRoutes.php';
     });
 
     Route::get('/user/profile', 'Identity\UserController@auth');

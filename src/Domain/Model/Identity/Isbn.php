@@ -6,7 +6,7 @@
  * Time: 11:49
  */
 
-namespace Bakgat\Notos\Domain\Model\Descriptive;
+namespace Bakgat\Notos\Domain\Model\Identity;
 
 
 use Assert\Assertion;

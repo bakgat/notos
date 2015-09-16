@@ -17,29 +17,19 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="organizations",
- *  uniqueConstraints={
- *          @ORM\UniqueConstraint(name="unique_domainname",columns={"domain_name"})
- *      }))
+ * @ORM\Table(name="groups")
  *
  */
-class Organization extends Party
+class Group extends Party
 {
-
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $domain_name;
+    private $description;
     /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $avatar;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\ACL\UserRole", mappedBy="organization")
-     * @JMS\Exclude
-     */
-    private $user_roles;
 
     public function __construct($name)
     {
@@ -48,26 +38,7 @@ class Organization extends Party
 
     public static function register(Name $name)
     {
-        return new Organization($name);
-    }
-
-
-    /**
-     * @param DomainName $domain_name
-     * @return void
-     */
-    public function setDomainName(DomainName $domain_name)
-    {
-        $this->domain_name = $domain_name->toString();
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function domainName()
-    {
-        return DomainName::fromNative($this->domain_name);
+        return new Group($name);
     }
 
     /**
@@ -92,6 +63,23 @@ class Organization extends Party
     }
 
     /**
+     * @param  description
+     * @return void
+     */
+    public function setDescription( $description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return 
+     */
+    public function description()
+    {
+        return $this->description;
+    }
+
+    /**
      * @param  avatar
      * @return void
      */
@@ -108,6 +96,4 @@ class Organization extends Party
     {
         return $this->avatar;
     }
-
-
 }

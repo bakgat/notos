@@ -9,7 +9,13 @@
 namespace Bakgat\Notos\Domain\Model\ACL;
 
 
-class RoleRepository
+interface RoleRepository
 {
-
+    /**
+     * Get the Role by slug
+     *
+     * @param $slug
+     * @return mixed
+     */
+    public function get($slug);
 }

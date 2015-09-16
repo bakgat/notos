@@ -13,11 +13,17 @@ use Bakgat\Notos\Domain\Model\ACL\RoleRepository;
 use Bakgat\Notos\Domain\Model\ACL\UserRole;
 use Bakgat\Notos\Domain\Model\ACL\UserRolesRepository;
 use Bakgat\Notos\Domain\Model\Identity\DomainName;
+use Bakgat\Notos\Domain\Model\Identity\Email;
+use Bakgat\Notos\Domain\Model\Identity\Gender;
+use Bakgat\Notos\Domain\Model\Identity\HashedPassword;
+use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Identity\User;
 use Bakgat\Notos\Domain\Model\Identity\Username;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
+use DateTime;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -33,10 +39,13 @@ class UserService
     private $roleRepo;
     /** @var UserRolesRepository $userRoleRepo */
     private $userRoleRepo;
+    /** @var Hasher $hasher */
+    private $hasher;
 
     public function __construct(/*Guard $guard, */
         UserRepository $userRepository, OrganizationRepository $organizationRepository,
-        RoleRepository $roleRepository, UserRolesRepository $userRolesRepository)
+        RoleRepository $roleRepository, UserRolesRepository $userRolesRepository,
+        Hasher $hasher)
     {
         //$this->guard = $guard;
 
@@ -44,6 +53,7 @@ class UserService
         $this->orgRepo = $organizationRepository;
         $this->roleRepo = $roleRepository;
         $this->userRoleRepo = $userRolesRepository;
+        $this->hasher = $hasher;
     }
 
     public function login($credentials, $remember)
@@ -139,11 +149,11 @@ class UserService
      */
     public function add($data, $orgId)
     {
-        $firstName = new Name($data['firstName']);
-        $lastName = new Name($data['lastName']);
+        $firstName = new Name($data['first_name']);
+        $lastName = new Name($data['last_name']);
         $userName = new Username($data['username']);
         $hashedPwd = new HashedPassword(bcrypt($data['password']));
-        $gender = new Gender($data['personalInfo']['gender']);
+        $gender = new Gender($data['gender']);
 
         $email = null;
         if (isset($data['reset_email'])) {
@@ -160,7 +170,9 @@ class UserService
 
         $this->addUserToRole($user, 'user', $organization);
 
-        return $user;
+        //return the entire filled profile (ACL included)
+        //TODO speed by manually setting $user->setUserRoles  or $user->addUserRole ... to fill getRoles()
+        return $this->getProfile($user->id(), $orgId);
     }
 
     /**
@@ -175,7 +187,7 @@ class UserService
 
         $user->setFirstName(new Name($data['first_name']));
         $user->setLastName(new Name($data['last_name']));
-        $user->setGender(new Gender(['gender']));
+        $user->setGender(new Gender($data['gender']));
 
         //do not update username here. Therefore there must be another Service method
         $this->userRepo->update($user);
@@ -197,7 +209,7 @@ class UserService
         }
 
         $user->setDeletedAt(new DateTime);
-        $this->update($user);
+        $this->userRepo->update($user);
 
         return true;
     }

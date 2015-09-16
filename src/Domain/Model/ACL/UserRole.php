@@ -31,19 +31,19 @@ class UserRole implements \JsonSerializable
 
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\User", inversedBy="user_roles")
-     * @ORM\JoinColumn(name="user_id")
+     * @ORM\JoinColumn(name="user_id", onDelete="CASCADE")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\ACL\Role", inversedBy="user_roles", fetch="EAGER")
-     * @ORM\JoinColumn(name="role_id")
+     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\ACL\Role", inversedBy="user_roles")
+     * @ORM\JoinColumn(name="role_id", onDelete="CASCADE")
      */
     private $role;
 
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization", inversedBy="user_roles")
-     * @ORM\JoinColumn(name="organization_id")
+     * @ORM\JoinColumn(name="organization_id", onDelete="CASCADE")
      */
     private $organization;
 

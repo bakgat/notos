@@ -13,6 +13,8 @@ use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\Username;
 use Bakgat\Notos\Domain\Services\Identity\UserService;
 use Bakgat\Notos\Http\Controllers\Controller;
+use Bakgat\Notos\Http\Requests\Identity\UserFormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
@@ -95,7 +97,7 @@ class UserController extends Controller
         $data = array_merge(['id' => $userId], $data);
 
         $user = $this->userService->update($data);
-        return JsonResponse::create($user);
+        return $this->json($user);
     }
 
     /**
@@ -110,7 +112,7 @@ class UserController extends Controller
         $data = $request->all();
 
         $user = $this->userService->add($data, $orgId);
-        return JsonResponse::create($user);
+        return $this->json($user);
     }
 
     /**
@@ -141,7 +143,7 @@ class UserController extends Controller
         $user = $this->userService->userOfId($userId);
         if ($user) {
             $user = $this->userService->resetPassword($user, $password);
-            return JsonResponse::create($user);
+            return $this->json($user);
         } else {
             abort(404, 'User with id [' . $user . '] not found.');
         }

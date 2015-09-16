@@ -9,7 +9,6 @@
 namespace Bakgat\Notos\Domain\Model\Resource;
 
 use Bakgat\Notos\Domain\Model\Identity\Name;
-use Bakgat\Notos\Domain\Model\Resource\Events\ImageWasAdded;
 use Bakgat\Notos\Domain\RecordEvents;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,7 +21,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Image extends Resource
 {
 
-    use RecordEvents;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -60,7 +58,6 @@ class Image extends Resource
         $this->setFilename($filename);
         $this->setDirectory($filename->directory());
 
-        $this->record(new ImageWasAdded);
     }
 
     public static function register(Name $name, $filename)

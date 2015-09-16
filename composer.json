@@ -17,7 +17,6 @@
     "phpunit/phpunit": "4.*",
     "mockery/mockery": "0.9.*",
     "orchestra/testbench": "~3.0",
-    "doctrine/doctrine-fixtures-bundle": "^2.2@dev",
     "laravel/laravel": "dev-master"
   },
   "autoload-dev": {
@@ -28,7 +27,8 @@
   "require": {
     "beberlei/assert": "^2.4",
     "atrauzzi/laravel-doctrine": "dev-master",
-    "atrauzzi/laravel-serializer": "dev-master"
+    "atrauzzi/laravel-serializer": "dev-master",
+    "doctrine/doctrine-fixtures-bundle": "^2.2@dev"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

@@ -11,6 +11,7 @@ namespace Bakgat\Notos\Domain\Model\Identity;
 use Bakgat\Notos\Domain\Model\ACL\HasRole;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineExtensions\Query\Sqlite\Date;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword;
 
@@ -117,6 +118,7 @@ class User extends Party implements Authenticatable, CanResetPassword
         $user->setResetEmail($resetEmail);
         $user->setLocked(false);
         $user->setGender($gender);
+
 
         return $user;
     }

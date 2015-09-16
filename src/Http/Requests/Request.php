@@ -6,7 +6,7 @@
  * Time: 07:56
  */
 
-namespace Bakgat\Notos\Requests;
+namespace Bakgat\Notos\Http\Requests;
 
 
 use Illuminate\Foundation\Http\FormRequest;

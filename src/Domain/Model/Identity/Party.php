@@ -8,7 +8,13 @@
 
 namespace Bakgat\Notos\Domain\Model\Identity;
 
+use Atrauzzi\LaravelDoctrine\Util\Time;
 use Bakgat\Notos\Domain\Model\Kind;
+use Bakgat\Notos\Domain\Model\SoftDelete;
+use Bakgat\Notos\Domain\Model\Timestamp;
+use DateTime;
+use DoctrineExtensions\Query\Mysql\TimestampAdd;
+use Gedmo\Mapping\Annotation\Timestampable;
 use JMS\Serializer\Annotation as JMS;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -17,7 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"party"="Party",
+ * @ORM\DiscriminatorMap({"party"="Party", "group"="Group",
  *                      "organization"="Organization",
  *                      "user"="User"})
  * @ORM\Table(name="parties")
@@ -26,6 +32,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Party
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -44,6 +51,8 @@ class Party
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Kind")
      */
     protected $kind;
+
+
     /**
      * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\Relations\PartyRelation", mappedBy="reference")
      * @JMS\Exclude
@@ -101,6 +110,15 @@ class Party
     public function lastName()
     {
         return $this->lastName;
+    }
+
+    /**
+     * return string
+     * @JMS\VirtualProperty
+     */
+    public function fullName()
+    {
+        return ($this->firstName ? $this->firstName . ' ' : '') . $this->lastName;
     }
 
     /**

@@ -52,21 +52,15 @@ class UserDoctrineORMRepository implements UserRepository
      */
     public function all(Organization $organization)
     {
-        //TODO where user has role USER in organization that's alive
-
         $qb = $this->em->createQueryBuilder();
         $qb->select('u.id, u.firstName, u.lastName, u.username')
-            ->from($this->class, 'u')
-            ->join('u.relatedTo', 'pr')
-            //->join('pr.kind', 'k')
+            ->from($this->urClass, 'ur')
+            ->join('ur.user', 'u')
             ->where(
-                $qb->expr()->eq('pr.reference', '?1')
-            // $qb->expr()->eq('k.name', '?2')
+                $qb->expr()->eq('ur.organization', '?1')
             )
             ->setParameter(1, $organization->id())
-            //->setParameter(2, 'USER')
             ->groupBy('u.id');
-
         return $qb->getQuery()->getResult();
     }
 

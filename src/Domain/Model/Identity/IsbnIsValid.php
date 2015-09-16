@@ -6,7 +6,7 @@
  * Time: 12:06
  */
 
-namespace Bakgat\Notos\Domain\Model\Descriptive;
+namespace Bakgat\Notos\Domain\Model\Identity;
 
 
 class IsbnIsValid implements IsbnSpecification {

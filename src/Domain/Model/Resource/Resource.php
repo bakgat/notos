@@ -18,10 +18,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"resource"="Resource", "book"="Book", "image"="Image", "album"="Album"})
+ * @ORM\DiscriminatorMap({"resource"="Resource", "book"="Book", "image"="Image"})
  * @ORM\Table(name="resources")
  */
-class Resource implements \JsonSerializable
+class Resource
 {
     use Time;
 
@@ -90,19 +90,5 @@ class Resource implements \JsonSerializable
         return $this->parent;
     }
 
-    /**
-     * (PHP 5 &gt;= 5.4.0)<br/>
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     */
-    function jsonSerialize()
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'kind' => $this->kind
-        ];
-    }
+
 }

@@ -11,5 +11,9 @@ namespace Bakgat\Notos\Domain\Model\Identity;
 
 interface GroupRepository
 {
-
+    /**
+     * @param $name
+     * @return Group
+     */
+    public function groupOfName($name);
 }

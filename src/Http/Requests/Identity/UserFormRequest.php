@@ -6,18 +6,18 @@
  * Time: 07:57
  */
 
-namespace Bakgat\Notos\Requests\Identity;
+namespace Bakgat\Notos\Http\Requests\Identity;
 
 
-use Bakgat\Notos\Requests\Request;
+use Bakgat\Notos\Http\Requests\Request;
 
 class UserFormRequest extends Request
 {
     public function rules()
     {
         return [
-            'firstName' => 'max:255',
-            'lastName' => 'required|max:255',
+            'firs_name' => 'max:255',
+            'last_name' => 'required|max:255',
             'username' => 'required|max:255|email',
             'birthday' => 'date',
             'gender' => 'in:M,F'

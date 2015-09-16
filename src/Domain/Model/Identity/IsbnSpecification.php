@@ -6,7 +6,7 @@
  * Time: 21:17
  */
 
-namespace Bakgat\Notos\Domain\Model\Descriptive;
+namespace Bakgat\Notos\Domain\Model\Identity;
 
 
 interface IsbnSpecification {

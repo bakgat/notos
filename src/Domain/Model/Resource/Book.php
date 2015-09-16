@@ -8,10 +8,8 @@
 
 namespace Bakgat\Notos\Domain\Model\Resource;
 
-use Bakgat\Notos\Domain\Model\Descriptive\Description;
-use Bakgat\Notos\Domain\Model\Descriptive\Isbn;
+use Bakgat\Notos\Domain\Model\Identity\Isbn;
 use Bakgat\Notos\Domain\Model\Identity\Name;
-use Bakgat\Notos\Domain\Model\Resource\Events\BookWasAdded;
 use Bakgat\Notos\Domain\RecordEvents;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,7 +24,6 @@ use DateTime;
  */
 class Book extends Resource
 {
-    use RecordEvents;
 
     /**
      * @ORM\Column(type="text", length=65535, nullable=true)
@@ -76,7 +73,6 @@ class Book extends Resource
         $this->authors = new ArrayCollection;
         $this->publishers = new ArrayCollection;
 
-        $this->record(new BookWasAdded);
     }
 
     public static function register(Name $name, Isbn $isbn)
@@ -88,13 +84,13 @@ class Book extends Resource
      * @param Description description
      * @return void
      */
-    public function setDescription(Description $description)
+    public function setDescription($description)
     {
         $this->description = $description;
     }
 
     /**
-     * @return Description
+     * @return string
      */
     public function description()
     {

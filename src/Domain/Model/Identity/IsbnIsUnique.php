@@ -6,7 +6,7 @@
  * Time: 11:52
  */
 
-namespace Bakgat\Notos\Domain\Model\Descriptive;
+namespace Bakgat\Notos\Domain\Model\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Resource\BookRepository;

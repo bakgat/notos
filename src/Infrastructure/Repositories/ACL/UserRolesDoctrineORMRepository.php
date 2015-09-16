@@ -66,7 +66,7 @@ class UserRolesDoctrineORMRepository implements UserRolesRepository
      */
     public function add(UserRole $userRole)
     {
-        $this->em->persist($userRole);
+        $this->em->merge($userRole);
         $this->em->flush();
     }
 

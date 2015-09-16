@@ -6,15 +6,18 @@ namespace Bakgat\Notos;
 use Atrauzzi\LaravelDoctrine\DoctrineRegistry;
 use Bakgat\Notos\Domain\Model\ACL\RoleRepository;
 use Bakgat\Notos\Domain\Model\ACL\UserRolesRepository;
+use Bakgat\Notos\Domain\Model\Curricula\CourseRepository;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelationRepository;
 use Bakgat\Notos\Infrastructure\Repositories\ACL\RoleDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\ACL\UserRolesDoctrineORMRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CourseDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\OrganizationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\PartyRelationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\UserDoctrineORMRepository;
 use Bakgat\Notos\Providers\NotosUserProvider;
+use Bakgat\Notos\Seeds\Seed;
 use Bakgat\Notos\Tests\Infrastructure\Repositories\ACL\UserRolesDoctrineORMRepositoryTest;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Auth\AuthManager;
@@ -79,7 +82,8 @@ class NotosServiceProvider extends ServiceProvider
             [OrganizationRepository::class, OrganizationDoctrineORMRepository::class],
             [PartyRelationRepository::class, PartyRelationDoctrineORMRepository::class],
             [RoleRepository::class, RoleDoctrineORMRepository::class],
-            [UserRolesRepository::class, UserRolesDoctrineORMRepository::class]
+            [UserRolesRepository::class, UserRolesDoctrineORMRepository::class],
+            [CourseRepository::class, CourseDoctrineORMRepository::class]
         ];
         $this->simpleBindRepositories($repos);
         /*
@@ -100,6 +104,9 @@ class NotosServiceProvider extends ServiceProvider
          */
         /*$this->bindUserService();
         $this->bindOrganizationService();*/
+
+
+
     }
 
 
