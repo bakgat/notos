@@ -12,6 +12,15 @@ namespace Bakgat\Notos\Domain\Model\Curricula;
 interface CurriculumRepository
 {
     /**
+     * Get all objectives in a curriculum.
+     *
+     * @param Curriculum $curriculum
+     * @return mixed
+     */
+    public function objectivesOfCurriculum(Curriculum $curriculum);
+
+
+    /**
      * @param Curriculum $curriculum
      * @return mixed
      */
@@ -38,4 +47,12 @@ interface CurriculumRepository
      * @return mixed
      */
     public function addObjectiveLevel(Objective $objective, Group $group, $level);
+
+    /**
+     * Find the latest active curriculum by it's course name
+     *
+     * @param Course $course
+     * @return mixed
+     */
+    public function curriculumOfCourse(Course $course);
 }

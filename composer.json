@@ -10,7 +10,7 @@
   "name": "bakgat/notos",
   "autoload": {
     "psr-4": {
-      "Bakgat\\Notos\\": "src/"
+      "Bakgat\\Notos\\": "src"
     }
   },
   "require-dev": {
@@ -28,7 +28,8 @@
     "beberlei/assert": "^2.4",
     "atrauzzi/laravel-doctrine": "dev-master",
     "atrauzzi/laravel-serializer": "dev-master",
-    "doctrine/doctrine-fixtures-bundle": "^2.2@dev"
+    "doctrine/doctrine-fixtures-bundle": "^2.2@dev",
+    "bakgat/serializer": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

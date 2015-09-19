@@ -60,7 +60,7 @@ class Curriculum
      *
      * @return mixed
      */
-    public function getId()
+    public function id()
     {
         return $this->id;
     }

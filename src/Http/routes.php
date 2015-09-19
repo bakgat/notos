@@ -26,12 +26,6 @@ Route::group(['prefix' => '/auth', 'namespace' => 'Bakgat\Notos\Http\Controllers
     ]);
 });
 
-Route::get('/seed/all', function () {
-    $seed = new \Bakgat\Notos\Seeds\Seed();
-    $seed->SeedAll();
-});
-
-
 //Reset routes
 Route::get('password/reset', [
     'uses' => 'Auth\PasswordController@remind',
@@ -49,6 +43,18 @@ Route::post('password/reset', [
 Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
     Route::group(['prefix' => '/organization/{domain}/user', 'namespace' => 'Identity'], function () {
         include_once __DIR__ . '/Routes/UserRoutes.php';
+    });
+
+    Route::group(['prefix' => '/websites', 'namespace' => 'Location'], function () {
+        include_once __DIR__ . '/Routes/WebsitesRoutes.php';
+    });
+
+    Route::group(['prefix' => '/tags', 'namespace' => 'Descriptive'], function () {
+        include_once __DIR__ . '/Routes/TagsRoutes.php';
+    });
+
+    Route::group(['prefix' => '/curricula/{course}', 'namespace' => 'Curricula'], function () {
+        include_once __DIR__ . '/Routes/CurriculaRoutes.php';
     });
 
     Route::get('/user/profile', 'Identity\UserController@auth');

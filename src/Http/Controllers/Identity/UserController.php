@@ -43,7 +43,7 @@ class UserController extends Controller
     public function index($orgId)
     {
         //$domain = str_replace('_', '.', $domain);
-        return $this->json($this->userService->getUsers($orgId));
+        return $this->jsonResponse($this->userService->getUsers($orgId));
     }
 
     /**
@@ -58,7 +58,7 @@ class UserController extends Controller
 
         $result = $this->userService->getUserWithACL($userId, $orgId);
 
-        return $this->json($result);
+        return $this->jsonResponse($result);
     }
 
     /**
@@ -73,7 +73,7 @@ class UserController extends Controller
         $domain = str_replace('_', '.', $domain);
         $profile = $this->userService->getProfile(new Username($username), new DomainName($domain));
 
-        return $this->json($profile);
+        return $this->jsonResponse($profile);
     }
 
     /**
@@ -82,7 +82,7 @@ class UserController extends Controller
      * @return mixed
      */
     public function auth() {
-        return $this->json($this->userService->getAuth());
+        return $this->jsonResponse($this->userService->getAuth());
     }
 
     /**
@@ -97,7 +97,7 @@ class UserController extends Controller
         $data = array_merge(['id' => $userId], $data);
 
         $user = $this->userService->update($data);
-        return $this->json($user);
+        return $this->jsonResponse($user);
     }
 
     /**
@@ -112,7 +112,7 @@ class UserController extends Controller
         $data = $request->all();
 
         $user = $this->userService->add($data, $orgId);
-        return $this->json($user);
+        return $this->jsonResponse($user);
     }
 
     /**
@@ -143,7 +143,7 @@ class UserController extends Controller
         $user = $this->userService->userOfId($userId);
         if ($user) {
             $user = $this->userService->resetPassword($user, $password);
-            return $this->json($user);
+            return $this->jsonResponse($user);
         } else {
             abort(404, 'User with id [' . $user . '] not found.');
         }

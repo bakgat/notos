@@ -2,15 +2,14 @@
 
 namespace Bakgat\Notos\Http\Controllers;
 
+use Bakgat\Serializer\SerializerBuilder;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-
-
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Response;
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
-use JMS\Serializer\SerializerBuilder;
 
 abstract class Controller extends BaseController
 {
@@ -18,18 +17,33 @@ abstract class Controller extends BaseController
 
     /** @var  Serializer $serializer */
     private $serializer;
+    /** @var  SerializationContext $context */
+    private $context;
 
     public function __construct()
     {
-        $serializer = SerializerBuilder::create()
-            ->build();
-
-        $this->serializer = $serializer;
+        $this->serializer = SerializerBuilder::create();
+        $this->context = SerializationContext::create();
     }
 
-    public function json($data)
+    public function json($data, $groups = null)
     {
-        $serializedData = $this->serializer->serialize($data, 'json');
+        if ($groups) {
+            $this->context->setGroups($groups);
+        }
+        $serializedData = $this->serializer->serialize($data, 'json', $this->context);
+
         return $serializedData;
+    }
+
+    public function jsonResponse($data, $groups = null) {
+        $headers = ['Content-type'=> 'application/json; charset=utf-8'];
+
+        return Response::create(
+            $this->json($data, $groups),
+            200,
+            $headers,
+            JSON_UNESCAPED_UNICODE
+        );
     }
 }

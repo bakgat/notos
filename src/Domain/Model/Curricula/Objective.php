@@ -14,6 +14,8 @@ use Bakgat\Notos\Domain\Model\Location\Website;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation as JMS;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="curr_objectives", indexes={@ORM\Index(columns={"code"})})
@@ -24,43 +26,52 @@ class Objective
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"list","detail"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Structure", inversedBy="objectives")
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @JMS\Exclude
      */
     private $structure;
 
     /**
      * @ORM\Column(type="text", length=65535)
+     * @JMS\Groups({"list", "detail"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @JMS\Groups({"list","detail"})
      */
     private $code;
 
+
     /**
-     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Location\Website")
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Location\Website", mappedBy="objectives")
+     * @JMS\Exclude
      **/
     private $websites;
 
     /**
      * @ORM\ManyToOne(targetEntity="Objective", inversedBy="children")
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @JMS\Groups({"detail"})
      */
     private $parent;
 
     /**
      * @ORM\OneToMany(targetEntity="Objective", mappedBy="parent")
+     * @JMS\Exclude
      */
     private $children;
 
     /**
      * @ORM\OneToMany(targetEntity="ObjectiveControlLevel", mappedBy="objective")
+     * @JMS\Groups({"detail", "website_detail"})
      */
     private $levels;
 
@@ -70,6 +81,7 @@ class Objective
         $this->setCode($code);
         $this->setStructure($structure);
         $this->children = new ArrayCollection;
+        $this->websites = new ArrayCollection;
     }
 
     public static function register(Name $name, $code, Structure $structure)
@@ -217,6 +229,23 @@ class Objective
     public function removeChild(Objective $child)
     {
         $this->children->removeElement($child);
+    }
+
+    /**
+     * @param ArrayCollection levels
+     * @return void
+     */
+    public function setLevels(ArrayCollection $levels)
+    {
+        $this->levels = $levels;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function levels()
+    {
+        return $this->levels;
     }
 
     /**

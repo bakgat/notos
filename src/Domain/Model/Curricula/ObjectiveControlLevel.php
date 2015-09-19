@@ -12,7 +12,7 @@ namespace Bakgat\Notos\Domain\Model\Curricula;
 use Bakgat\Notos\Domain\Model\Identity\Group;
 use Doctrine\ORM\Mapping as ORM;
 
-
+use JMS\Serializer\Annotation as JMS;
 /**
  * @ORM\Entity
  * @ORM\Table(name="curr_objective_levels")
@@ -27,6 +27,7 @@ class ObjectiveControlLevel
     private $id;
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Group")
+     * @JMS\Groups({"list", "detail"})
      */
     private $group;
     /**
@@ -36,6 +37,7 @@ class ObjectiveControlLevel
     private $objective;
     /**
      * @ORM\Column(type="smallint")
+     * @JMS\Groups({"list","detail"})
      */
     private $level;
 

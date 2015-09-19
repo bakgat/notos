@@ -57,6 +57,7 @@ class Group extends Party
      *
      * @return Name
      * @JMS\VirtualProperty
+     * @JMS\Groups({"list","detail"})
      */
     public function name() {
         return $this->lastName();

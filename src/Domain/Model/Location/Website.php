@@ -9,9 +9,13 @@
 namespace Bakgat\Notos\Domain\Model\Location;
 
 use Bakgat\Notos\Domain\Model\Curricula\Objective;
+use Bakgat\Notos\Domain\Model\Descriptive\Tag;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+
+
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
@@ -22,35 +26,50 @@ class Website extends Location
     /**
      * @ORM\Column(type="string")
      * @var URL $url
+     * @JMS\Groups({"list", "detail"})
      */
     private $url;
     /**
      * @ORM\Column(type="text", length=65535, nullable=true)
+     * @JMS\Groups({"detail"})
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Resource\Image")
+     * @JMS\Groups({"list", "detail"})
      */
     private $image;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Curricula\Objective")
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Curricula\Objective", inversedBy="websites")
      * @ORM\JoinTable(name="website_objectives",
      *      joinColumns={@ORM\JoinColumn(name="website_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="objective_id", referencedColumnName="id")}
      *      )
      * @var ArrayCollection
+     * @JMS\Groups({"detail"})
      **/
     private $objectives;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Descriptive\Tag", mappedBy="websites")
+     * @JMS\Groups({"list", "detail"})
+     * @var ArrayCollection
+     */
+    private $tags;
 
     public function __construct(Name $name, URL $url)
     {
         parent::__construct($name);
         $this->setUrl($url);
+
     }
 
+    public static function register(Name $name, URL $url)
+    {
+        return new Website($name, $url);
+    }
 
     /**
      * @param URL url
@@ -107,7 +126,8 @@ class Website extends Location
      * Get all objectives that are associated with this website.
      * @return ArrayCollection
      */
-    public function getObjectives() {
+    public function getObjectives()
+    {
         return $this->objectives;
     }
 
@@ -129,5 +149,31 @@ class Website extends Location
     public function removeObjective(Objective $objective)
     {
         $this->objectives->removeElement($objective);
+    }
+
+    /**
+     * Get all tags that are associated with this website.
+     * @return ArrayCollection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param Tag $tag
+     */
+    public function addTag(Tag $tag)
+    {
+        $this->tags[] = $tag;
+        $tag->addWebsite($this);
+    }
+
+    /**
+     * @param Tag $tag
+     */
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
     }
 }

@@ -12,6 +12,8 @@ use Bakgat\Notos\Domain\Model\Identity\Name;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation as JMS;
+
 /**
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
@@ -25,10 +27,12 @@ class Location
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"list","detail"})
      */
     private $id;
     /**
      * @ORM\Column(type="string")
+     * @JMS\Groups({"list","detail"})
      */
     private $name;
     /**
@@ -40,8 +44,6 @@ class Location
     public function __construct(Name $name)
     {
         $this->setName($name);
-        $this->setCreatedAt(new DateTime);
-        $this->setUpdatedAt(new DateTime);
     }
 
     /**

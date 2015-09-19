@@ -7,9 +7,15 @@ use Atrauzzi\LaravelDoctrine\DoctrineRegistry;
 use Bakgat\Notos\Domain\Model\ACL\RoleRepository;
 use Bakgat\Notos\Domain\Model\ACL\UserRolesRepository;
 use Bakgat\Notos\Domain\Model\Curricula\CourseRepository;
+use Bakgat\Notos\Domain\Model\Curricula\CurriculumRepository;
+use Bakgat\Notos\Domain\Model\Descriptive\TagRepository;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
+use Bakgat\Notos\Domain\Model\Location\WebsitesRepository;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelationRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CurriculumDoctrineORMRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Descriptive\TagDoctrineORMRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Location\WebsitesDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\ACL\RoleDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\ACL\UserRolesDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CourseDoctrineORMRepository;
@@ -17,8 +23,6 @@ use Bakgat\Notos\Infrastructure\Repositories\OrganizationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\PartyRelationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\UserDoctrineORMRepository;
 use Bakgat\Notos\Providers\NotosUserProvider;
-use Bakgat\Notos\Seeds\Seed;
-use Bakgat\Notos\Tests\Infrastructure\Repositories\ACL\UserRolesDoctrineORMRepositoryTest;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Support\Facades\App;
@@ -76,35 +80,19 @@ class NotosServiceProvider extends ServiceProvider
          |
          */
 
-        /*$this->bindKindRepository();*/
+
         $repos = [
             [UserRepository::class, UserDoctrineORMRepository::class],
             [OrganizationRepository::class, OrganizationDoctrineORMRepository::class],
             [PartyRelationRepository::class, PartyRelationDoctrineORMRepository::class],
             [RoleRepository::class, RoleDoctrineORMRepository::class],
             [UserRolesRepository::class, UserRolesDoctrineORMRepository::class],
-            [CourseRepository::class, CourseDoctrineORMRepository::class]
+            [CourseRepository::class, CourseDoctrineORMRepository::class],
+            [WebsitesRepository::class, WebsitesDoctrineORMRepository::class],
+            [CurriculumRepository::class, CurriculumDoctrineORMRepository::class],
+            [TagRepository::class, TagDoctrineORMRepository::class],
         ];
         $this->simpleBindRepositories($repos);
-        /*
-        $this->bindUserRepository();
-        $this->bindOrganizationRepository();
-
-        $this->bindPartyRelationRepository();
-
-        $this->bindRoleRepository();
-        $this->bindUserRoleRepository();*/
-
-        /*
-         |----------------------------------------------------------------------------------------------
-         | Services
-         |----------------------------------------------------------------------------------------------
-         |
-         |
-         */
-        /*$this->bindUserService();
-        $this->bindOrganizationService();*/
-
 
 
     }
@@ -124,78 +112,6 @@ class NotosServiceProvider extends ServiceProvider
         }
 
     }
-
-    /*  private function bindKindRepository()
-      {
-          $this->app->bind(KindRepository::class, function ($app) {
-              return new KindCacheRepository(
-                  $app->make(EntityManager::class)
-              );
-          });
-      }
-
-    private function bindUserRepository()
-    {
-        $this->app->bind(UserRepository::class, function ($app) {
-            return new UserDoctrineORMRepository(
-                $app->make(EntityManager::class)
-            );
-        });
-    }
-
-    private function bindOrganizationRepository()
-    {
-        $this->app->bind(OrganizationRepository::class, function ($app) {
-            return new OrganizationDoctrineORMRepository(
-                $app->make(EntityManager::class)
-            );
-        });
-    }
-
-    private function bindPartyRelationRepository()
-    {
-        $this->app->bind(PartyRelationRepository::class, function ($app) {
-            return new PartyRelationDoctrineORMRepository(
-                $app->make(EntityManager::class)
-            );
-        });
-    }
-
-    private function bindRoleRepository()
-    {
-        $this->app->bind(RoleRepository::class, function ($app) {
-            return new RoleDoctrineORMRepository(
-                $app->make(EntityManager::class)
-            );
-        });
-    }
-
-    /*
-          private function bindUserService()
-          {
-              $this->app->bind(UserSerivce::class, function ($app) {
-                  return new UserService(
-                      $app->make(UserRepository::class),
-                      $app->make(OrganizationRepository::class),
-                      $app->make(KindRepository::class),
-                      $app->make(PartyRelationRepository::class),
-                      $app->make(Hasher::class)
-                  );
-              });
-          }
-
-          private function bindOrganizationService()
-          {
-              $this->app->bind(OrganizationService::class, function ($app) {
-                  return new OrganizationService(
-                      $app->make(OrganizationRepository::class),
-                      $app->make(KindRepository::class),
-                      $app->make(PartyRelationRepository::class)
-                  );
-              });
-          }
-*/
-
 
     private function extendAuthManager()
     {

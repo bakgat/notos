@@ -10,6 +10,7 @@ namespace Bakgat\Notos\Seeds;
 
 
 use Bakgat\Notos\Seeds\Fixtures\CourseFixtures;
+use Bakgat\Notos\Seeds\Fixtures\WebsiteFixtures;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -32,11 +33,25 @@ class Seed
 
         $this->executor = new ORMExecutor($this->em, new ORMPurger);
         $this->loader = new Loader;
-
-        $this->loader->addFixture(new CourseFixtures);
     }
 
     public function SeedAll() {
+        $this->loader->addFixture(new CourseFixtures);
+        $this->loader->addFixture(new WebsiteFixtures);
         $this->executor->execute($this->loader->getFixtures());
     }
+
+    public function SeedCurricula() {
+        $this->loader->addFixture(new CourseFixtures);
+        $this->executor->execute($this->loader->getFixtures());
+    }
+
+    /**
+     *
+     */
+    public function SeedSites() {
+        $this->loader->addFixture(new WebsiteFixtures);
+        $this->executor->execute($this->loader->getFixtures());
+    }
+
 }

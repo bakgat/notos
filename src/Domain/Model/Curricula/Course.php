@@ -51,9 +51,13 @@ class Course
         return new Course($name);
     }
 
+    public function id()
+    {
+        return $this->id;
+    }
+
     /**
-     * @param Name name
-     * @return void
+     * @param Name $name
      */
     public function setName(Name $name)
     {

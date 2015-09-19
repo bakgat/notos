@@ -12,9 +12,8 @@ use Atrauzzi\LaravelDoctrine\Util\Time;
 use Bakgat\Notos\Domain\Model\Kind;
 use Bakgat\Notos\Domain\Model\SoftDelete;
 use Bakgat\Notos\Domain\Model\Timestamp;
-use DateTime;
+use \DateTime;
 use DoctrineExtensions\Query\Mysql\TimestampAdd;
-use Gedmo\Mapping\Annotation\Timestampable;
 use JMS\Serializer\Annotation as JMS;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -37,6 +36,7 @@ class Party
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"list","detail"})
      */
     protected $id;
     /**
@@ -45,13 +45,14 @@ class Party
     protected $firstName;
     /**
      * @ORM\Column(type="string")
+     * @JMS\Groups({"list","detail"})
      */
     protected $lastName;
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Kind")
+     *
      */
     protected $kind;
-
 
     /**
      * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\Relations\PartyRelation", mappedBy="reference")
