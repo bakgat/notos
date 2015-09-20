@@ -71,7 +71,7 @@ class Objective
 
     /**
      * @ORM\OneToMany(targetEntity="ObjectiveControlLevel", mappedBy="objective")
-     * @JMS\Groups({"detail", "website_detail"})
+     * @JMS\Groups({"detail", "website_detail", "full"})
      */
     private $levels;
 

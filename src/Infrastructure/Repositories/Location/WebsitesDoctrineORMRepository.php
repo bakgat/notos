@@ -53,7 +53,11 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
             ->from($this->wsClass, 'w')
             ->leftJoin('w.objectives', 'wo')
             ->leftJoin('w.tags', 't')
-            ->leftJoin('wo.levels','l');
+            ->leftJoin('wo.levels', 'l')
+            ->where(
+                $qb->expr()->gt('l.level', '?1')
+            )
+            ->setParameter(1, 0);
         return $qb->getQuery()->getResult();
     }
 
@@ -92,8 +96,7 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
         $qb->select('w, wo, l')
             ->from($this->wsClass, 'w')
             ->join('w.objectives', 'wo')
-            ->leftJoin('wo.levels','l')
-
+            ->leftJoin('wo.levels', 'l')
             ->where(
                 $qb->expr()->eq('w.id', '?1')
             )
@@ -113,7 +116,7 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
         $qb->select('w, wo, l, t')
             ->from($this->wsClass, 'w')
             ->join('w.objectives', 'wo')
-            ->leftJoin('wo.levels','l')
+            ->leftJoin('wo.levels', 'l')
             ->leftJoin('w.tags', 't')
             ->where(
                 $qb->expr()->eq('w.url', '?1')

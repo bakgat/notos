@@ -13,6 +13,7 @@ use Bakgat\Notos\Domain\Model\Identity\Group;
 use Doctrine\ORM\Mapping as ORM;
 
 use JMS\Serializer\Annotation as JMS;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="curr_objective_levels")
@@ -27,7 +28,7 @@ class ObjectiveControlLevel
     private $id;
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Group")
-     * @JMS\Groups({"list", "detail"})
+     * @JMS\Groups({"list", "detail", "full"})
      */
     private $group;
     /**
@@ -37,7 +38,7 @@ class ObjectiveControlLevel
     private $objective;
     /**
      * @ORM\Column(type="smallint")
-     * @JMS\Groups({"list","detail"})
+     * @JMS\Groups({"list","detail", "full"})
      */
     private $level;
 
@@ -48,8 +49,9 @@ class ObjectiveControlLevel
         $this->setLevel($level);
     }
 
-    public static function register(Group $group, Objective $objective, $level) {
-        $level =  new ObjectiveControlLevel($group, $objective, $level);
+    public static function register(Group $group, Objective $objective, $level)
+    {
+        $level = new ObjectiveControlLevel($group, $objective, $level);
         return $level;
     }
 
