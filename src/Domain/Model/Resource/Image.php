@@ -83,16 +83,16 @@ class Image extends Resource
     }
 
     /**
-     * @param Description description
+     * @param description
      * @return void
      */
-    public function setDescription(Description $description)
+    public function setDescription($description)
     {
         $this->description = $description;
     }
 
     /**
-     * @return Description
+     * @return string|null
      */
     public function description()
     {
