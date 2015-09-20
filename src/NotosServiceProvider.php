@@ -57,7 +57,7 @@ class NotosServiceProvider extends ServiceProvider
         // Bootstrap the JMS custom annotations for Object to Json mapping
         \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
             'JMS\Serializer\Annotation',
-            __DIR__ . '/../vendor/jms/serializer/src'
+            app_path() . '/../vendor/jms/serializer/src'
         );
 
         include __DIR__ . '/Http/routes.php';
