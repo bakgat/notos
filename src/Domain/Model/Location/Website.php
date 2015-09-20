@@ -11,6 +11,7 @@ namespace Bakgat\Notos\Domain\Model\Location;
 use Bakgat\Notos\Domain\Model\Curricula\Objective;
 use Bakgat\Notos\Domain\Model\Descriptive\Tag;
 use Bakgat\Notos\Domain\Model\Identity\Name;
+use Bakgat\Notos\Domain\Model\Resource\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
