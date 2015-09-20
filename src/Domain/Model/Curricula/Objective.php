@@ -59,7 +59,7 @@ class Objective
     /**
      * @ORM\ManyToOne(targetEntity="Objective", inversedBy="children")
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @JMS\Groups({"detail"})
+     * @JMS\Groups({"detail", "full"})
      */
     private $parent;
 
