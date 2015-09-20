@@ -46,9 +46,11 @@ class Organization extends Party
         parent::__construct($name);
     }
 
-    public static function register(Name $name)
+    public static function register(Name $name, DomainName $domainName)
     {
-        return new Organization($name);
+        $org = new Organization($name);
+        $org->setDomainName($domainName);
+        return $org;
     }
 
 
@@ -76,7 +78,8 @@ class Organization extends Party
      * @param Name $name
      * @return $this
      */
-    public function setName(Name $name) {
+    public function setName(Name $name)
+    {
         $this->setLastName($name);
         return $this;
     }
@@ -87,7 +90,8 @@ class Organization extends Party
      * @return Name
      * @JMS\VirtualProperty
      */
-    public function name() {
+    public function name()
+    {
         return $this->lastName();
     }
 
@@ -108,6 +112,7 @@ class Organization extends Party
     {
         return $this->avatar;
     }
+
 
 
 }

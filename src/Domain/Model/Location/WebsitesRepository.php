@@ -48,4 +48,11 @@ interface WebsitesRepository
      * @return mixed
      */
     public function websiteOfURL(URL $URL);
+
+    /**
+     * Get all websites, fully loaded with all relations
+     *
+     * @return mixed
+     */
+    public function full();
 }

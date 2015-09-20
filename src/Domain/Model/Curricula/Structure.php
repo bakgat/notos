@@ -181,6 +181,7 @@ class Structure
     public function addObjective(Objective $objective)
     {
         $this->objectives[] = $objective;
+        $objective->setStructure($this);
     }
 
     /**

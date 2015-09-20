@@ -32,11 +32,7 @@ class Tag
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Location\Website", inversedBy="tags")
-     * @ORM\JoinTable(name="website_tags",
-     *      joinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="website_id", referencedColumnName="id")}
-     *      ))
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Location\Website", mappedBy="tags")
      */
     private $websites;
 

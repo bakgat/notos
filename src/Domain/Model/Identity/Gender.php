@@ -21,7 +21,7 @@ class Gender implements ValueObject
 
     public function __construct($value)
     {
-        Assertion::inArray($value, ['M', 'F', 'O', 'Male', 'Female', 'Other']);
+        Assertion::inArray($value, ['m', 'f', 'male', 'female', 'M', 'F', 'O', 'Male', 'Female', 'Other']);
 
         $this->value = $this->normalize($value);
     }
@@ -50,13 +50,15 @@ class Gender implements ValueObject
 
     private function normalize($value)
     {
-        if ($value === 'Male') {
+        $value = strtoupper($value);
+
+        if ($value === 'MALE') {
             return 'M';
         }
-        if ($value === 'Female') {
+        if ($value === 'FEMALE') {
             return 'F';
         }
-        if ($value === 'Other') {
+        if ($value === 'OTHER') {
             return 'O';
         }
         return $value;

@@ -14,6 +14,7 @@ use Bakgat\Notos\Domain\Model\Curricula\Curriculum;
 use Bakgat\Notos\Domain\Model\Curricula\CurriculumRepository;
 use Bakgat\Notos\Domain\Model\Curricula\Group;
 use Bakgat\Notos\Domain\Model\Curricula\Objective;
+use Bakgat\Notos\Domain\Model\Curricula\ObjectiveControlLevel;
 use Bakgat\Notos\Domain\Model\Curricula\Structure;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Cache;
@@ -27,11 +28,14 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
     private $class;
     /** @var string $currClass */
     private $currClass;
+    /** @var string $strucClass */
+    private $strucClass;
 
     public function __construct(EntityManager $em) {
         $this->em = $em;
         $this->class = 'Bakgat\Notos\Domain\Model\Curricula\Objective';
         $this->currClass = 'Bakgat\Notos\Domain\Model\Curricula\Curriculum';
+        $this->strucClass = 'Bakgat\Notos\Domain\Model\Curricula\Structure';
     }
 
     /**
@@ -40,7 +44,8 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
      */
     public function add(Curriculum $curriculum)
     {
-        // TODO: Implement add() method.
+        $this->em->persist($curriculum);
+        $this->em->flush();
     }
 
     /**
@@ -50,7 +55,13 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
      */
     public function addStructure(Structure $structure, $curriculumId)
     {
-        // TODO: Implement addStructure() method.
+        /** @var Curriculum $curriculum */
+        $curriculum = $this->em->getRepository($this->currClass)
+            ->find($curriculumId);
+
+        $curriculum->addStructure($structure);
+        $this->em->persist($curriculum);
+        $this->em->flush();
     }
 
     /**
@@ -60,7 +71,13 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
      */
     public function addObjective(Objective $objective, $structureId)
     {
-        // TODO: Implement addObjective() method.
+        /** @var Structure $structure */
+        $structure = $this->em->getRepository($this->strucClass)
+            ->find($structureId);
+
+        $structure->addObjective($objective);
+        $this->em->persist($structure);
+        $this->em->flush();
     }
 
     /**
@@ -71,7 +88,9 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
      */
     public function addObjectiveLevel(Objective $objective, Group $group, $level)
     {
-        // TODO: Implement addObjectiveLevel() method.
+        $obj_level = ObjectiveControlLevel::register($group, $objective, $level);
+        $this->em->persist($obj_level);
+        $this->em->flush();
     }
 
     /**
@@ -119,6 +138,25 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
                 $qb->expr()->eq('c.course', '?1')
             )
             ->setParameter(1, $course->id());
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
+    /**
+     * Returns an objective that as a given code.
+     *
+     * @param $code
+     * @return mixed
+     */
+    public function objectiveOfCode($code)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('o')
+            ->from($this->class, 'o')
+            ->where(
+                $qb->expr()->eq('UPPER(o.code)', '?1')
+            )
+            ->setParameter(1, strtoupper($code));
 
         return $qb->getQuery()->getSingleResult();
     }

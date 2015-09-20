@@ -29,6 +29,9 @@ class WebsitesController extends Controller
     {
         return $this->jsonResponse($this->websitesService->all(), ['list']);
     }
+    public function fullIndex() {
+        return $this->jsonResponse($this->websitesService->full(), ['full','list']);
+    }
 
     public function edit($id)
     {

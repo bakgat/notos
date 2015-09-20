@@ -27,18 +27,18 @@ class Website extends Location
     /**
      * @ORM\Column(type="string")
      * @var URL $url
-     * @JMS\Groups({"list", "detail"})
+     * @JMS\Groups({"list", "detail","full"})
      */
     private $url;
     /**
      * @ORM\Column(type="text", length=65535, nullable=true)
-     * @JMS\Groups({"detail"})
+     * @JMS\Groups({"detail","full"})
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Resource\Image")
-     * @JMS\Groups({"list", "detail"})
+     * @JMS\Groups({"list", "detail","full"})
      */
     private $image;
 
@@ -49,13 +49,17 @@ class Website extends Location
      *      inverseJoinColumns={@ORM\JoinColumn(name="objective_id", referencedColumnName="id")}
      *      )
      * @var ArrayCollection
-     * @JMS\Groups({"detail"})
+     * @JMS\Groups({"detail","full"})
      **/
     private $objectives;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Descriptive\Tag", mappedBy="websites")
-     * @JMS\Groups({"list", "detail"})
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Descriptive\Tag", inversedBy="websites")
+     * @ORM\JoinTable(name="website_tags",
+     *      joinColumns={@ORM\JoinColumn(name="website_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
+     *      ))
+     * @JMS\Groups({"list", "detail","full"})
      * @var ArrayCollection
      */
     private $tags;
@@ -140,6 +144,7 @@ class Website extends Location
     public function addObjective(Objective $objective)
     {
         $this->objectives[] = $objective;
+        $objective->addWebsite($this);
     }
 
     /**

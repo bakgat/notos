@@ -292,6 +292,10 @@ class User extends Party implements Authenticatable, CanResetPassword
         $this->organizations = $organizations;
     }
 
+    public function addToOrganization(Organization $organization) {
+        $this->organizations[] = $organization;
+    }
+
     /**
      * @return mixed
      * @JMS\VirtualProperty

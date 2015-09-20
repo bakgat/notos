@@ -27,12 +27,12 @@ class Location
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"list","detail"})
+     * @JMS\Groups({"list","detail","full"})
      */
     private $id;
     /**
      * @ORM\Column(type="string")
-     * @JMS\Groups({"list","detail"})
+     * @JMS\Groups({"list","detail","full"})
      */
     private $name;
     /**

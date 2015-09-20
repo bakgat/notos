@@ -7,6 +7,5 @@
  * Time: 11:26
  */
 Route::get('/', 'WebsitesController@index');
+Route::get('/full', 'WebsitesController@fullIndex');
 Route::get('/{id}', 'WebsitesController@edit');
-
-

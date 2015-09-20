@@ -34,4 +34,9 @@ class WebsitesService
     {
         return $this->websitesRepository->websiteofId($id);
     }
+
+    public function full()
+    {
+        return $this->websitesRepository->full();
+    }
 }

@@ -134,6 +134,7 @@ class Curriculum
     public function addStructure(Structure $structure)
     {
         $this->structures[] = $structure;
+        $structure->setCurriculum($this);
     }
 
     /**

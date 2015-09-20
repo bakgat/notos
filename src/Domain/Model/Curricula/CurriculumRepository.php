@@ -55,4 +55,12 @@ interface CurriculumRepository
      * @return mixed
      */
     public function curriculumOfCourse(Course $course);
+
+    /**
+     * Returns an objective that as a given code.
+     *
+     * @param $code
+     * @return mixed
+     */
+    public function objectiveOfCode($code);
 }

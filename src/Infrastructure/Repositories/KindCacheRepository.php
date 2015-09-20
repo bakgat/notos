@@ -42,7 +42,6 @@ class KindCacheRepository implements KindRepository
         }
 
         //find or create in store
-
         $kind = $this->em->getRepository($this->class)
             ->findOneBy(['name' => $uppername]);
         if (!$kind) {

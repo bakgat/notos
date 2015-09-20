@@ -42,6 +42,22 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
     }
 
     /**
+     * Get all websites, fully loaded with all relations
+     *
+     * @return mixed
+     */
+    public function full()
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('w, wo, l, t')
+            ->from($this->wsClass, 'w')
+            ->leftJoin('w.objectives', 'wo')
+            ->leftJoin('w.tags', 't')
+            ->leftJoin('wo.levels','l');
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Adds a new website
      *
      * @param Website $website
@@ -105,4 +121,6 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
             ->setParameter(1, $URL->toString());
         return $qb->getQuery()->getSingleResult();
     }
+
+
 }
