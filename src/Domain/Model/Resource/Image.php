@@ -10,6 +10,7 @@ namespace Bakgat\Notos\Domain\Model\Resource;
 
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\RecordEvents;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
