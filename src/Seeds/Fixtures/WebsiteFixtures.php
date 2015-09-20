@@ -9,12 +9,14 @@
 namespace Bakgat\Notos\Seeds\Fixtures;
 
 
+use Bakgat\Notos\Domain\Model\Curricula\CurriculumRepository;
 use Bakgat\Notos\Domain\Model\Descriptive\Tag;
 use Bakgat\Notos\Domain\Model\Descriptive\TagRepository;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Location\URL;
 use Bakgat\Notos\Domain\Model\Location\Website;
 use Bakgat\Notos\Domain\Model\Location\WebsitesRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CurriculumDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Descriptive\TagDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Location\WebsitesDoctrineORMRepository;
 use Doctrine\Common\DataFixtures\FixtureInterface;
@@ -28,6 +30,8 @@ class WebsiteFixtures implements FixtureInterface
     private $tagRepo;
     /** @var WebsitesRepository $websiteRepo */
     private $websiteRepo;
+    /** @var CurriculumRepository $currRepo */
+    private $currRepo;
 
     private $tags = ['optellen', 'aftrekken', 'tafels', 'wegen', 'Sinterklaas'];
 
@@ -41,6 +45,7 @@ class WebsiteFixtures implements FixtureInterface
         $this->manager = $manager;
         $this->tagRepo = new TagDoctrineORMRepository($manager);
         $this->websiteRepo = new WebsitesDoctrineORMRepository($manager);
+        $this->currRepo = new CurriculumDoctrineORMRepository($manager);
 
         $this->createTags();
         $this->createWebsites();
@@ -57,19 +62,22 @@ class WebsiteFixtures implements FixtureInterface
     public function createWebsites()
     {
         $websites = [
-            'Rekenmeester' => 'www.rekenmeester.be',
-            'De Klimtoren' => 'www.klimtoren.be',
-            'Google' => 'www.google.be',
+            ['n'=>'Rekenmeeseter', 'u'=>'www.rekenmeester.be', 'o'=>['WIS G1','WIS G1.a'], 't'=>['optellen', 'aftrekken']],
+            ['n'=>'Google', 'u'=>'www.google.be', 'o'=>['WIS G7','WIS G9','WIS G9.e'], 't'=>['optellen', 'Sinterklaas']],
         ];
 
-        foreach ($websites as $name => $url) {
-            $website = Website::register(new Name($name), new URL($url));
-            $tname = $this->tags[rand(0, 4)];
-            $tag = $this->tagRepo->tagOfName(new Name($tname));
-            $website->addTag($tag);
+        foreach ($websites as $awebsite) {
+            $website = Website::register(new Name($awebsite['n']), new URL($awebsite['u']));
 
+            foreach ($awebsite['t'] as $atag) {
+                $tag = $this->tagRepo->tagOfName(new Name($atag));
+                $website->addTag($tag);
+            }
+            foreach ($awebsite['o'] as $aobjective) {
+                $objective = $this->currRepo->objectiveOfCode($aobjective);
+                $website->addObjective($objective);
+            }
             $this->manager->persist($website);
-
 
             $this->websiteRepo->add($website);
         }

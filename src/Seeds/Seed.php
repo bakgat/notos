@@ -10,6 +10,7 @@ namespace Bakgat\Notos\Seeds;
 
 
 use Bakgat\Notos\Seeds\Fixtures\CourseFixtures;
+use Bakgat\Notos\Seeds\Fixtures\StartupUserFixtures;
 use Bakgat\Notos\Seeds\Fixtures\WebsiteFixtures;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
@@ -38,6 +39,7 @@ class Seed
     public function SeedAll() {
         $this->loader->addFixture(new CourseFixtures);
         $this->loader->addFixture(new WebsiteFixtures);
+        $this->loader->addFixture(new StartupUserFixtures);
         $this->executor->execute($this->loader->getFixtures());
     }
 
@@ -46,11 +48,14 @@ class Seed
         $this->executor->execute($this->loader->getFixtures());
     }
 
-    /**
-     *
-     */
+
     public function SeedSites() {
         $this->loader->addFixture(new WebsiteFixtures);
+        $this->executor->execute($this->loader->getFixtures());
+    }
+
+    public function SeedStartup() {
+        $this->loader->addFixture(new StartupUserFixtures);
         $this->executor->execute($this->loader->getFixtures());
     }
 
