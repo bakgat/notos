@@ -53,11 +53,7 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
             ->from($this->wsClass, 'w')
             ->leftJoin('w.objectives', 'wo')
             ->leftJoin('w.tags', 't')
-            ->leftJoin('wo.levels', 'l')
-            ->where(
-                $qb->expr()->gt('l.level', '?1')
-            )
-            ->setParameter(1, 0);
+            ->leftJoin('wo.levels', 'l');
         return $qb->getQuery()->getResult();
     }
 
