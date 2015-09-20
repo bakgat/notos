@@ -9,12 +9,16 @@ use Bakgat\Notos\Domain\Model\ACL\UserRolesRepository;
 use Bakgat\Notos\Domain\Model\Curricula\CourseRepository;
 use Bakgat\Notos\Domain\Model\Curricula\CurriculumRepository;
 use Bakgat\Notos\Domain\Model\Descriptive\TagRepository;
+use Bakgat\Notos\Domain\Model\Identity\GroupRepository;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
+use Bakgat\Notos\Domain\Model\KindRepository;
 use Bakgat\Notos\Domain\Model\Location\WebsitesRepository;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelationRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CurriculumDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Descriptive\TagDoctrineORMRepository;
+use Bakgat\Notos\Infrastructure\Repositories\GroupDoctrineORMRepository;
+use Bakgat\Notos\Infrastructure\Repositories\KindCacheRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Location\WebsitesDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\ACL\RoleDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\ACL\UserRolesDoctrineORMRepository;
@@ -91,6 +95,8 @@ class NotosServiceProvider extends ServiceProvider
             [WebsitesRepository::class, WebsitesDoctrineORMRepository::class],
             [CurriculumRepository::class, CurriculumDoctrineORMRepository::class],
             [TagRepository::class, TagDoctrineORMRepository::class],
+            [KindRepository::class, KindCacheRepository::class],
+            [GroupRepository::class, GroupDoctrineORMRepository::class],
         ];
         $this->simpleBindRepositories($repos);
 

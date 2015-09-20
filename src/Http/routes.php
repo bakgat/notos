@@ -44,6 +44,9 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
     Route::group(['prefix' => '/organization/{domain}/user', 'namespace' => 'Identity'], function () {
         include_once __DIR__ . '/Routes/UserRoutes.php';
     });
+    Route::group(['prefix' => '/group', 'namespace' => 'Identity'], function () {
+        include_once __DIR__ . '/Routes/GroupRoutes.php';
+    });
 
     Route::group(['prefix' => '/websites', 'namespace' => 'Location'], function () {
         include_once __DIR__ . '/Routes/WebsitesRoutes.php';

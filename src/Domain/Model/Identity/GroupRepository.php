@@ -9,8 +9,17 @@
 namespace Bakgat\Notos\Domain\Model\Identity;
 
 
+use Bakgat\Notos\Domain\Model\Kind;
+
 interface GroupRepository
 {
+    /**
+     * Get all groups of a kind
+     *
+     * @param Kind $kind
+     * @return mixed
+     */
+    public function groupsOfKind(Kind $kind);
     /**
      * @param $name
      * @return Group

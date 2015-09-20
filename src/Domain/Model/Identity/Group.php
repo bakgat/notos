@@ -24,6 +24,7 @@ class Group extends Party
 {
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @JMS\Groups({"list"})
      */
     private $description;
     /**

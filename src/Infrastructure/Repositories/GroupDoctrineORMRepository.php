@@ -11,6 +11,7 @@ namespace Bakgat\Notos\Infrastructure\Repositories;
 
 use Bakgat\Notos\Domain\Model\Identity\Group;
 use Bakgat\Notos\Domain\Model\Identity\GroupRepository;
+use Bakgat\Notos\Domain\Model\Kind;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Cache;
 
@@ -20,6 +21,7 @@ class GroupDoctrineORMRepository implements GroupRepository
     private $em;
     /** @var string $groupClass */
     private $groupClass;
+
 
     public function __construct(EntityManager $em)
     {
@@ -43,5 +45,19 @@ class GroupDoctrineORMRepository implements GroupRepository
         Cache::forever($cache_key, $group);
 
         return $group;
+    }
+
+    /**
+     * Get all groups of a kind
+     *
+     * @param Kind $kind
+     * @return mixed
+     */
+    public function groupsOfKind(Kind $kind)
+    {
+        $groups = $this->em->getRepository($this->groupClass)
+            ->findBy(['kind'=>$kind]);
+
+        return $groups;
     }
 }
