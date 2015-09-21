@@ -74,15 +74,20 @@ class WebsitesService
 
         //Sync tags
         $website->clearTags();
-        foreach ($data['tags'] as $tag) {
-            $t = $this->tagRepository->tagOfNameOrCreate(new Name($tag['name']));
-            $website->addTag($t);
+        if (isset($data['tags'])) {
+            foreach ($data['tags'] as $tag) {
+                $t = $this->tagRepository->tagOfNameOrCreate(new Name($tag['name']));
+                $website->addTag($t);
+            }
         }
 
+
         $website->clearObjectives();
-        foreach ($data['objectives'] as $objective) {
-            $o = $this->curriculumRepository->objectiveOfId($objective['id']);
-            $website->addObjective($o);
+        if (isset($data['objectives'])) {
+            foreach ($data['objectives'] as $objective) {
+                $o = $this->curriculumRepository->objectiveOfId($objective['id']);
+                $website->addObjective($o);
+            }
         }
 
         $this->websitesRepository->add($website);
@@ -104,17 +109,20 @@ class WebsitesService
 
             //Sync tags
             $website->clearTags();
-            foreach ($data['tags'] as $tag) {
-                $t = $this->tagRepository->tagOfNameOrCreate(new Name($tag['name']));
-                $website->addTag($t);
+            if (isset($data['tags'])) {
+                foreach ($data['tags'] as $tag) {
+                    $t = $this->tagRepository->tagOfNameOrCreate(new Name($tag['name']));
+                    $website->addTag($t);
+                }
             }
 
             $website->clearObjectives();
-            foreach ($data['objectives'] as $objective) {
-                $o = $this->curriculumRepository->objectiveOfId($objective['id']);
-                $website->addObjective($o);
+            if (isset($data['objectives'])) {
+                foreach ($data['objectives'] as $objective) {
+                    $o = $this->curriculumRepository->objectiveOfId($objective['id']);
+                    $website->addObjective($o);
+                }
             }
-
             $this->websitesRepository->update($website);
         }
     }
