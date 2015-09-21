@@ -55,4 +55,8 @@ interface WebsitesRepository
      * @return mixed
      */
     public function full();
+
+    public function clearObjectives(Website $website);
+
+    public function clearTags(Website $website);
 }

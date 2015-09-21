@@ -66,11 +66,20 @@ class NotosServiceProvider extends ServiceProvider
 
         include __DIR__ . '/Http/routes.php';
 
+        /* ***************************************************
+         * Atrauzzi LaravelDoctrine
+         * **************************************************/
         $this->app->register(\Atrauzzi\LaravelDoctrine\ServiceProvider::class);
-        //$this->app->register(\Atrauzzi\LaravelSerializer\ServiceProvider::class);
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('EntityManager', \Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::class);
+
+        /* ***************************************************
+         * Intervention Image
+         * **************************************************/
+        $this->app->register(\Intervention\Image\ImageServiceProvider::class);
+
+        $loader->alias('Image', \Intervention\Image\Facades\Image::class);
 
         $this->mergeConfigFrom(
             __DIR__ . '/../config/doctrine.php', 'doctrine'

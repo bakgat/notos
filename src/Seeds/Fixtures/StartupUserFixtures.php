@@ -52,6 +52,9 @@ class StartupUserFixtures implements FixtureInterface
     /** @var Role $book_moderator */
     private $book_moderator;
 
+    /** @var Role $user_role */
+    private $user_role;
+
     /**
      * Load data fixtures with the passed EntityManager
      *
@@ -72,12 +75,14 @@ class StartupUserFixtures implements FixtureInterface
     public function createRoles()
     {
         $this->sa = Role::register('sa');
+        $this->user_role = Role::register('user');
         $this->admin = Role::register('admin');
         $this->user_admin = Role::register('user_admin');
         $this->website_moderator = Role::register('website_moderator');
         $this->book_moderator = Role::register('book_moderator');
 
         $this->manager->persist($this->sa);
+        $this->manager->persist($this->user_role);
         $this->manager->persist($this->admin);
         $this->manager->persist($this->user_admin);
         $this->manager->persist($this->website_moderator);
@@ -115,7 +120,7 @@ class StartupUserFixtures implements FixtureInterface
             ['fn' => 'Annemie', 'ln' => 'Demaré', 'un' => 'annemie.demare@tboompje.be', 'pwd' => 'password', 'realms' => [$this->boompje], 'roles' => [$this->website_moderator]],
         ];
 
-        $user_kind = $this->kindRepo->get('user');
+
         $emp = $this->kindRepo->get('employee');
 
         foreach ($users as $arr_user) {
@@ -129,18 +134,19 @@ class StartupUserFixtures implements FixtureInterface
             $user = User::register($firstName, $lastName, $userName, $pwd, $reset_email, $male);
             $this->manager->persist($user);
 
+
             //SET RELATION
-            foreach ($arr_user['realms'] as $realm) {
-                $rel = PartyRelation::register($user, $realm, $user_kind);
-                $this->manager->merge($rel);
-            }
             $rel = PartyRelation::register($user, $arr_user['realms'][0], $emp);
             $this->manager->merge($rel);
 
-
+            //Set Roles
             foreach ($arr_user['roles'] as $role) {
-                //Set Roles
                 $ur = UserRole::register($user, $role, $arr_user['realms'][0]);
+                $this->manager->persist($ur);
+            }
+
+            foreach ($arr_user['realms'] as $realm) {
+                $ur = UserRole::register($user, $this->user_role, $realm);
                 $this->manager->persist($ur);
             }
         }

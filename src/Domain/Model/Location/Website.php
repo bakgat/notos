@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 
+use Illuminate\Support\Arr;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -157,6 +158,11 @@ class Website extends Location
         $this->objectives->removeElement($objective);
     }
 
+    public function clearObjectives()
+    {
+        $this->objectives = new ArrayCollection;
+    }
+
     /**
      * Get all tags that are associated with this website.
      * @return ArrayCollection
@@ -182,4 +188,10 @@ class Website extends Location
     {
         $this->tags->removeElement($tag);
     }
+
+    public function clearTags() {
+        $this->tags = new ArrayCollection;
+    }
+
+
 }

@@ -12,6 +12,7 @@ namespace Bakgat\Notos\Http\Controllers\Location;
 use Bakgat\Notos\Domain\Services\Location\WebsitesService;
 use Bakgat\Notos\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class WebsitesController extends Controller
@@ -36,5 +37,14 @@ class WebsitesController extends Controller
     public function edit($id)
     {
         return $this->jsonResponse($this->websitesService->websiteOfId($id), ['detail']);
+    }
+
+    public function store(Request $request) {
+        $data = $request->all();
+        $website = $this->websitesService->add($data);
+    }
+    public function update($id, Request $request){
+        $data = $request->all();
+        $this->websitesService->update($id, $data);
     }
 }

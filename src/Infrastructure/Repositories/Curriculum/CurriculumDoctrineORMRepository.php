@@ -25,7 +25,7 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
     /** @var EntityManager $em */
     private $em;
     /** @var string $class */
-    private $class;
+    private $objectiveClass;
     /** @var string $currClass */
     private $currClass;
     /** @var string $strucClass */
@@ -33,7 +33,7 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
 
     public function __construct(EntityManager $em) {
         $this->em = $em;
-        $this->class = 'Bakgat\Notos\Domain\Model\Curricula\Objective';
+        $this->objectiveClass = 'Bakgat\Notos\Domain\Model\Curricula\Objective';
         $this->currClass = 'Bakgat\Notos\Domain\Model\Curricula\Curriculum';
         $this->strucClass = 'Bakgat\Notos\Domain\Model\Curricula\Structure';
     }
@@ -109,7 +109,7 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
 
         $qb = $this->em->createQueryBuilder();
         $qb->select('o')
-            ->from($this->class, 'o')
+            ->from($this->objectiveClass, 'o')
             ->join('o.structure', 's')
             ->join('s.curriculum', 'c')
             ->where(
@@ -146,18 +146,30 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
      * Returns an objective that as a given code.
      *
      * @param $code
-     * @return mixed
+     * @return Objective
      */
     public function objectiveOfCode($code)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('o')
-            ->from($this->class, 'o')
+            ->from($this->objectiveClass, 'o')
             ->where(
                 $qb->expr()->eq('UPPER(o.code)', '?1')
             )
             ->setParameter(1, strtoupper($code));
 
         return $qb->getQuery()->getSingleResult();
+    }
+
+    /**
+     * Finds an objective by it's id
+     *
+     * @param $id
+     * @return Objective
+     */
+    public function objectiveOfId($id)
+    {
+        return $this->em->getRepository($this->objectiveClass)
+            ->find($id);
     }
 }

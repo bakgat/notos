@@ -10,6 +10,7 @@
  * AUTHENTICATION
  * ---------------------- */
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 Route::group(['prefix' => '/auth', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
     Route::get('/login', [

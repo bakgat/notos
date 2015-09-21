@@ -29,7 +29,8 @@
     "atrauzzi/laravel-doctrine": "dev-master",
     "atrauzzi/laravel-serializer": "dev-master",
     "doctrine/doctrine-fixtures-bundle": "^2.2@dev",
-    "bakgat/serializer": "dev-master"
+    "bakgat/serializer": "dev-master",
+    "intervention/image": "^2.3@dev"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

@@ -89,10 +89,11 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
     public function websiteofId($id)
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->select('w, wo, l')
+        $qb->select('w, wo, l, t')
             ->from($this->wsClass, 'w')
-            ->join('w.objectives', 'wo')
+            ->leftJoin('w.objectives', 'wo')
             ->leftJoin('wo.levels', 'l')
+            ->leftJoin('w.tags', 't')
             ->where(
                 $qb->expr()->eq('w.id', '?1')
             )
@@ -122,4 +123,15 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
     }
 
 
+    public function clearObjectives(Website $website)
+    {
+        $website->clearTags();
+        $this->em->persist($website);
+    }
+
+    public function clearTags(Website $website)
+    {
+        $website->clearObjectives();
+        $this->em->persist($website);
+    }
 }

@@ -60,7 +60,7 @@ class Tag
      */
     public function setName(Name $name)
     {
-        $this->name = $name;
+        $this->name = strtolower($name->toString());
     }
 
     /**

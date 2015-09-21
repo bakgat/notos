@@ -60,7 +60,15 @@ interface CurriculumRepository
      * Returns an objective that as a given code.
      *
      * @param $code
-     * @return mixed
+     * @return Objective
      */
     public function objectiveOfCode($code);
+
+    /**
+     * Finds an objective by it's id
+     *
+     * @param $id
+     * @return Objective
+     */
+    public function objectiveOfId($id);
 }

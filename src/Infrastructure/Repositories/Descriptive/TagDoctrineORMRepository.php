@@ -13,6 +13,7 @@ use Bakgat\Notos\Domain\Model\Descriptive\Tag;
 use Bakgat\Notos\Domain\Model\Descriptive\TagRepository;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Doctrine\ORM\EntityManager;
+use Illuminate\Support\Facades\Cache;
 
 class TagDoctrineORMRepository implements TagRepository
 {
@@ -79,7 +80,20 @@ class TagDoctrineORMRepository implements TagRepository
      */
     public function tagOfName(Name $name)
     {
-        return $this->em->getRepository($this->class)
+        $tag = $this->em->getRepository($this->class)
             ->findOneBy(['name' => strtolower($name->toString())]);
+
+        return $tag;
     }
+
+    public function tagOfNameOrCreate(Name $name)
+    {
+        $tag = $this->tagOfName($name);
+        if ($tag === null) {
+            $tag = Tag::register($name);
+            $this->add($tag);
+        }
+        return $tag;
+    }
+
 }

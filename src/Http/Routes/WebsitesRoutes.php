@@ -9,3 +9,6 @@
 Route::get('/', 'WebsitesController@index');
 Route::get('/full', 'WebsitesController@fullIndex');
 Route::get('/{id}', 'WebsitesController@edit');
+Route::post('/', 'WebsitesController@store');
+Route::put('/{id}', 'WebsitesController@update');
+Route::delete('/{id}', 'WebsitesController@destroy');
