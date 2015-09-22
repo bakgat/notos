@@ -158,7 +158,7 @@ class URL implements ValueObject
         // @link https://tools.ietf.org/html/rfc3986#section-3.3
 
         if ($this->path) {
-            $this->path .= '/';
+            //$this->path .= '/';
             $this->path = $this->removeAdditionalPathPrefixSlashes($this->path);
             $this->path = $this->removeDotSegments($this->path);
             $this->path = $this->urlDecodeUnreservedChars($this->path);
