@@ -41,6 +41,8 @@ class Organization extends Party
      */
     private $user_roles;
 
+
+
     public function __construct($name)
     {
         parent::__construct($name);

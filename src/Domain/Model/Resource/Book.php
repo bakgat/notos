@@ -8,8 +8,11 @@
 
 namespace Bakgat\Notos\Domain\Model\Resource;
 
+use Bakgat\Notos\Domain\Model\Descriptive\Tag;
 use Bakgat\Notos\Domain\Model\Identity\Isbn;
 use Bakgat\Notos\Domain\Model\Identity\Name;
+use Bakgat\Notos\Domain\Model\Identity\Organization;
+use Bakgat\Notos\Domain\Model\Identity\Party;
 use Bakgat\Notos\Domain\RecordEvents;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,8 +21,7 @@ use DateTime;
 /**
  *
  * @ORM\Entity
- * @ORM\Table(name="books", indexes={@ORM\Index(columns={"isbn"}), @ORM\Index(columns={"language"})}
- * )
+ * @ORM\Table(name="books", indexes={@ORM\Index(columns={"isbn"}), @ORM\Index(columns={"language"})})
  *
  */
 class Book extends Resource
@@ -41,12 +43,8 @@ class Book extends Resource
      * @ORM\Column(type="string", length=20)
      */
     private $isbn;
-
-    private $serie;
-
-
     /**
-     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Identity\Party", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Identity\Party")
      * @ORM\JoinTable(name="book_authors",
      *      joinColumns={@ORM\JoinColumn(name="book_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="author_id", referencedColumnName="id")}
@@ -55,7 +53,7 @@ class Book extends Resource
      */
     private $authors;
     /**
-     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization")
      * @ORM\JoinTable(name="book_publishers",
      *      joinColumns={@ORM\JoinColumn(name="book_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="publisher_id", referencedColumnName="id")}
@@ -63,6 +61,20 @@ class Book extends Resource
      *
      */
     private $publishers;
+    /**
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Descriptive\Tag", inversedBy="books")
+     * @ORM\JoinTable(name="book_tags",
+     *      joinColumns={@ORM\JoinColumn(name="book_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
+     *      ))
+     * @var ArrayCollection
+     */
+    private $tags;
+    /**
+     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization")
+     */
+    private $organization;
+
 
     public function __construct(Name $name, Isbn $isbn)
     {
@@ -162,7 +174,7 @@ class Book extends Resource
      *
      * @param Party $author
      */
-    public function addAuthor($author)
+    public function addAuthor(Party $author)
     {
         $this->authors[] = $author;
     }
@@ -181,7 +193,7 @@ class Book extends Resource
      * Removes an author from this book.
      * @param $author
      */
-    public function removeAuthor($author)
+    public function removeAuthor(Party $author)
     {
         $this->authors->removeElement($author);
     }
@@ -199,7 +211,7 @@ class Book extends Resource
      *
      * @param Party $publisher
      */
-    public function addPublisher($publisher)
+    public function addPublisher(Party $publisher)
     {
         $this->publishers[] = $publisher;
     }
@@ -218,7 +230,7 @@ class Book extends Resource
      * Removes a publisher from this book.
      * @param $publisher
      */
-    public function removePublisher($publisher)
+    public function removePublisher(Party $publisher)
     {
         $this->publishers->removeElement($publisher);
     }
@@ -229,5 +241,43 @@ class Book extends Resource
     public function clearPublishers()
     {
         $this->publishers = new ArrayCollection;
+    }
+
+    public function tags()
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag)
+    {
+        $this->tags[] = $tag;
+        $tag->addBook($this);
+    }
+
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    public function clearTags()
+    {
+        $this->tags = new ArrayCollection;
+    }
+
+    /**
+     * @param Organization organization
+     * @return void
+     */
+    public function setOrganization(Organization $organization)
+    {
+        $this->organization = $organization;
+    }
+
+    /**
+     * @return Organization
+     */
+    public function organization()
+    {
+        return $this->organization;
     }
 }

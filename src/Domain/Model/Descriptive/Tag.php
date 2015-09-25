@@ -9,6 +9,8 @@
 namespace Bakgat\Notos\Domain\Model\Descriptive;
 
 use Bakgat\Notos\Domain\Model\Identity\Name;
+use Bakgat\Notos\Domain\Model\Location\Website;
+use Bakgat\Notos\Domain\Model\Resource\Book;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
@@ -35,6 +37,10 @@ class Tag
      * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Location\Website", mappedBy="tags")
      */
     private $websites;
+    /**
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Resource\Book", mappedBy="tags")
+     */
+    private $books;
 
 
     public function __construct(Name $name)
@@ -78,8 +84,25 @@ class Tag
         return $this->websites;
     }
 
-    public function addWebsite($website)
+    /**
+     * @param Website $website
+     */
+    public function addWebsite(Website $website)
     {
         $this->websites[] = $website;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function books() {
+        return $this->books;
+    }
+
+    /**
+     * @param Book $book
+     */
+    public function addBook(Book $book) {
+        $this->books[] = $book;
     }
 }

@@ -1,21 +1,21 @@
 <?php
 use Doctrine\ORM\Tools\Setup;
 
-require_once app_path(). "/vendor/autoload.php";
+require_once __DIR__ . "/vendor/autoload.php";
 
 // Bootstrap the JMS custom annotations for Object to Json mapping
 // Bootstrap the JMS custom annotations for Object to Json mapping
 \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
     'JMS\Serializer\Annotation',
-    app_path() . '/vendor/jms/serializer/src'
+    __DIR__ . '/vendor/jms/serializer/src'
 );
 $isDevMode = true;
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/../src/Domain/Model"), $isDevMode, null, null, false);
+$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/src/Domain/Model"), $isDevMode, null, null, false);
 
 $conn = [
     'driver' => 'mysqli',
     'host' => '127.0.0.1',
-    'dbname' =>'notosplus',
+    'dbname' => 'notosplus',
     'user' => 'root',
     'password' => 'root',
     'prefix' => ''

@@ -18,7 +18,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"location"="Location", "website"="Website"})
+ * @ORM\DiscriminatorMap({"location"="Location", "website"="Website", "blog"="Blog"})
  * @ORM\Table(name="locations")
  */
 class Location

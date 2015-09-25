@@ -13,18 +13,22 @@ use Bakgat\Notos\Domain\Model\Identity\GroupRepository;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
 use Bakgat\Notos\Domain\Model\KindRepository;
+use Bakgat\Notos\Domain\Model\Location\BlogRepository;
 use Bakgat\Notos\Domain\Model\Location\WebsitesRepository;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelationRepository;
+use Bakgat\Notos\Domain\Model\Resource\BookRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CurriculumDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Descriptive\TagDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\GroupDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\KindCacheRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Location\BlogDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Location\WebsitesDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\ACL\RoleDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\ACL\UserRolesDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CourseDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\OrganizationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\PartyRelationDoctrineORMRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Resource\BookDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\UserDoctrineORMRepository;
 use Bakgat\Notos\Providers\NotosUserProvider;
 use Doctrine\ORM\EntityManager;
@@ -102,10 +106,12 @@ class NotosServiceProvider extends ServiceProvider
             [UserRolesRepository::class, UserRolesDoctrineORMRepository::class],
             [CourseRepository::class, CourseDoctrineORMRepository::class],
             [WebsitesRepository::class, WebsitesDoctrineORMRepository::class],
+            [BlogRepository::class, BlogDoctrineORMRepository::class],
             [CurriculumRepository::class, CurriculumDoctrineORMRepository::class],
             [TagRepository::class, TagDoctrineORMRepository::class],
             [KindRepository::class, KindCacheRepository::class],
             [GroupRepository::class, GroupDoctrineORMRepository::class],
+            [BookRepository::class, BookDoctrineORMRepository::class],
         ];
         $this->simpleBindRepositories($repos);
 

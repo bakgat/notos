@@ -41,6 +41,7 @@ class Resource
      */
     private $parent;
 
+
     public function __construct(Name $name)
     {
         $this->setName($name);
