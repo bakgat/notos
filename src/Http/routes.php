@@ -43,9 +43,6 @@ Route::post('password/reset', [
  * ---------------------- */
 Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
 
-    Route::group(['prefix' => '/group', 'namespace' => 'Identity'], function () {
-        include_once __DIR__ . '/Routes/GroupRoutes.php';
-    });
 
 
     /*
@@ -63,6 +60,17 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
         Route::group(['prefix' => '/books', 'namespace' => 'Resource'], function () {
             include_once __DIR__ . '/Routes/BooksRoutes.php';
         });
+    });
+
+
+    /*
+     * GLOBAL ROUTES
+     */
+    Route::group(['prefix' => '/group', 'namespace' => 'Identity'], function () {
+        include_once __DIR__ . '/Routes/GroupRoutes.php';
+    });
+    Route::group(['prefix' => '/realm', 'namespace' => 'Identity'], function() {
+        include_once __DIR__ . '/Routes/RealmRoutes.php';
     });
 
 
