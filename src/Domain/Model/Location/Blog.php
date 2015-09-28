@@ -30,6 +30,7 @@ class Blog extends Location
      * @JMS\Groups({"list", "detail","full"})
      */
     private $description;
+
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Resource\Image")
      * @JMS\Groups({"list", "detail","full"})
@@ -40,6 +41,8 @@ class Blog extends Location
      * @JMS\Exclude
      */
     private $organization;
+    /** @ORM\Column(type="smallint") */
+    private $weborder;
 
     public function __construct(Name $name, URL $url, Organization $organization)
     {

@@ -35,6 +35,7 @@ class BlogDoctrineORMRepository implements BlogRepository
             ->where(
                 $qb->expr()->eq('b.organization', '?1')
             )
+            ->orderBy('b.weborder')
             ->setParameter(1, $organization->id());
         return $qb->getQuery()->getResult();
     }
