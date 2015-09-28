@@ -27,7 +27,7 @@ class Blog extends Location
     private $url;
     /**
      * @ORM\Column(type="text", length=65535, nullable=true)
-     * @JMS\Groups({"detail","full"})
+     * @JMS\Groups({"list", "detail","full"})
      */
     private $description;
     /**
