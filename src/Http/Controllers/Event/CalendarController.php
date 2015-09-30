@@ -21,6 +21,7 @@ class CalendarController extends Controller
 
     public function __construct(CalendarService $calendarService)
     {
+        parent::__construct();
         $this->calendarService = $calendarService;
     }
 

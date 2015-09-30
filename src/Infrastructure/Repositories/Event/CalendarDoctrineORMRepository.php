@@ -25,7 +25,7 @@ class CalendarDoctrineORMRepository implements CalendarRepository
 
     public function __construct(EntityManager $em)
     {
-        $this->em = em;
+        $this->em = $em;
         $this->calendarClass = 'Bakgat\Notos\Domain\Model\Event\CalendarEvent';
     }
 
@@ -41,10 +41,13 @@ class CalendarDoctrineORMRepository implements CalendarRepository
         $qb->select('c')
             ->from($this->calendarClass, 'c')
             ->where(
-                $qb->expr()->eq('c.organization_id', '?1'),
+                $qb->expr()->eq('c.organization', '?1'),
                 $qb->expr()->orX(
-                    $qb->expr()->gte('c.end', '?2'),
-                    $qb->expr()->isNull('c.end')
+                    $qb->expr()->lte('c.end', '?2'),
+                    $qb->expr()->andX(
+                        $qb->expr()->isNull('c.end'),
+                        $qb->expr()->gt('c.start', '?2')
+                    )
                 ))
             ->setParameter(1, $organization->id())
             ->setParameter(2, new DateTime);
@@ -101,8 +104,11 @@ class CalendarDoctrineORMRepository implements CalendarRepository
             ->where(
                 $qb->expr()->eq('g.id', '?1'),
                 $qb->expr()->orX(
-                    $qb->expr()->gte('c.end', '?2'),
-                    $qb->expr()->isNull('c.end')
+                    $qb->expr()->lte('c.end', '?2'),
+                    $qb->expr()->andX(
+                        $qb->expr()->isNull('c.end'),
+                        $qb->expr()->gt('c.start', '?2')
+                    )
                 ))
             ->setParameter(1, $group->id());
         return $qb->getQuery()->getResult();
@@ -133,7 +139,7 @@ class CalendarDoctrineORMRepository implements CalendarRepository
         $qb->select('c')
             ->from($this->calendarClass, 'c')
             ->where(
-                $qb->expr()->eq('c.organization_id', '?1'),
+                $qb->expr()->eq('c.organization', '?1'),
                 $qb->expr()->gt('c.start', '?2'),
                 $qb->expr()->orX(
                     $qb->expr()->gte('c.end', '?3'),

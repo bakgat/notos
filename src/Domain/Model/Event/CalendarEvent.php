@@ -10,6 +10,7 @@ namespace Bakgat\Notos\Domain\Model\Event;
 
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 use JMS\Serializer\Annotation as JMS;
@@ -23,25 +24,28 @@ class CalendarEvent extends Event
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var DateTime
+     * @JMS\Groups({"list","detail","full"})
      */
     private $end;
-
     /**
      * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Identity\Group")
+     * @var ArrayCollection
+     * @JMS\Groups({"list","detail","full"})
      */
     private $groups;
-
     /**
      * @ORM\Column(type="string")
+     * @JMS\Groups({"list","detail","full"})
      */
     private $description;
-
     /**
      * @ORM\Column(type="boolean", options={"default"=false})
+     * @JMS\Groups({"list","detail","full"})
      */
     private $allDay;
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization")
+     * @JMS\Exclude
      */
     private $organization;
 
@@ -52,6 +56,8 @@ class CalendarEvent extends Event
             $this->setEnd($end);
         }
         $this->setAllDay($allDay);
+
+        $this->groups = new ArrayCollection;
     }
 
     public static function register(Name $name, Organization $organization, DateTime $start = null, DateTime $end = null)
@@ -76,13 +82,14 @@ class CalendarEvent extends Event
         return $this->end;
     }
 
-    /**
-     * @param ArrayCollection groups
-     * @return void
-     */
-    public function setGroups(ArrayCollection $groups)
+    public function addGroup(Group $group)
     {
-        $this->groups = $groups;
+        $this->groups[] = $group;
+    }
+
+    public function removeGroup(Group $group)
+    {
+        $this->groups->removeElement($group);
     }
 
     /**
