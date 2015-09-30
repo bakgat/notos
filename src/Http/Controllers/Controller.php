@@ -36,8 +36,9 @@ abstract class Controller extends BaseController
         return $serializedData;
     }
 
-    public function jsonResponse($data, $groups = null) {
-        $headers = ['Content-type'=> 'application/json; charset=utf-8'];
+    public function jsonResponse($data, $groups = null)
+    {
+        $headers = ['Content-type' => 'application/json; charset=utf-8'];
 
         return Response::create(
             $this->json($data, $groups),
@@ -45,5 +46,10 @@ abstract class Controller extends BaseController
             $headers,
             JSON_UNESCAPED_UNICODE
         );
+    }
+
+    public function destroyedResponse()
+    {
+        return Response::create(null, 204);
     }
 }

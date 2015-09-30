@@ -20,9 +20,18 @@ interface GroupRepository
      * @return mixed
      */
     public function groupsOfKind(Kind $kind);
+
     /**
+     * Find a group by it's name
      * @param $name
      * @return Group
      */
     public function groupOfName($name);
+
+    /**
+     * Find a group by it's id
+     * @param $groupId
+     * @return mixed
+     */
+    public function groupOfId($id);
 }

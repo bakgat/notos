@@ -41,7 +41,7 @@ class Blog extends Location
      * @JMS\Exclude
      */
     private $organization;
-    /** @ORM\Column(type="smallint") */
+    /** @ORM\Column(type="smallint", nullable=true) */
     private $weborder;
 
     public function __construct(Name $name, URL $url, Organization $organization)

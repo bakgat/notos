@@ -60,4 +60,15 @@ class GroupDoctrineORMRepository implements GroupRepository
 
         return $groups;
     }
+
+    /**
+     * Find a group by it's id
+     * @param $groupId
+     * @return mixed
+     */
+    public function groupOfId($id)
+    {
+        return $this->em->getRepository($this->groupClass)
+            ->find($id);
+    }
 }

@@ -60,6 +60,10 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
         Route::group(['prefix' => '/books', 'namespace' => 'Resource'], function () {
             include_once __DIR__ . '/Routes/BooksRoutes.php';
         });
+
+        Route::group(['prefix'=>'/calendar', 'namespace' => 'Event'], function() {
+            include_once __DIR__ . '/Routes/EventRoutes.php';
+        });
     });
 
 

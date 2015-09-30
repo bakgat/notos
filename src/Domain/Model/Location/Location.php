@@ -9,7 +9,6 @@
 namespace Bakgat\Notos\Domain\Model\Location;
 
 use Bakgat\Notos\Domain\Model\Identity\Name;
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 use JMS\Serializer\Annotation as JMS;
