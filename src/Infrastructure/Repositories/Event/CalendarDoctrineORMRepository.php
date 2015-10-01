@@ -43,11 +43,11 @@ class CalendarDoctrineORMRepository implements CalendarRepository
             ->where(
                 $qb->expr()->eq('c.organization', '?1'),
                 $qb->expr()->orX(
-                    $qb->expr()->lte('c.end', '?2'),
                     $qb->expr()->andX(
                         $qb->expr()->isNull('c.end'),
                         $qb->expr()->gt('c.start', '?2')
-                    )
+                    ),
+                    $qb->expr()->gt('c.end', '?2')
                 ))
             ->setParameter(1, $organization->id())
             ->setParameter(2, new DateTime);
