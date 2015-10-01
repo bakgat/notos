@@ -45,7 +45,7 @@ class CalendarDoctrineORMRepository implements CalendarRepository
                 $qb->expr()->orX(
                     $qb->expr()->andX(
                         $qb->expr()->isNull('c.end'),
-                        $qb->expr()->gt('c.start', '?2')
+                        $qb->expr()->gte('c.start', '?2')
                     ),
                     $qb->expr()->gt('c.end', '?2')
                 ))
@@ -104,11 +104,11 @@ class CalendarDoctrineORMRepository implements CalendarRepository
             ->where(
                 $qb->expr()->eq('g.id', '?1'),
                 $qb->expr()->orX(
-                    $qb->expr()->lte('c.end', '?2'),
                     $qb->expr()->andX(
                         $qb->expr()->isNull('c.end'),
-                        $qb->expr()->gt('c.start', '?2')
-                    )
+                        $qb->expr()->gte('c.start', '?2')
+                    ),
+                    $qb->expr()->gt('c.end', '?2')
                 ))
             ->setParameter(1, $group->id());
         return $qb->getQuery()->getResult();
@@ -140,9 +140,9 @@ class CalendarDoctrineORMRepository implements CalendarRepository
             ->from($this->calendarClass, 'c')
             ->where(
                 $qb->expr()->eq('c.organization', '?1'),
-                $qb->expr()->gt('c.start', '?2'),
+                $qb->expr()->gte('c.start', '?2'),
                 $qb->expr()->orX(
-                    $qb->expr()->gte('c.end', '?3'),
+                    $qb->expr()->gt('c.end', '?3'),
                     $qb->expr()->isNull('c.end')
                 ))
             ->setParameter(1, $organization->id())
