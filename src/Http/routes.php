@@ -38,12 +38,11 @@ Route::post('password/reset', [
 ]);
 
 
+
 /* ------------------------
  * API
  * ---------------------- */
 Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
-
-
 
     /*
      * ORGANIZATION SPECIFIC ROUTES
@@ -59,6 +58,9 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
 
         Route::group(['prefix' => '/books', 'namespace' => 'Resource'], function () {
             include_once __DIR__ . '/Routes/BooksRoutes.php';
+        });
+        Route::group(['prefix' => '/meals', 'namespace' => 'Resource'], function () {
+            include_once __DIR__ . '/Routes/MealsRoutes.php';
         });
 
         Route::group(['prefix'=>'/calendar', 'namespace' => 'Event'], function() {
