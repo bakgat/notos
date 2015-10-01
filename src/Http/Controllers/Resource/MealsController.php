@@ -19,7 +19,7 @@ class MealsController extends Controller
     public function index()
     {
         $dom = new DOMDocument();
-        if (@$dom->loadHTMLFile('http://www.laeta-mensa.be/office/Public/ShowMenu.aspx?m=SCHOLENGROEP%202&v=69')) {
+        if (@$dom->loadHTMLFile(env('MEALS_URL', ''))) {
             $elements = $dom->getElementsByTagName('table');
 
             if ($elements->length > 0) {
