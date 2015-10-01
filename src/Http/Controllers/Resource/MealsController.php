@@ -28,6 +28,12 @@ class MealsController extends Controller
                     if ($table->attributes->getNamedItem('class') &&
                         str_contains($table->attributes->getNamedItem('class')->value, 'table')
                     ) {
+                        //CLEAR IMAGES
+                        $images  = $table->getElementsByTagName('img');
+                        foreach ($images as $image) {
+                            $image->parentNode->removeChild($image);
+                        }
+
                         $response .= $dom->saveHtml($table);
                     }
                 }
