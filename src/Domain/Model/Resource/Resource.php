@@ -14,6 +14,8 @@ use Bakgat\Notos\Domain\Model\Identity\Name;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation as JMS;
+
 /**
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")

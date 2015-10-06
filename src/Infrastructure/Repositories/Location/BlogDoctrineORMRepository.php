@@ -30,8 +30,9 @@ class BlogDoctrineORMRepository implements BlogRepository
     public function all(Organization $organization)
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->select('b')
+        $qb->select('b, i')
             ->from($this->blogClass, 'b')
+            ->leftJoin('b.image', 'i')
             ->where(
                 $qb->expr()->eq('b.organization', '?1')
             )

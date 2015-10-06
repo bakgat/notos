@@ -13,6 +13,8 @@ use Bakgat\Notos\Domain\RecordEvents;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation as JMS;
+
 /**
  *
  * @ORM\Entity
@@ -33,10 +35,12 @@ class Image extends Resource
     private $description;
     /**
      * @ORM\Column(type="string")
+     * @JMS\Groups({"list", "detail","full"})
      */
     private $directory;
     /**
      * @ORM\Column(type="string", length=60)
+     * @JMS\Groups({"list", "detail","full"})
      */
     private $filename;
     /**
