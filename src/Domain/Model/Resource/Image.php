@@ -188,4 +188,16 @@ class Image extends Resource
     {
         return $this->exif;
     }
+
+    /**
+     * @JMS\Groups({"list", "full", "detail"})
+     * @JMS\VirtualProperty
+     */
+    public function url()
+    {
+        if (!ends_with($this->directory, '/')) {
+            $this->directory .= '/';
+        }
+        return $this->directory . '/' . $this->filename;
+    }
 }
