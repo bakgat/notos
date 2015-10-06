@@ -31,7 +31,8 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
     /** @var string $strucClass */
     private $strucClass;
 
-    public function __construct(EntityManager $em) {
+    public function __construct(EntityManager $em)
+    {
         $this->em = $em;
         $this->objectiveClass = 'Bakgat\Notos\Domain\Model\Curricula\Objective';
         $this->currClass = 'Bakgat\Notos\Domain\Model\Curricula\Curriculum';
@@ -103,7 +104,7 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
     {
         $key = md5('objectives.' . $curriculum->code());
 
-        if(Cache::has($key)) {
+        if (Cache::has($key)) {
             return Cache::get($key);
         }
 
@@ -154,11 +155,11 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
         $qb->select('o')
             ->from($this->objectiveClass, 'o')
             ->where(
-                $qb->expr()->eq('UPPER(o.code)', '?1')
+                $qb->expr()->eq('o.code', '?1')
             )
-            ->setParameter(1, strtoupper($code));
+            ->setParameter(1, $code);
 
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -171,5 +172,33 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
     {
         return $this->em->getRepository($this->objectiveClass)
             ->find($id);
+    }
+
+    public function structure(Curriculum $curriculum, $parent, $name, $type)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('s')
+            ->from($this->strucClass, 's')
+            ->where(
+                $qb->expr()->eq('s.name', '?1'),
+                $qb->expr()->eq('s.type', '?2'),
+                $qb->expr()->eq('s.curriculum', '?3')
+            )
+            ->setParameter(1, $name)
+            ->setParameter(2, $type)
+            ->setParameter(3, $curriculum->id());
+
+        if ($parent) {
+            $qb->andWhere(
+                $qb->expr()->eq('s.parent', '?4')
+            )
+            ->setParameter(4, $parent->id());
+        } else {
+            $qb->andWhere(
+                $qb->expr()->isNull('s.parent')
+            );
+        }
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }

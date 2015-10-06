@@ -366,10 +366,10 @@ return array(
             array('name' => 'andere talstelsels', 'kind' => 'chapter',
                 'obj' => array(
                     array('name' => 'Getallen lezen en schrijven in het Romeinse talstelsel',
-                        'code' => 'WIS G28',
+                        'code' => 'WIS G33',
                         'level' => '00000024'), //G33
                     array('name' => 'Met concrete voorbeelden aanduiden dat er verschillende talstelsels zijn',
-                        'code' => 'WIS G29',
+                        'code' => 'WIS G34',
                         'level' => '00000012'), //G34
                 )),
             array('name' => 'getallen schatten en afronden', 'kind' => 'chapter',
@@ -410,7 +410,6 @@ return array(
                         'level' => '00333333'), //G42
                 )),
         )), //GK
-
     array('name' => 'bewerkingen', 'kind' => 'subcourse',
         'children' => array(
             array('name' => 'Van situaties naar bewerkingen en omgekeerd', 'kind' => 'chapter',
@@ -635,7 +634,7 @@ return array(
                                 'level' => '00024000'
                             ), //B20
                             array('name' => 'De delingstafels die horen bij de vermenigvuldigingstafels tot en met 10 paraat kennen.',
-                                'code' => 'WIS B201',
+                                'code' => 'WIS B21',
                                 'level' => '00012400'
                             ), //B21
                             array('name' => 'Bij eenvoudige delingen (bijv. 45 : 7 quotiënt 6 rest 3; 96: 8; 750 : 3; 100 000 : 4) flexibel een doelmatige oplossingsmethode kiezen op basis van inzicht in de structuur van de getallen en in de eigenschappen van de deling; die delingen correct uitvoeren, verwoorden en noteren:',
@@ -879,7 +878,7 @@ return array(
         )), //B
 
     array('name' => 'meetkunde', 'kind' => 'subcourse',
-        'children' => array()), //MR
+        'children' => array()), //MK
 
     array('name' => 'meten en metend rekenen', 'kind' => 'subcourse',
         'children' => array(
@@ -933,28 +932,454 @@ return array(
                         )), //MR17
                     array('name' => 'Referentiematen (bijv. 1 kg is het gewicht van een doos klontjessuiker, 1 l is de inhoud van een melkbrik, een deur is ongeveer 2 m hoog, 100 m is de afstand van ... tot ...; een brood kost ongeveer ... euro) kennen en gebruiken.',
                         'code' => 'WIS MR18', 'level' => '00244444'), //MR18
+                    array('name' => 'Resultaten van metingen en berekeningen lezen en noteren:',
+                        'code' => 'WIS MR19',
+                        'obj' => array(
+                            array('name' => 'met 1 één maateenheid (bij. bijna 1 m, ongeveer 1kg, precies 1 l)',
+                                'code' => 'WIS MR19.a', 'level' => '00200000'),
+                            array('name' => 'met meer dan één maateenheid (bij. 4 m 23 cm, 3 l 15 cl, 1 kg 125 g)',
+                                'code' => 'WIS MR19.b', 'level' => '00021444'),
+                            array('name' => 'als kommagetal met één maateenheid (bijv. 4,23m, 3,15 l, 1,125 kg)',
+                                'code' => 'WIS MR19.c', 'level' => '00000244'),
+                        )), //MR19
+                    array('name' => 'Een grootte schatten bij meetopdrachten met standaardmaateenheden en de schatting vergelijken met het meetresultaat (zie doel MR31, MR32, MR33, MR34, MR41, MR42, MR43, MR44, MR45, MR46, MR47, MR48, MR52, MR58, MR59, MR60, MR63, MR69, MR70, MR71, MR74, MR77).',
+                        'code' => 'WIS MR20', 'level' => '00244444'), //MR20
+                    array('name' => 'De gemeten dingen sorteren of rangschikken na een meting met standaardmaateenheden.',
+                        'code' => 'WIS MR21', 'level' => '00244444'), //MR21
+                    array('name' => 'Zelfgemaakte meetinstrumenten ijken en correct gebruiken (bijv. een koord van 10 m verdeeld in meters, een fles gradueren in dl, een meetrooster).',
+                        'code' => 'WIS MR22', 'level' => '00244444'), //MR22
+                    array('name' => 'Gebruikelijke meetinstrumenten correct gebruiken bij metingen van lengte (bijv. meetlat, duimstok, meetlint), inhoud (bijv. een maatbeker), gewicht (bijv. een digitale weegschaal), tijdsduur (bijv. uurwerk, chronometer) en hoekgrootte (bijv. gradenboog, geodriehoek).',
+                        'code' => 'WIS MR23', 'level' => '00244444'), //MR23
+                    array('name' => 'Een passend meetinstrument kiezen bij een meting met standaardmaateenheden',
+                        'code' => 'WIS MR24', 'level' => '00244444'), //MR24
+                    array('name' => 'Beseffen dat de nauwkeurigheid van de meting beïnvloed wordt door de maateenheid, het doel van de meting en de verwachte nauwkeurigheid, de werkwijze en handigheid van degene die meet, de kwaliteit van het meetinstrument, de aard van het voorwerp dat gemeten wordt en de wijze van afronden.',
+                        'code' => 'WIS MR25', 'level' => '00111124'), //MR25
+                    array('name' => 'Een passende standaardmaateenheid kiezen (bijv. De lengte van de klas kan het best uitgedrukt worden in m en niet in mm).',
+                        'code' => 'WIS MR26', 'level' => '00012444'), //MR26
+                    array('name' => 'Ervaren en inzien dat hoe groter de maateenheid is, hoe kleiner het maatgetal is en omgekeerd (bijv. Als de maateenheid 10 keer groter wordt, zal het maatgetal 10 keer kleiner worden.)',
+                        'code' => 'WIS MR27', 'level' => '00011244'), //MR27
+                    array('name' => 'Met de gekende standaardmaateenheden in betekenisvolle situaties herleidingen uitvoeren:',
+                        'code' => 'WIS MR28',
+                        'obj' => array(
+                            array('name' => 'tussen de hoofdeenheid en de afgeleide eenheden (bijv. 1 m² = 10 000 cm², 1 kg = 1 000 g)',
+                                'code' => 'WIS MR28.a', 'level' => '00012444'),
+                            array('name' => 'tussen frequent gebruikte maateenheden (bijv. 1 dl = 10 cl, 1 min. = 60 sec.)',
+                                'code' => 'WIS MR28.b', 'level' => '00012444'),
+                        )), //MR28
+
                 ),
                 'children' => array(
                     array('name' => 'lengte', 'kind' => 'chapter',
-                        'obj' => array()),
+                        'obj' => array(
+                            array('name' => 'Lengte',
+                                'code' => 'WIS MR29',
+                                'obj' => array(
+                                    array('name' => 'Weten dat het resultaat van een lengtemeting uitgedrukt kan worden in meter of daarvan afgeleide maateenheden.',
+                                        'code' => 'WIS MR29.a', 'level' => '00240000'),
+                                    array('name' => 'en daarbij de termen lengte, breedte, hoogte en dikte  gebruiken.',
+                                        'code' => 'WIS MR29.b', 'level' => '00124000'),
+                                    array('name' => 'en daarbij de termen diepte, omtrek en afstand gebruiken.',
+                                        'code' => 'WIS MR29.c', 'level' => '00112400'),
+                                )), //MR29
+                            array('name' => 'Het metriek stelsel in verband met lengte opbouwen en daarbij volgende maateenheden en hun symbolen lezen en gebruiken: ',
+                                'code' => 'WIS MR30',
+                                'obj' => array(
+                                    array('name' => 'de meter (m) ',
+                                        'code' => 'WIS MR30.a', 'level' => '00240000'),
+                                    array('name' => 'de centimeter (cm) ',
+                                        'code' => 'WIS MR30.b', 'level' => '00024000'),
+                                    array('name' => 'de decimeter (dm)',
+                                        'code' => 'WIS MR30.c', 'level' => '00012000'),
+                                    array('name' => 'de kilometer (km)',
+                                        'code' => 'WIS MR30.d', 'level' => '00002400'),
+                                    array('name' => 'de millimeter (mm)',
+                                        'code' => 'WIS MR30.e', 'level' => '00001240'),
+                                )), //MR30
+                            array('name' => 'Een lengte (breedte, dikte, afstand...):',
+                                'code' => 'WIS MR31',
+                                'obj' => array(
+                                    array('name' => 'meten en afmeten bij voorwerpen en lijnstukken',
+                                        'code' => 'WIS MR31.a', 'level' => '00244400'),
+                                    array('name' => 'en lijnstukken met een gegeven lengte tekenen',
+                                        'code' => 'WIS MR31.b', 'level' => '00024400'),
+                                )), //M31
+                            array('name' => 'Inzien dat ook lijnen (onder meer de omtrek) met een gebroken, gebogen of grillige vorm een lengte hebben en die bij benadering bepalen.',
+                                'code' => 'WIS MR32',
+                                'level' => '00011200'
+                            ), //MR32
+                            array('name' => 'De omtrek van vlakke figuren meten en van gekende vlakke figuren',
+                                'code' => 'WIS MR33',
+                                'obj' => array(
+                                    array('name' => 'De omtrek van vlakke figuren meten en van gekende vlakke figuren berekenen',
+                                        'code' => 'WIS MR33.a', 'level' => '00012444'),
+                                    array('name' => 'en daarbij de eigenschappen van de zijden gebruiken.',
+                                        'code' => 'WIS MR33.b', 'level' => '00001244'),
+                                )), //MR33
+                            array('name' => 'De waarde van pi ontdekken als de constante verhouding tussen de omtrek en de diameter van een cirkel (De benaderde waarde van pi is 3,14) en de formule voor de omtrekberekening van de cirkel gebruiken (pi x 2 x r of pi x d).',
+                                'code' => 'WIS MR34',
+                                'level' => '00000002'
+                            ), //MR34
+                        )),
                     array('name' => 'oppervlakte', 'kind' => 'chapter',
-                        'obj' => array()),
+                        'obj' => array(
+                            array('name' => 'Beseffen dat de oppervlaktebepaling van figuren afhankelijk is van twee dimensies (bijv. de oppervlakte van een rechthoek heeft te maken met een basis en hoogte).',
+                                'code' => 'WIS MR35',
+                                'level' => '00000002'
+                            ), //MR35
+                            array('name' => 'Oppervlakte',
+                                'code' => 'WIS MR36',
+                                'obj' => array(
+                                    array('name' => 'Weten dat het resultaat van een oppervlaktemeting uitgedrukt kan worden in vierkante meter of daarvan afgeleide maateenheden.',
+                                        'code' => 'WIS MR36.a', 'level' => '00000240'),
+                                    array('name' => 'en de term oppervlakte gebruiken.',
+                                        'code' => 'WIS MR36.b', 'level' => '00111200'),
+                                )), //MR36
+                            array('name' => 'Het metriek stelsel in verband met oppervlakte opbouwen, en daarbij volgende maateenheden en hun symbolen lezen en gebruiken: ',
+                                'code' => 'WIS MR37',
+                                'obj' => array(
+                                    array('name' => 'de vierkante centimeter (cm²), de vierkante decimeter (dm²) en de vierkante meter (m²)',
+                                        'code' => 'WIS MR37.a', 'level' => '00000240'),
+                                    array('name' => 'de vierkante kilometer (km²)',
+                                        'code' => 'WIS MR37.b', 'level' => '00000024'),
+                                    array('name' => 'de landmaten (nooit in decimale vorm): de centiare (ca), de are (a), de hectare (ha)',
+                                        'code' => 'WIS MR37.c', 'level' => '00000024'),
+                                )), //MR37
+                            array('name' => 'Het verband inzien tussen oppervlaktematen en landmaten',
+                                'code' => 'WIS MR38',
+                                'level' => '00000024'
+                            ), //MR38
+                            array('name' => 'Ervaren en inzien dat figuren met een verschillende vorm, dezelfde oppervlakte kunnen hebben (bijv. 1 m² heeft niet noodzakelijk de vorm van een vierkant; een driehoek en een vierkant kunnen dezelfde oppervlakte hebben',
+                                'code' => 'WIS MR39',
+                                'level' => '00001244'
+                            ), //MR39
+                            array('name' => 'Ervaren en inzien dat de omtrek van figuren kan verschillen terwijl hun oppervlakte dezelfde is en omgekeerd',
+                                'code' => 'WIS MR40',
+                                'level' => '00001244'
+                            ), //MR40
+                            array('name' => 'De oppervlakte van figuren bepalen door ze te beleggen met vierkanten van 1 m² of 1 dm² of 1 cm²',
+                                'code' => 'WIS MR41',
+                                'level' => '00000200'
+                            ), //MR41
+                            array('name' => 'De basisformule (basis x hoogte; b x h) voor de oppervlakteberekening van rechthoeken en vierkanten ',
+                                'code' => 'WIS MR42',
+                                'obj' => array(
+                                    array('name' => 'begrijpen (via het beeld van een aantal rijen van hetzelfde aantal gelijke maateenheden)',
+                                        'code' => 'WIS MR42.a', 'level' => '00000244'),
+                                    array('name' => 'paraat kennen en gebruiken',
+                                        'code' => 'WIS MR42.b', 'level' => '00000124'),
+                                )), //MR42
+                            array('name' => 'Ervaren en inzien dat de oppervlakte van een paralellogram berekend kan worden via omstructurering naar een rechthoek en de formule (b x h) paraat kennen en gebruiken',
+                                'code' => 'WIS MR43',
+                                'level' => '00000024'
+                            ), //MR43
+                            array('name' => 'Ervaren en inzien dat de oppervlakte van een driehoek gelijk is aan de helft van de oppervlakte van een rechthoek met dezelfde basis en dezelfde hoogte, en de formule (b x h)/2 paraat kennen en gebruiken',
+                                'code' => 'WIS MR44',
+                                'level' => '00000024'
+                            ), //MR44
+                            array('name' => 'Ervaren en inzien dat de oppervlakte van volgende vlakke figuren bepaald kan worden door ze om te structureren naar figuren waarvan men de oppervlakte kan berekenen:',
+                                'code' => 'WIS MR45',
+                                'obj' => array(
+                                    array('name' => 'ruit',
+                                        'code' => 'WIS MR45.a', 'level' => '00000024'),
+                                    array('name' => 'trapezium',
+                                        'code' => 'WIS MR45.b', 'level' => '00000002'),
+                                    array('name' => 'veelhoek',
+                                        'code' => 'WIS MR45.c', 'level' => '00000002'),
+                                )), //MR45
+                            array('name' => 'Ervaren en inzien dat de oppervlakte van een regelmatige veelhoek met een groot aantal hoekpunten de oppervlakte van een cirkel benadert en dat de oppervlakte van de cirkel berekend wordt met de formule r x r x pi',
+                                'code' => 'WIS MR46',
+                                'level' => '00000002'
+                            ), //MR46
+                            array('name' => 'Inzien dat de oppervlakte van een kubus, een balk en een cilinder gelijk is aan de som van de oppervlakten van de grensvlakken',
+                                'code' => 'WIS MR47',
+                                'level' => '00000012'
+                            ), //MR47
+                            array('name' => 'Inzien dat ook vlakstukken en ruimtefiguren met een gebogen of een grillige vorm een oppervlakte hebben en de oppervlakte van deze vlakstukken bij benadering bepalen.',
+                                'code' => 'WIS MR48',
+                                'level' => '00000012'
+                            ), //MR48
+                        )),
                     array('name' => 'inhoud en volume', 'kind' => 'chapter',
-                        'obj' => array()),
+                        'obj' => array(
+                            array('name' => 'Beseffen dat de inhouds(volume)bepaling afhankelijk is van drie dimensies (bijv. de volumeberekening van een balk heeft te maken met een breedte, een diepte en een hoogte).',
+                                'code' => 'WIS MR49',
+                                'level' => '00000012'
+                            ), //MR49
+                            array('name' => 'Weten dat het resultaat van een inhoudsmeting uitgedrukt kan worden in liter of daarvan afgeleide maateenheden, en daarbij de term inhoud gebruiken.',
+                                'code' => 'WIS MR50',
+                                'level' => '00240000'
+                            ), //MR50
+                            array('name' => 'Het metriek stelsel in verband met inhoud opbouwen en daarbij volgende maateenheden en hun symbolen lezen en gebruiken:',
+                                'code' => 'WIS MR51',
+                                'obj' => array(
+                                    array('name' => 'de liter (l)',
+                                        'code' => 'WIS MR51.a', 'level' => '00240000'),
+                                    array('name' => 'de deciliter (dl), de centiliter (cl)',
+                                        'code' => 'WIS MR51.b', 'level' => '00012400'),
+                                    array('name' => 'de milliliter (ml)',
+                                        'code' => 'WIS MR51.c', 'level' => '00000240'),
+                                )), //MR51
+                            array('name' => 'De inhoud meten van allerlei gebruiksvoorwerpen (bijv. drinkglas, bierflesje, koffiekopje, soepbord, melkfles, lepel, emmer, flesje voor frisdranken...) en een bepaalde inhoud afmeten.',
+                                'code' => 'WIS MR52',
+                                'level' => '00244440'
+                            ), //MR52
+                            array('name' => 'Weten dat het resultaat van een volumeberekening uitgedrukt kan worden in kubieke meter of daarvan afgeleide maateenheden, en daarbij de term volume gebruiken.',
+                                'code' => 'WIS MR53',
+                                'level' => '00000002'
+                            ), //MR53
+                            array('name' => 'Het metriek stelsel in verband met volume opbouwen en daarbij volgende termen en symbolen lezen en gebruiken: de kubieke meter (m³), de kubieke decimeter (dm³), de kubieke centimeter (cm³ of cc).',
+                                'code' => 'WIS MR54',
+                                'level' => '00000002'
+                            ), //MR54
+                            array('name' => 'Het verband inzien tussen inhoudsmaten en ruimtematen (bijv. tussen liter en dm³, tussen ml en cm³).',
+                                'code' => 'WIS MR55',
+                                'level' => '00000002'
+                            ), //MR55
+                            array('name' => 'Ervaren en inzien dat ruimtefiguren met een verschillende vorm hetzelfde volume kunnen hebben (bijv. 1 m³ heeft niet noodzakelijk de vorm van een kubus; een balk en een cilinder kunnen hetzelfde volume hebben.)',
+                                'code' => 'WIS MR56',
+                                'level' => '00000012'
+                            ), //MR56
+                            array('name' => 'Ervaren en inzien dat de oppervlakte van ruimtefiguren kan verschillen terwijl het volume hetzelfde is en omgekeerd.',
+                                'code' => 'WIS MR57',
+                                'level' => '00000012'
+                            ), //MR57
+                            array('name' => 'De basisformule (opp. grondvlak x hoogte) voor de berekening van het volume van een balk en een kubus begrijpen (via het beeld van een aantal gelijke lagen), kennen en gebruiken.',
+                                'code' => 'WIS MR58',
+                                'level' => '00000002'
+                            ), //MR58
+                            array('name' => 'Inzien dat het volume van een cilinder berekend kan worden naar analogie met de berekening van het volume van een balk en van daaruit de inhoud van een cilinder berekenen.',
+                                'code' => 'WIS MR59',
+                                'level' => '00000002'
+                            ), //MR59
+                            array('name' => 'Inzien dat ook ruimtefiguren met een gebogen of grillige vorm een volume hebben en dat bij benadering bepalen (bijv. door omstructurering, door onderdompeling).',
+                                'code' => 'WIS MR60',
+                                'level' => '00000002'
+                            ), //MR60
+                        )),
                     array('name' => 'gewicht', 'kind' => 'chapter',
-                        'obj' => array()),
+                        'obj' => array(
+                            array('name' => 'Weten dat het resultaat van een gewichtsmeting uitgedrukt kan worden in kilogram of daarvan afgeleide maateenheden, en daarbij de term gewicht gebruiken.',
+                                'code' => 'WIS MR61',
+                                'level' => '00240000'
+                            ), //MR61
+                            array('name' => 'Het metriek stelsel in verband met gewichten opbouwen en daarbij volgende maateenheden lezen en gebruiken: ',
+                                'code' => 'WIS MR62',
+                                'obj' => array(
+                                    array('name' => 'het kilogram (kg)',
+                                        'code' => 'WIS MR62.a', 'level' => '00240000'),
+                                    array('name' => 'het gram (g)',
+                                        'code' => 'WIS MR62.b', 'level' => '00012400'),
+                                    array('name' => 'de ton',
+                                        'code' => 'WIS MR62.c', 'level' => '00000200'),
+                                )), //MR62
+                            array('name' => 'Het gewicht van allerlei gebruiksvoorwerpen bepalen (bijv. een pakje koffie, een zakje aardappelen...) en een bepaald gewicht afwegen.',
+                                'code' => 'WIS MR63',
+                                'level' => '00244400'
+                            ), //MR63
+                            array('name' => 'Ervaren en inzien dat het gewicht van dingen niet enkel bepaald wordt door het volume.',
+                                'code' => 'WIS MR64',
+                                'level' => '00112000'
+                            ), //MR64
+                            array('name' => 'Het verband inzien tussen inhoudsmaten, ruimtematen en gewicht (bijv. 1 liter water heeft een volume van 1 dm³ en weegt 1 kg).',
+                                'code' => 'WIS MR65',
+                                'level' => '00000002'
+                            ), //MR65
+                        )),
                     array('name' => 'tijdstip en tijdsduur', 'kind' => 'chapter',
-                        'obj' => array()),
+                        'obj' => array(
+                            array('name' => 'Volgende termen gebruiken: ',
+                                'code' => 'WIS MR66',
+                                'obj' => array(
+                                    array('name' => 'de dagen van de week',
+                                        'code' => 'WIS MR66.a', 'level' => '01200000'),
+                                    array('name' => 'vandaag, gisteren, morgen',
+                                        'code' => 'WIS MR66.b', 'level' => '01120000'),
+                                    array('name' => 'de maanden van het jaar',
+                                        'code' => 'WIS MR66.c', 'level' => '00120000'),
+                                    array('name' => 'eergisteren, overmorgen',
+                                        'code' => 'WIS MR66.d', 'level' => '00112000'),
+                                    array('name' => 'het aantal dagen van de maanden kennen',
+                                        'code' => 'WIS MR66.e', 'level' => '00012000'),
+                                    array('name' => 'een jaar (365 dagen), een schrikkeljaar en een eeuw',
+                                        'code' => 'WIS MR66.f', 'level' => '00001200'),
+                                    array('name' => 'trimester, kwartaal, semester',
+                                        'code' => 'WIS MR66.g', 'level' => '00000124'),
+                                )), //MR66
+                            array('name' => 'De datum lezen en noteren',
+                                'code' => 'WIS MR67',
+                                'obj' => array(
+                                    array('name' => 'voluit (bijv. 29 mei 1997)',
+                                        'code' => 'WIS MR67.a', 'level' => '00124000'),
+                                    array('name' => 'op verschillende wijzen (bijv. 1997-05-29)',
+                                        'code' => 'WIS MR67.b', 'level' => '00000240'),
+                                )), //MR67
+                            array('name' => 'Weten dat een tijdstip en een tijdsduur uitgedrukt kan worden in uur of daarvan afgeleide maateenheden, en volgende termen en afkortingen lezen en gebruiken: ',
+                                'code' => 'WIS MR68',
+                                'obj' => array(
+                                    array('name' => 'het uur (wordt niet afgekort) en het halfuur',
+                                        'code' => 'WIS MR68.a', 'level' => '00240000'),
+                                    array('name' => 'het kwartier',
+                                        'code' => 'WIS MR68.b', 'level' => '00024000'),
+                                    array('name' => 'de minuut (min.)',
+                                        'code' => 'WIS MR68.c', 'level' => '00002400'),
+                                    array('name' => 'de seconde (sec.)',
+                                        'code' => 'WIS MR68.d', 'level' => '00000240'),
+                                )), //MR68
+                            array('name' => 'De tijd aflezen en aanduiden, de tijd noteren en tijdsaanduidingen lezen en correct interpreteren: ',
+                                'code' => 'WIS MR69',
+                                'obj' => array(
+                                    array('name' => 'op een analoge klok',
+                                        'code' => 'WIS MR69.a',
+                                        'obj' => array(
+                                            array('name' => 'tot op een uur en een halfuur nauwkeurig',
+                                                'code' => 'WIS MR69.a.1', 'level' => '00200000'),
+                                            array('name' => 'tot op een kwartier nauwkeurig',
+                                                'code' => 'WIS MR69.a.2', 'level' => '00020000')
+                                        )),
+                                    array('name' => 'op een analoge en een digitale klok',
+                                        'code' => 'WIS MR69.b',
+                                        'obj' => array(
+                                            array('name' => 'tot op één minuut nauwkeurig (bijv. 5 over halfdrie; 10 voor twee; 5 voor halfvijf, 16 uur 05 min. of 16.05 uur of in een dienstregeling 16.05)',
+                                                'code' => 'WIS MR69.b.1', 'level' => '00002000'),
+                                            array('name' => 'tot op één seconde nauwkeurig',
+                                                'code' => 'WIS MR69.b.2', 'level' => '00000240')
+                                        )),
+                                )), //MR69
+                            array('name' => 'Tijdsduur berekenen: ',
+                                'code' => 'WIS MR70',
+                                'obj' => array(
+                                    array('name' => 'op een kalender in dagen binnen de periode van een week',
+                                        'code' => 'WIS MR70.a', 'level' => '01200000'),
+                                    array('name' => 'in dagen en/of maanden en/of jaren (bijv. het aantal dagen berekenen van ... tot (en met) ... of tussen...) ',
+                                        'code' => 'WIS MR70.b', 'level' => '00011240'),
+                                    array('name' => 'in uren en/of minuten en/of seconden (bijv.: Er zijn nog 42 min. van 2.18 uur tot 3 uur)',
+                                        'code' => 'WIS MR70.c', 'level' => '00001124'),
+                                )), //MR70
+                        )),
                     array('name' => 'geldwaarden', 'kind' => 'chapter',
-                        'obj' => array()),
+                        'obj' => array(
+                            array('name' => 'Weten dat een geldwaarde uitgedrukt kan worden in euro of daarvan afgeleide maateenheden, daarbij de termen geld, waarde, prijs, euro, (euro)cent... gebruiken:',
+                                'code' => 'WIS MR71',
+                                'obj' => array(
+                                    array('name' => 'de in omloop zijnde muntstukken en bankbiljetten benoemen en onderscheiden',
+                                        'code' => 'WIS MR71.a', 'level' => '00244400'),
+                                    array('name' => 'volgende afkortingen/symbolen lezen en noteren: ',
+                                        'code' => 'WIS MR71.b',
+                                        'obj' => array(
+                                            array('name' => 'euro, €, ...',
+                                                'code' => 'WIS MR71.b.1', 'level' => '00200000'),
+                                            array('name' => 'EUR',
+                                                'code' => 'WIS MR71.b.2', 'level' => '00000200')
+                                        )),
+                                    array('name' => 'en geldwaarden op verschillende wijzen noteren (bijv. 0,50 euro of ... 0,50  of 0,50 EUR of 50 cent)',
+                                        'code' => 'WIS MR71.c', 'level' => '00000244'),
+                                )), //MR71
+                            array('name' => 'Betalen, wisselen, teruggeven.',
+                                'code' => 'WIS MR72',
+                                'level' => '00244400'
+                            ), //MR72
+                        )),
                     array('name' => 'temperatuur', 'kind' => 'chapter',
-                        'obj' => array()),
+                        'obj' => array(
+                            array('name' => 'Weten dat een temperatuur uitgedrukt kan worden in graden Celsius, daarbij de term temperatuur gebruiken en weten dat',
+                                'code' => 'WIS MR73',
+                                'obj' => array(
+                                    array('name' => 'bij temperatuurmeting 0 ° C het vriespunt aangeeft',
+                                        'code' => 'WIS MR73.a', 'level' => '00011200'),
+                                    array('name' => 'bij temperaturen beneden het vriespunt negatieve getallen gebruikt worden.',
+                                        'code' => 'WIS MR73.b', 'level' => '00011200'),
+                                )), //MR73
+                            array('name' => 'De temperatuur tot op 1° C nauwkeurig meten, aflezen en noteren.',
+                                'code' => 'WIS MR74',
+                                'level' => '00011200'
+                            ), //MR74
+                        )),
                     array('name' => 'hoekgrootte', 'kind' => 'chapter',
-                        'obj' => array()),
+                        'obj' => array(
+                            array('name' => 'Weten dat het resultaat van de meting van de hoekgrootte uitgedrukt kan worden in graden, daarbij de term graad gebruiken, de graad kennen als het negentigste deel van een rechte hoek en zijn symbool (°) lezen en noteren.',
+                                'code' => 'WIS MR75',
+                                'level' => '00000024'
+                            ), //MR75
+                            array('name' => 'Met een geodriehoek hoeken vergelijken.',
+                                'code' => 'WIS MR76',
+                                'level' => '00001120'
+                            ), //MR76
+                            array('name' => 'Met een geodriehoek hoeken meten en tekenen tot op 1°nauwkeurig.',
+                                'code' => 'WIS MR77',
+                                'level' => '00000024'
+                            ), //MR77
+                        )),
                 )),
             array('name' => 'toepassingen', 'kind' => 'chapter',
-                'obj' => array()),
-        )), //MK
+                'obj' => array(
+                    array('name' => 'Het gemiddelde van meetresultaten berekenen en weten wanneer dat zinvol is.',
+                        'code' => 'WIS MR78',
+                        'level' => '00000244'
+                    ), //MR78
+                    array('name' => 'In betekenisvolle situaties weten wanneer een schatting (bijv. een huiskamer is ongeveer 2,5 m hoog) of een benaderende aanduiding (bijv. het gewicht van iemand wordt uitgedrukt in kg niet in gram) zinvoller is dan een precieze meting of een exacte berekening.',
+                        'code' => 'WIS MR79',
+                        'level' => '00011124'
+                    ), //MR79
+                    array('name' => 'Indirect meten (bijv. 20 min. wandelen als antwoord op de vraag hoe ver het is).',
+                        'code' => 'WIS MR80',
+                        'level' => '00000012'
+                    ), //MR80
+                    array('name' => 'Kennis maken met minder gebruikelijke meetinstrumenten (bijv. een weeghaak, een meetwiel).',
+                        'code' => 'WIS MR81',
+                        'level' => '00000112'
+                    ), //MR81
+                    array('name' => 'Tabellen (bijv. spoorboekje, de dienstregeling van de bus, een televisiegids), grafieken en diagrammen (staaf- en cirkeldiagram) lezen en correct interpreteren.',
+                        'code' => 'WIS MR82',
+                        'level' => '00011244'
+                    ), //MR82
+                    array('name' => 'Meetresultaten in tabellen, grafieken en staafdiagrammen verwerken.',
+                        'code' => 'WIS MR83',
+                        'level' => '00001244'
+                    ), //MR83
+                    array('name' => 'Bij meetkundige voorstellingen verhoudingen vaststellen en vergelijken (bijv. Hoeveel keer is de pen op de foto kleiner dan in werkelijkheid?).',
+                        'code' => 'WIS MR84',
+                        'level' => '00011124'
+                    ), //MR84
+                    array('name' => 'De begrippen en termen schaal, lijnschaal en breukschaal kennen en met voorbeelden uitleggen wanneer die begrippen gebruikt kunnen worden.',
+                        'code' => 'WIS MR85',
+                        'level' => '00000124'
+                    ), //MR85
+                    array('name' => 'Allerlei verbanden, patronen en structuren tussen en met grootheden en maatgetallen opsporen en onderzoeken.',
+                        'code' => 'WIS MR86',
+                        'level' => '00000244'
+                    ), //MR86
+                    array('name' => 'Inzien dat bij het gelijkvormig vergroten of verkleinen van een oppervlakte twee afmetingen, en van een volume drie afmetingen een rol spelen (bijv. een vierkant met zijden van 3 cm heeft een oppervlakte van 9 cm², een vierkant met zijden van 6 cm heeft een oppervlakte van 36 cm², een kubus met ribben van 1 cm heeft een volume van 1 cm³, een kubus met ribben van 2 cm heeft een volume van 8 cm³).',
+                        'code' => 'WIS MR87',
+                        'level' => '00000112'
+                    ), //MR87
+                    array('name' => 'Vraagstukken over één grootheid oplossen: lengte, oppervlakte, inhoud, volume, gewicht, tijd, geldwaarden, temperatuur en hoekgrootte.',
+                        'code' => 'WIS MR88',
+                        'level' => '00111244'
+                    ), //MR88
+                    array('name' => 'In veel voorkomende situaties de relaties tussen grootheden ervaren en onderzoeken bij:',
+                        'code' => 'WIS MR89',
+                        'obj' => array(
+                            array('name' => 'prijsberekeningen',
+                                'code' => 'WIS MR89.a', 'level' => '00000124'),
+                            array('name' => 'winst of verlies',
+                                'code' => 'WIS MR89.b', 'level' => '00000124'),
+                            array('name' => 'tijd, afstand, snelheid',
+                                'code' => 'WIS MR89.c', 'level' => '00000124'),
+                            array('name' => 'sparen',
+                                'code' => 'WIS MR89.d', 'level' => '00000024'),
+                            array('name' => 'korting',
+                                'code' => 'WIS MR89.e', 'level' => '00000024'),
+                            array('name' => 'kapitaal en enkelvoudige interest',
+                                'code' => 'WIS MR89.f', 'level' => '00000024'),
+                            array('name' => 'soortelijk gewicht',
+                                'code' => 'WIS MR89.g', 'level' => '00000001'),
+                        )), //MR89
+                    array('name' => 'Resultaten van metingen zoals bevolkingsdichtheid, windkracht, neerslag, stijgingspercentage van de weg, verkeersintensiteit, kijkdichtheid, leesvaardigheid, populariteit... begrijpen.',
+                        'code' => 'WIS MR90',
+                        'level' => '00000112'
+                    ), //MR90
+                )),
+        )), //MR
 );
 
 /*
@@ -968,6 +1393,11 @@ array('name' => '',
         array('name' => '', 'code' => 'WIS G4.d', 'level' => ''),
     )), //G4
 
+
+array('name' => '',
+        'code' => 'WIS MR',
+        'level' => ''
+), //MR
  */
 
 /*

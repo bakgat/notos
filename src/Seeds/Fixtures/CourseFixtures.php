@@ -12,12 +12,14 @@ namespace Bakgat\Notos\Seeds\Fixtures;
 use Bakgat\Notos\Domain\Model\Curricula\Course;
 use Bakgat\Notos\Domain\Model\Curricula\CourseRepository;
 use Bakgat\Notos\Domain\Model\Curricula\Curriculum;
+use Bakgat\Notos\Domain\Model\Curricula\CurriculumRepository;
 use Bakgat\Notos\Domain\Model\Curricula\Objective;
 use Bakgat\Notos\Domain\Model\Curricula\ObjectiveControlLevel;
 use Bakgat\Notos\Domain\Model\Curricula\Structure;
 use Bakgat\Notos\Domain\Model\Identity\Group;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CourseDoctrineORMRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CurriculumDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\GroupDoctrineORMRepository;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -28,6 +30,8 @@ class CourseFixtures implements FixtureInterface
     private $courseRepo;
     /** @var GroupRepository $groupRepo */
     private $groupRepo;
+    /** @var  CurriculumRepository $currRepo */
+    private $currRepo;
     /** @var ObjectManager $manager */
     private $manager;
 
@@ -46,10 +50,11 @@ class CourseFixtures implements FixtureInterface
         $this->manager = $manager;
         $this->courseRepo = new CourseDoctrineORMRepository($manager);
         $this->groupRepo = new GroupDoctrineORMRepository($manager);
+        $this->currRepo = new CurriculumDoctrineORMRepository($manager);
 
         $this->math_objectives = include_once __DIR__ . '/objectives_math.php';
-        $this->createGroups();
-        $this->createCourses();
+        //$this->createGroups();
+        //$this->createCourses();
         $this->createCurricula();
 
     }
@@ -75,9 +80,10 @@ class CourseFixtures implements FixtureInterface
     private function createCurricula()
     {
         $maths = $this->courseRepo->courseOfName(new Name('wiskunde'));
-        $maths_cur = new Curriculum($maths, 2000);
-        $maths_cur->setCode('D/2000/0938/02');
-        $this->manager->persist($maths_cur);
+        $maths_cur = $this->currRepo->curriculumOfCourse($maths);
+        //$maths_cur = new Curriculum($maths, 2000);
+        //$maths_cur->setCode('D/2000/0938/02');
+        //$this->manager->persist($maths_cur);
 
         $this->recursiveStructure($this->math_objectives, null, $maths_cur);
 
@@ -92,17 +98,18 @@ class CourseFixtures implements FixtureInterface
         foreach ($structure as $struc) {
             $data = $struc;
 
-            $structure = Structure::register($curr, new Name($data['name']), $data['kind']);
-            if ($parent) {
+            //$structure = Structure::register($curr, new Name($data['name']), $data['kind']);
+            /*if ($parent) {
                 $parent->addChild($structure);
                 $structure->setParent($parent);
             }
             $this->manager->persist($structure);
-            $curr->addStructure($structure);
+            $curr->addStructure($structure);*/
 
 
             //$s = $this->curriculum->createStructure($curr, $data);
 
+            $structure = $this->currRepo->structure($curr, $parent, $data['name'], $data['kind']);
             if (isset($data['obj'])) {
                 $this->recursiveObjectives($data['obj'], null, $structure);
             }
@@ -110,10 +117,11 @@ class CourseFixtures implements FixtureInterface
                 $this->recursiveStructure($data['children'], $structure, $curr);
             }
         }
-        $this->manager->persist($curr);
+        /*NOT NOW, NOT ANY MORE
+         * $this->manager->persist($curr);
         if ($parent) {
             $this->manager->persist($parent);
-        }
+        }*/
     }
 
     private function recursiveObjectives($objectives, $parent, $structure)
@@ -122,33 +130,37 @@ class CourseFixtures implements FixtureInterface
             $data = $obj;
             //$data['parent'] = $parent;
 
-            $objective = Objective::register(new Name($data['name']), $data['code'], $structure);
-            if ($parent) {
-                $parent->addChild($objective);
-                $objective->setParent($parent);
-            }
+            $objective = $this->currRepo->objectiveOfCode($data['code']);
+            //if not already exists in database
+            if (!$objective) {
+                $objective = Objective::register(new Name($data['name']), $data['code'], $structure);
 
-            $this->manager->persist($objective);
+                if ($parent) {
+                    $parent->addChild($objective);
+                    $objective->setParent($parent);
+                }
 
-            $structure->addObjective($objective);
+                $this->manager->persist($objective);
 
-            if (isset($data['level'])) {
-                $o_levels = str_split($data['level']);
+                $structure->addObjective($objective);
 
-                //find group
-                $i = 0;
-                foreach ($this->cur_classlevels as $grouplevel) {
-                    $group = $this->groupRepo->groupOfName($grouplevel);
-                    $obj_level = ObjectiveControlLevel::register($group, $objective, $o_levels[$i++]);
-                    $this->manager->merge($obj_level);
+                if (isset($data['level'])) {
+                    $o_levels = str_split($data['level']);
+
+                    //find group
+                    $i = 0;
+                    foreach ($this->cur_classlevels as $grouplevel) {
+                        $group = $this->groupRepo->groupOfName($grouplevel);
+                        $obj_level = ObjectiveControlLevel::register($group, $objective, $o_levels[$i++]);
+                        $this->manager->merge($obj_level);
+                    }
                 }
             }
-
             if (isset($data['obj'])) {
                 $this->recursiveObjectives($data['obj'], $objective, $structure);
             }
         }
-        $this->manager->persist($structure);
+        //$this->manager->persist($structure);
         if ($parent) {
             $this->manager->persist($parent);
         }

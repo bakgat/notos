@@ -71,4 +71,6 @@ interface CurriculumRepository
      * @return Objective
      */
     public function objectiveOfId($id);
+
+    public function structure(Curriculum $curriculum, $parent_id, $name, $type);
 }

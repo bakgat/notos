@@ -44,7 +44,7 @@ class Objective
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=15, unique=true)
      * @JMS\Groups({"list","detail"})
      */
     private $code;
