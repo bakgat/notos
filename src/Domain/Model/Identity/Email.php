@@ -10,14 +10,22 @@ namespace Bakgat\Notos\Domain\Model\Identity;
 
 
 use Assert\Assertion;
+use Bakgat\Notos\Domain\Model\Identity\Exceptions\EmailNotValid;
 use Bakgat\Notos\Domain\Model\ValueObject;
 
-class Email implements ValueObject {
+class Email implements ValueObject
+{
 
     private $value;
 
-    public function __construct($value) {
-        Assertion::regex($value, '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}^');
+    private $email_regex = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}^';
+
+    public function __construct($value)
+    {
+        //Assertion::regex($value, $this->email_regex);
+        if (!$this->isValidEmail($value)) {
+            throw new EmailNotValid($value);
+        }
         $this->value = $value;
     }
 
@@ -26,7 +34,8 @@ class Email implements ValueObject {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->value;
     }
 
@@ -63,4 +72,13 @@ class Email implements ValueObject {
         return $this->value;
     }
 
+
+    /* ***************************************************
+     * PRIVATE VALIDATION METHODS
+     * **************************************************/
+
+    private function isValidEmail($value)
+    {
+        return preg_match($this->email_regex, $value);
+    }
 }

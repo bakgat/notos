@@ -38,6 +38,11 @@ return [
         'detail' => '%s is geen geldige domeinnaam.'
     ],
 
+    'email_not_valid' => [
+        'title' => 'De server voldoet niet aan een van de voorwaarden die werden aangevraagd.',
+        'detail' => '%s is geen geldig email-adres.'
+    ],
+
     'duplicate' => [
         'title' => 'Het verzoek was geldig, maar de server kon het niet verwerken als gevolg van semantische fouten.',
         'detail' => '%s [%s] bestaat al.'

@@ -25,11 +25,10 @@ class DomainName implements ValueObject {
      * @throws PreconditionFailedException
      */
     public function __construct($value) {
-        //Assertion::regex($value, $this->domain_regex);
-
         if(!$this->isValidDomainName($value)) {
             throw new DomainNameNotValid($value);
         }
+
         $this->value = $value;
     }
 
