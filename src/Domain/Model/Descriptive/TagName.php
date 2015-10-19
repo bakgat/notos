@@ -28,7 +28,7 @@ class TagName implements ValueObject {
         //only allow a-z A-Z 0-9 and spaces
         //Assertion::regex($value, $this->tag_regex);
         if(!$this->tagnameIsValid($value)) {
-            throw new TagNameNotValidException($value);
+            throw new \Bakgat\Notos\Domain\Model\Descriptive\Exceptions\TagNameNotValidException($value);
         }
 
         $this->value = $value;
