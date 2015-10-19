@@ -21,7 +21,7 @@ class EmailTest extends TestCase
      */
     public function should_require_valid_email()
     {
-        $this->setExpectedException('Bakgat\Notos\Domain\Model\Identity\Exceptions\EmailNotValid');
+        $this->setExpectedException('Bakgat\Notos\Domain\Model\Identity\Exceptions\EmailNotValidException');
         $email = new Email('karl');
     }
 

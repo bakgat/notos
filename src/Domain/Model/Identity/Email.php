@@ -10,7 +10,7 @@ namespace Bakgat\Notos\Domain\Model\Identity;
 
 
 use Assert\Assertion;
-use Bakgat\Notos\Domain\Model\Identity\Exceptions\EmailNotValid;
+use Bakgat\Notos\Domain\Model\Identity\Exceptions\EmailNotValidException;
 use Bakgat\Notos\Domain\Model\ValueObject;
 
 class Email implements ValueObject
@@ -24,7 +24,7 @@ class Email implements ValueObject
     {
         //Assertion::regex($value, $this->email_regex);
         if (!$this->isValidEmail($value)) {
-            throw new EmailNotValid($value);
+            throw new EmailNotValidException($value);
         }
         $this->value = $value;
     }

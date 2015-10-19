@@ -11,7 +11,7 @@ namespace Bakgat\Notos\Domain\Model\Identity\Exceptions;
 
 use Bakgat\Notos\Exceptions\PreconditionFailedException;
 
-class EmailNotValid extends PreconditionFailedException
+class EmailNotValidException extends PreconditionFailedException
 {
     public function __construct() {
         $args = func_get_args();

@@ -11,7 +11,7 @@ namespace Bakgat\Notos\Domain\Model\Identity\Exceptions;
 
 use Bakgat\Notos\Exceptions\PreconditionFailedException;
 
-class DomainNameNotValid extends PreconditionFailedException
+class DomainNameNotValidException extends PreconditionFailedException
 {
     public function __construct() {
         $args = func_get_args();

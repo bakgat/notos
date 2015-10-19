@@ -19,7 +19,7 @@ class DomainNameTest extends TestCase {
      * @group domainname
      */
     public function should_require_valid_domainname() {
-        $this->setExpectedException('Bakgat\Notos\Domain\Model\Identity\Exceptions\DomainNameNotValid');
+        $this->setExpectedException('Bakgat\Notos\Domain\Model\Identity\Exceptions\DomainNameNotValidException');
         $domain  = new DomainName('test');
     }
 

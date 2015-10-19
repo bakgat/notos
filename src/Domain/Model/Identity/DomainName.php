@@ -10,7 +10,7 @@ namespace Bakgat\Notos\Domain\Model\Identity;
 
 
 use Assert\Assertion;
-use Bakgat\Notos\Domain\Model\Identity\Exceptions\DomainNameNotValid;
+use Bakgat\Notos\Domain\Model\Identity\Exceptions\DomainNameNotValidException;
 use Bakgat\Notos\Domain\Model\ValueObject;
 use Bakgat\Notos\Exceptions\PreconditionFailedException;
 
@@ -26,7 +26,7 @@ class DomainName implements ValueObject {
      */
     public function __construct($value) {
         if(!$this->isValidDomainName($value)) {
-            throw new DomainNameNotValid($value);
+            throw new DomainNameNotValidException($value);
         }
 
         $this->value = $value;
