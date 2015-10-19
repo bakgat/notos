@@ -18,6 +18,9 @@ class TagNameTest extends TestCase
      * @test
      * @group tagname
      */
+    //TODO: this test always fails on Travis
+    //Class: TagNameNotValidException not found ???
+    //local it works
     /*public function should_require_valid_tagname()
     {
         $this->setExpectedException('Bakgat\Notos\Domain\Model\Descriptive\Exceptions\TagNameNotValidException');
