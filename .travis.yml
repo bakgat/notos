@@ -9,7 +9,7 @@ before_script:
   - composer install --no-interaction --prefer-source
   - cp .env.travis .env
   - cp config/doctrine.travis.php config/doctrine.php
-  - cp bootstrap/autoload.travis.php bootstrap/autoload.php
+  - cp bootstrap/autoload.travis.php autoload.php
   - mysql -e 'create database notosplus;'
   - ./vendor/bin/doctrine orm:schema-tool:create
 
