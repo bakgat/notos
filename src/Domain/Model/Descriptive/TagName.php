@@ -19,6 +19,10 @@ class TagName implements ValueObject {
 
     private $tag_regex = '/^[ \w#-]+$/';
 
+    /**
+     * @param $value
+     * @throws TagNameNotValidException
+     */
     public function __construct($value) {
 
         //only allow a-z A-Z 0-9 and spaces
