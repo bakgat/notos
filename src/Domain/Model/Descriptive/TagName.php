@@ -10,16 +10,22 @@ namespace Bakgat\Notos\Domain\Model\Descriptive;
 
 
 use Assert\Assertion;
+use Bakgat\Notos\Domain\Model\Descriptive\Exceptions\TagNameNotValidException;
 use Bakgat\Notos\Domain\Model\ValueObject;
 
 class TagName implements ValueObject {
 
     private $value;
 
+    private $tag_regex = '/^[ \w#-]+$/';
+
     public function __construct($value) {
 
         //only allow a-z A-Z 0-9 and spaces
-        Assertion::regex($value, '/^[ \w#-]+$/');
+        //Assertion::regex($value, $this->tag_regex);
+        if(!$this->tagnameIsValid($value)) {
+            throw new TagNameNotValidException($value);
+        }
 
         $this->value = $value;
     }
@@ -64,5 +70,12 @@ class TagName implements ValueObject {
     public function toString()
     {
         return strtolower($this->value);
+    }
+
+    /* ***************************************************
+     * PRIVATE VALIDATION METHODS
+     * **************************************************/
+    private function tagnameIsValid($value) {
+        return preg_match($this->tag_regex, $value);
     }
 }

@@ -3,19 +3,19 @@
  * Created by PhpStorm.
  * User: karlvaniseghem
  * Date: 19/10/15
- * Time: 14:18
+ * Time: 15:30
  */
 
-namespace Bakgat\Notos\Domain\Model\Identity\Exceptions;
+namespace Bakgat\Notos\Domain\Model\Descriptive\Exceptions;
 
 
 use Bakgat\Notos\Exceptions\PreconditionFailedException;
 
-class UsernameNotValidException extends PreconditionFailedException
+class TagNameNotValidException extends PreconditionFailedException
 {
     public function __construct() {
         $args = func_get_args();
-        array_unshift($args, 'username_not_valid');
+        array_unshift($args, 'tagname_not_valid');
 
         call_user_func_array(array($this, 'parent::__construct'), $args);
     }
