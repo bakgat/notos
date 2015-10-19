@@ -10,6 +10,7 @@ namespace Bakgat\Notos\Domain\Model\Location;
 
 
 
+use Bakgat\Notos\Domain\Model\Location\Exceptions\URLNotValidException;
 use Bakgat\Notos\Domain\Model\ValueObject;
 
 class URL implements ValueObject
@@ -36,6 +37,8 @@ class URL implements ValueObject
 
         $this->remove_empty_delimiters = $remove_empty_delimiters;
         $this->sort_query_params = $sort_query_params;
+
+        $this->normalize();
     }
 
     /**
@@ -218,6 +221,7 @@ class URL implements ValueObject
         }
 
         $this->setUrl($this->scheme . $authority . $this->path . $this->query . $this->fragment);
+
 
         return $this->url;
     }
@@ -423,6 +427,9 @@ class URL implements ValueObject
             foreach ($encodedParts as $key => $value) {
                 $result[$key] = urldecode(str_replace($replacements, $entities, $value));
             }
+        } else {
+            //parse_url returned false, so URL is seriously malformed
+            throw new URLNotValidException($url);
         }
         return $result;
     }

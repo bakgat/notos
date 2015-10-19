@@ -56,6 +56,11 @@ return [
         'detail' => '%s is geen geldige tag.'
     ],
 
+    'url_not_valid' => [
+        'title' => 'De server voldoet niet aan een van de voorwaarden die werden aangevraagd.',
+        'detail' => '%s is geen geldig webadres.'
+    ],
+
     /* ***************************************************
      * DUPLICATE
      * **************************************************/
