@@ -30,7 +30,7 @@ class DomainNameTest extends TestCase {
     public function should_accept_valid_domainname() {
         $domain = new DomainName('klimtoren.be');
 
-        $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\DomainNpame', $domain);
+        $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\DomainName', $domain);
     }
 
     /**
