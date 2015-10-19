@@ -30,7 +30,12 @@ return [
 
     'precondition_failed' => [
         'title' => 'De server voldoet niet aan een van de voorwaarden die werden aangevraagd.',
-        'detail' => 'Uw aanvraag voldeed niet aan de vereiste voorwaarden.'
+        'detail' => 'Uw aanvraag voldeed niet aan de vereiste voorwaarden. %s'
+    ],
+
+    'domainname_not_valid' => [
+        'title' => 'De server voldoet niet aan een van de voorwaarden die werden aangevraagd.',
+        'detail' => '%s is geen geldige domeinnaam.'
     ],
 
     'duplicate' => [

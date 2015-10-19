@@ -9,7 +9,7 @@
 namespace Bakgat\Notos\Exceptions;
 
 
-class PreconditionFailedException
+class PreconditionFailedException extends NotosException
 {
     protected $status = '412';
 
