@@ -51,9 +51,10 @@ class NotosServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/views' => base_path('resources/views'),
         ]);
-
-
         */
+        $this->publishes([__DIR__ . '../config/doctrine.php' => config_path('doctrine.php')], 'config');
+        $this->publishes([__DIR__ . '../config/errors.php' => config_path('errors.php')], 'config');
+
         $this->extendAuthManager();
     }
 
@@ -89,6 +90,9 @@ class NotosServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(
             __DIR__ . '/../config/doctrine.php', 'doctrine'
+        );
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/errors.php', 'errors'
         );
 
         /*

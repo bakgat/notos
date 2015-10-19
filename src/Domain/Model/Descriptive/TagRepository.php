@@ -9,8 +9,6 @@
 namespace Bakgat\Notos\Domain\Model\Descriptive;
 
 
-use Bakgat\Notos\Domain\Model\Identity\Name;
-
 interface TagRepository
 {
     /**
@@ -44,15 +42,17 @@ interface TagRepository
 
     /**
      * Finds a tag by it's name
-     * @param Name $name
+     *
+     * @param TagName $name
      * @return mixed
      */
-    public function tagOfName(Name $name);
+    public function tagOfName(TagName $name);
 
     /**
      * Finds a tag by it's name or create one
-     * @param Name $name
+     *
+     * @param TagName $name
      * @return mixed
      */
-    public function tagOfNameOrCreate(Name $name);
+    public function tagOfNameOrCreate(TagName $name);
 }

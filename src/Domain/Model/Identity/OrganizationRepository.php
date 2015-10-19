@@ -41,6 +41,7 @@ interface OrganizationRepository {
      *
      * @param $id
      * @return Organization
+     * @throws OrganizationNotFoundException
      */
     public function organizationOfId($id);
 

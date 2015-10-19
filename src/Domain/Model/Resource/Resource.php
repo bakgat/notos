@@ -20,7 +20,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"resource"="Resource", "book"="Book", "image"="Image"})
+ * @ORM\DiscriminatorMap({"resource"="Resource", "book"="Book", "asset"="Asset", "image"="Image"})
  * @ORM\Table(name="resources")
  */
 class Resource

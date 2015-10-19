@@ -10,22 +10,27 @@ namespace Bakgat\Notos\Domain\Services\Identity;
 
 
 use Bakgat\Notos\Domain\Model\ACL\RoleRepository;
-use Bakgat\Notos\Domain\Model\ACL\UserRole;
 use Bakgat\Notos\Domain\Model\ACL\UserRolesRepository;
-use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\Email;
+use Bakgat\Notos\Domain\Model\Identity\Exceptions\OrganizationNotFoundException;
+use Bakgat\Notos\Domain\Model\Identity\Exceptions\UsernameIsNotUniqueException;
+use Bakgat\Notos\Domain\Model\Identity\Exceptions\UserNotFoundException;
 use Bakgat\Notos\Domain\Model\Identity\Gender;
 use Bakgat\Notos\Domain\Model\Identity\HashedPassword;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Identity\User;
 use Bakgat\Notos\Domain\Model\Identity\Username;
+use Bakgat\Notos\Domain\Model\Identity\UsernameIsUnique;
+use Bakgat\Notos\Domain\Model\Identity\UsernameSpecification;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
+use Bakgat\Notos\Exceptions\DuplicateException;
 use DateTime;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 class UserService
 {
@@ -41,6 +46,8 @@ class UserService
     private $userRoleRepo;
     /** @var Hasher $hasher */
     private $hasher;
+    /** @var UsernameSpecification $usernameSpec */
+    private $usernameSpec;
 
     public function __construct(/*Guard $guard, */
         UserRepository $userRepository, OrganizationRepository $organizationRepository,
@@ -79,9 +86,14 @@ class UserService
         return false;
     }
 
+    /**
+     * @param $orgId
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @throws OrganizationNotFoundException
+     */
     public function getUsers($orgId)
     {
-        $organization = $this->orgRepo->organizationOfId($orgId);
+        $organization = $this->organizationOfId($orgId);
         return $this->userRepo->all($organization);
     }
 
@@ -93,41 +105,60 @@ class UserService
         return $user;
     }
 
+    /**
+     * @param $id
+     * @return User
+     * @throws UserNotFoundException
+     */
     public function userOfId($id)
     {
-        return $this->userRepo->userOfId($id);
-    }
-
-    public function userOfUsername($username)
-    {
-        if ($username) {
-            return $this->userRepo->userOfUsername(new Username($username));
+        $user = $this->userRepo->userOfId($id);
+        if (!$user) {
+            throw new UserNotFoundException($id);
         }
-
+        return $user;
     }
 
     /**
-     * @param string|null $username
-     * @param string|null $domainname
+     * @param $username
+     * @return User
+     * @throws UserNotFoundException
+     */
+    public function userOfUsername($username)
+    {
+        $user = $this->userRepo->userOfUsername(new Username($username));
+        if (!$user) {
+            throw new UserNotFoundException($username);
+        }
+        return $user;
+    }
+
+    /**
+     * @param $userId
+     * @param $orgId
      * @return mixed|null
-     * @throws NoCurrentOrganizationLoggedInto
-     * @throws NoCurrentUserFoundException
+     * @throws OrganizationNotFoundException
+     * @throws UserNotFoundException
      */
     public function getUserWithACL($userId, $orgId)
     {
-        $user = $this->userRepo->userOfId($userId);
-        $organization = $this->orgRepo->organizationOfId($orgId);
+        $organization = $this->organizationOfId($orgId);
+        $user = $this->userOfId($userId);
 
         $user = $this->userRepo->userWithACL($user->username(), $organization);
         return $user;
     }
 
+    /**
+     * @param $userId
+     * @param $orgId
+     * @return User
+     */
     public function getProfile($userId, $orgId)
     {
+        $organization = $this->organizationOfId($orgId);
+        $user = $this->userOfId($userId);
 
-        $organization = $this->orgRepo->organizationOfId($orgId);
-
-        $user = $this->userRepo->userOfId($userId);
         //fill user with ALL ACL info
         $user = $this->userRepo->userWithACL($user->username(), $organization);
 
@@ -144,11 +175,14 @@ class UserService
      * Adds a new user to an organization.
      *
      * @param $data
-     * @param Organization $organization
+     * @param $orgId
      * @return User
+     * @throws DuplicateException
+     * @throws OrganizationNotFoundException
      */
     public function add($data, $orgId)
     {
+        //extract all data from array
         $firstName = new Name($data['first_name']);
         $lastName = new Name($data['last_name']);
         $userName = new Username($data['username']);
@@ -162,12 +196,17 @@ class UserService
             $email = new Email($data['username']);
         }
 
-        $user = User::register($firstName, $lastName, $userName, $hashedPwd, $email, $gender);
+        //find the organization
+        $organization = $this->organizationOfId($orgId);
 
+        //only unique usernames
+        $this->checkUsernameIsUnique($userName);
+
+        //all valid, now GO!
+        $user = User::register($firstName, $lastName, $userName, $hashedPwd, $email, $gender);
         $this->userRepo->add($user);
 
-        $organization = $this->orgRepo->organizationOfId($orgId);
-
+        //make this user a 'user' of the organization
         $this->addUserToRole($user, 'user', $organization);
 
         //return the entire filled profile (ACL included)
@@ -180,6 +219,7 @@ class UserService
      *
      * @param $data
      * @return User
+     * @throws UserNotFoundException
      */
     public function update($data)
     {
@@ -200,13 +240,13 @@ class UserService
      *
      * @param $userId
      * @return bool
+     * @throws UserNotFoundException
      */
     public function destroy($userId)
     {
-        $user = $this->userRepo->userOfId($userId);
-        if (!$user) {
-            return false;
-        }
+        //TODO: delete in org relationship too
+
+        $user = $this->userOfId($userId);
 
         $user->setDeletedAt(new DateTime);
         $this->userRepo->update($user);
@@ -230,6 +270,10 @@ class UserService
         return $user;
     }
 
+    /**
+     * @param User $user
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
     public function organizationsOfUser(User $user)
     {
         $orgs = $this->userRepo->organizationsOfUser($user);
@@ -237,10 +281,47 @@ class UserService
         return $orgs;
     }
 
+    /**
+     * @param $user
+     * @param $rolename
+     * @param $organization
+     */
     public function addUserToRole($user, $rolename, $organization)
     {
         $role = $this->roleRepo->get($rolename);
+        //TODO: throw role not found
 
         $this->userRoleRepo->register($user, $role, $organization);
     }
+
+    /* ***************************************************
+     * PRIVATE VALIDATION METHODS
+     * **************************************************/
+
+    /**
+     * @param Username $username
+     * @throws DuplicateException
+     */
+    private function checkUsernameIsUnique(Username $username)
+    {
+        $specification = new UsernameIsUnique($this->userRepo);
+        if (!$specification->isSatisfiedBy($username)) {
+            throw new DuplicateException('gebruikersnaam', $username->toString());
+        }
+    }
+
+    /**
+     * @param $orgId
+     * @return \Bakgat\Notos\Domain\Model\Identity\Organization
+     * @throws OrganizationNotFoundException
+     */
+    private function organizationOfId($orgId)
+    {
+        $organization = $this->orgRepo->organizationOfId($orgId);
+        if (!$organization) {
+            throw new OrganizationNotFoundException($orgId);
+        }
+        return $organization;
+    }
+
 }

@@ -9,7 +9,7 @@
 namespace Bakgat\Notos\Infrastructure\Repositories\Descriptive;
 
 
-use Bakgat\Notos\Domain\Model\Descriptive\Tag;
+use Bakgat\Notos\Domain\Model\Descriptive\TagName;
 use Bakgat\Notos\Domain\Model\Descriptive\TagRepository;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Doctrine\ORM\EntityManager;
@@ -75,10 +75,11 @@ class TagDoctrineORMRepository implements TagRepository
 
     /**
      * Finds a tag by it's name
-     * @param Name $name
-     * @return mixed
+     *
+     * @param TagName $name
+     * @return Tag
      */
-    public function tagOfName(Name $name)
+    public function tagOfName(TagName $name)
     {
         $tag = $this->em->getRepository($this->class)
             ->findOneBy(['name' => strtolower($name->toString())]);
@@ -86,7 +87,13 @@ class TagDoctrineORMRepository implements TagRepository
         return $tag;
     }
 
-    public function tagOfNameOrCreate(Name $name)
+    /**
+     * Finds a tag by it's name or create one
+     *
+     * @param TagName $name
+     * @return mixed
+     */
+    public function tagOfNameOrCreate(TagName $name)
     {
         $tag = $this->tagOfName($name);
         if ($tag === null) {

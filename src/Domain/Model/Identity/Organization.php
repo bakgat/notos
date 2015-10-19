@@ -9,6 +9,7 @@
 namespace Bakgat\Notos\Domain\Model\Identity;
 
 
+use Bakgat\Notos\Domain\Model\Resource\Asset;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,7 +28,7 @@ class Organization extends Party
 {
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, unique=true)
      */
     private $domain_name;
     /**
@@ -41,6 +42,11 @@ class Organization extends Party
      */
     private $user_roles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\Resource\Asset", mappedBy="organization")
+     * @var ArrayCollection
+     */
+    private $assets;
 
 
     public function __construct($name)
@@ -115,6 +121,27 @@ class Organization extends Party
         return $this->avatar;
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function assets()
+    {
+        return $this->assets;
+    }
 
+    /**
+     * @param Asset $asset
+     */
+    public function addAsset(Asset $asset)
+    {
+        $this->assets[] = $asset;
+    }
 
+    /**
+     * @param Asset $asset
+     */
+    public function removeAsset(Asset $asset)
+    {
+        $this->assets->removeElement($asset);
+    }
 }

@@ -878,7 +878,15 @@ return array(
         )), //B
 
     array('name' => 'meetkunde', 'kind' => 'subcourse',
-        'children' => array()), //MK
+        'children' => array(
+            array('name' => 'ruimtelijke oriëntatie', 'kind'=>'chapter',
+                array('name' => 'Ervaringen opdoen in verband met omsluiting en ze verwoorden met termen als: in, uit, binnen, buiten, open, gesloten, tussen, rondom...',
+                    'code' => 'WIS MK1',
+                    'level' => '11240000'
+                ), //MK1
+
+            ),
+        )), //MK
 
     array('name' => 'meten en metend rekenen', 'kind' => 'subcourse',
         'children' => array(

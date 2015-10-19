@@ -30,7 +30,9 @@
     "atrauzzi/laravel-serializer": "dev-master",
     "doctrine/doctrine-fixtures-bundle": "^2.2@dev",
     "bakgat/serializer": "dev-master",
-    "intervention/image": "^2.3@dev"
+    "intervention/image": "^2.3@dev",
+    "intervention/imagecache": "dev-master",
+    "dflydev/apache-mime-types": "^1.0@dev"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

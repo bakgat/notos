@@ -38,7 +38,6 @@ Route::post('password/reset', [
 ]);
 
 
-
 /* ------------------------
  * API
  * ---------------------- */
@@ -47,24 +46,32 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
     /*
      * ORGANIZATION SPECIFIC ROUTES
      */
-    Route::group(['prefix' => '/organization/{orgId}'], function() {
-        Route::group(['prefix' => '/user', 'namespace' => 'Identity'], function () {
-            include_once __DIR__ . '/Routes/UserRoutes.php';
-        });
+    Route::group(['prefix' => '/organization'], function () {
 
-        Route::group(['prefix' => '/blogs', 'namespace' => 'Location'], function () {
-            include_once __DIR__ . '/Routes/BlogRoutes.php';
-        });
+        Route::group(['prefix' => '/{orgId}'], function () {
 
-        Route::group(['prefix' => '/books', 'namespace' => 'Resource'], function () {
-            include_once __DIR__ . '/Routes/BooksRoutes.php';
-        });
-        Route::group(['prefix' => '/meals', 'namespace' => 'Resource'], function () {
-            include_once __DIR__ . '/Routes/MealsRoutes.php';
-        });
+            Route::get('/', 'Identity\OrganizationController@edit');
 
-        Route::group(['prefix'=>'/calendar', 'namespace' => 'Event'], function() {
-            include_once __DIR__ . '/Routes/EventRoutes.php';
+
+            Route::group(['prefix' => '/user', 'namespace' => 'Identity'], function () {
+                include_once __DIR__ . '/Routes/UserRoutes.php';
+            });
+
+            Route::group(['prefix' => '/blogs', 'namespace' => 'Location'], function () {
+                include_once __DIR__ . '/Routes/BlogRoutes.php';
+            });
+
+            Route::group(['prefix' => '/books', 'namespace' => 'Resource'], function () {
+                include_once __DIR__ . '/Routes/BooksRoutes.php';
+            });
+            Route::group(['prefix' => '/meals', 'namespace' => 'Resource'], function () {
+                include_once __DIR__ . '/Routes/MealsRoutes.php';
+            });
+
+            Route::group(['prefix' => '/calendar', 'namespace' => 'Event'], function () {
+                include_once __DIR__ . '/Routes/EventRoutes.php';
+            });
+
         });
     });
 
@@ -75,7 +82,7 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
     Route::group(['prefix' => '/group', 'namespace' => 'Identity'], function () {
         include_once __DIR__ . '/Routes/GroupRoutes.php';
     });
-    Route::group(['prefix' => '/realm', 'namespace' => 'Identity'], function() {
+    Route::group(['prefix' => '/realm', 'namespace' => 'Identity'], function () {
         include_once __DIR__ . '/Routes/RealmRoutes.php';
     });
 
@@ -92,6 +99,13 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
     });
 
 
-
     Route::get('/user/profile', 'Identity\UserController@auth');
+});
+
+/* ------------------------
+ * UPLOAD
+ * ---------------------- */
+Route::group(['prefix' => '/upload', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
+    Route::post('/file', 'Resource\UploadController@uploadFile');
+    Route::delete('/file/{guid}', 'Resource\UploadController@deleteFile');
 });

@@ -10,8 +10,10 @@ namespace Bakgat\Notos\Infrastructure\Repositories;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Domain;
+use Bakgat\Notos\Domain\Model\Identity\Exceptions\OrganizationNotFoundException;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
+use Bakgat\Notos\Exceptions\DuplicateException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Session;
@@ -70,11 +72,18 @@ class OrganizationDoctrineORMRepository implements OrganizationRepository
      *
      * @param $id
      * @return Organization
+     * @throws DuplicateException
      */
     public function organizationOfId($id)
     {
-        return $this->em->getRepository($this->class)
+        $org = $this->em->getRepository($this->class)
             ->findOneBy(['id' => $id]);
+
+        if(!$org) {
+            throw new DuplicateException('URL', 'klimtoren.be');
+        }
+
+        return $org;
     }
 
 

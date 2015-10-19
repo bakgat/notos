@@ -43,12 +43,12 @@ class Tag
     private $books;
 
 
-    public function __construct(Name $name)
+    public function __construct(TagName $name)
     {
         $this->setName($name);
     }
 
-    public static function register(Name $name)
+    public static function register(TagName $name)
     {
         return new Tag($name);
     }
@@ -61,20 +61,20 @@ class Tag
     }
 
     /**
-     * @param Name name
+     * @param TagName name
      * @return void
      */
-    public function setName(Name $name)
+    public function setName(TagName $name)
     {
         $this->name = strtolower($name->toString());
     }
 
     /**
-     * @return Name
+     * @return TagName
      */
     public function name()
     {
-        return $this->name;
+        return TagName::fromNative($this->name);
     }
 
     /**

@@ -32,8 +32,6 @@ class URL implements ValueObject
 
     public function __construct($url, $remove_empty_delimiters = false, $sort_query_params = false)
     {
-        //Assertion::regex($value, '/^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/u');
-
         $this->setUrl($url);
 
         $this->remove_empty_delimiters = $remove_empty_delimiters;
@@ -41,6 +39,7 @@ class URL implements ValueObject
     }
 
     /**
+     *
      * Sets the url
      * @param $url
      * @return bool

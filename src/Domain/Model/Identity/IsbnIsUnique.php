@@ -36,6 +36,9 @@ class IsbnIsUnique implements IsbnSpecification {
      */
     public function isSatisfiedBy(Isbn $isbn)
     {
-        $this->repository->bookOfIsbn($isbn);
+        if(!$this->repository->bookOfIsbn($isbn)) {
+            return true;
+        }
+        return false;
     }
 }
