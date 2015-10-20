@@ -9,6 +9,7 @@
 namespace Bakgat\Notos\Infrastructure\Repositories\Resource;
 
 
+use Bakgat\Notos\Domain\Model\Identity\Isbn;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\Party;
 use Bakgat\Notos\Domain\Model\Resource\Book;
@@ -90,5 +91,19 @@ class BookDoctrineORMRepository implements BookRepository
             )
             ->setParameter(1, $publisher->id());
         return $query->getQuery()->getResult();
+    }
+
+
+    public function bookOfIsbn(Organization $organization, Isbn $isbn) {
+        $qb = $this->em->createQueryBuilder();
+        $query = $qb->select('b')
+            ->from($this->bookClass, 'b')
+            ->where(
+                $qb->expr()->eq('b.organization', '?1'),
+                $qb->expr()->eq('b.isbn', '?2')
+            )
+            ->setParameter(1, $organization->id())
+            ->setParameter(2, $isbn->toString());
+        return $query->getQuery()->getOneOrNullResult();
     }
 }

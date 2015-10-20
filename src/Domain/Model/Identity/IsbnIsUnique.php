@@ -18,11 +18,7 @@ class IsbnIsUnique implements IsbnSpecification {
      */
     private $repository;
 
-    /**
-     * Creates a new instance of the IsbnIsUnique specification
-     *
-     * @param BookRepository $repository
-     */
+
     public function __construct(BookRepository $repository) {
         $this->repository = $repository;
     }
@@ -34,9 +30,9 @@ class IsbnIsUnique implements IsbnSpecification {
      * @param Isbn $isbn
      * @return bool
      */
-    public function isSatisfiedBy(Isbn $isbn)
+    public function isSatisfiedBy(Organization $organization, Isbn $isbn)
     {
-        if(!$this->repository->bookOfIsbn($isbn)) {
+        if(!$this->repository->bookOfIsbn($organization, $isbn)) {
             return true;
         }
         return false;

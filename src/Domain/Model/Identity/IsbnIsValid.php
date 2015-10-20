@@ -17,7 +17,7 @@ class IsbnIsValid implements IsbnSpecification {
      * @param Isbn $isbn
      * @return bool
      */
-    public function isSatisfiedBy(Isbn $isbn)
+    public function isSatisfiedBy(Organization $organization, Isbn $isbn)
     {
         return $isbn->isValid();
     }

@@ -13,8 +13,9 @@ interface IsbnSpecification {
     /**
      * Check to see if the specification is satisfied
      *
+     * @param Organization $organization
      * @param Isbn $isbn
      * @return bool
      */
-    public function isSatisfiedBy(Isbn $isbn);
+    public function isSatisfiedBy(Organization $organization, Isbn $isbn);
 }

@@ -9,6 +9,7 @@
 namespace Bakgat\Notos\Domain\Model\Resource;
 
 
+use Bakgat\Notos\Domain\Model\Identity\Isbn;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\Party;
 
@@ -25,4 +26,6 @@ interface BookRepository
     public function booksOfAuthor(Organization $organization, Party $author);
 
     public function booksOfPublisher(Organization $organization, Party $publisher);
+
+    public function bookOfIsbn(Organization $organization, Isbn $isbn);
 }
