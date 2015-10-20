@@ -10,6 +10,7 @@ namespace Bakgat\Notos\Domain\Model\Identity;
 
 
 use Assert\Assertion;
+use Bakgat\Notos\Domain\Model\Identity\Exceptions\IsbnNotValidException;
 use Bakgat\Notos\Domain\Model\ValueObject;
 
 class Isbn implements ValueObject
@@ -19,11 +20,15 @@ class Isbn implements ValueObject
 
     public function __construct($value)
     {
-        Assertion::regex($value, '/^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/u');
+        //Assertion::regex($value, '/^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/u');
 
         $this->value = $value;
 
-        Assertion::true($this->isValid());
+        if(!$this->isValid()) {
+            throw new IsbnNotValidException($value);
+        }
+
+        //Assertion::true($this->isValid());
     }
 
     /**

@@ -61,6 +61,11 @@ return [
         'detail' => '%s is geen geldig webadres.'
     ],
 
+    'url_not_valid' => [
+        'title' => 'De server voldoet niet aan een van de voorwaarden die werden aangevraagd.',
+        'detail' => '%s is geen geldig isbn-nummer.'
+    ],
+
     /* ***************************************************
      * DUPLICATE
      * **************************************************/

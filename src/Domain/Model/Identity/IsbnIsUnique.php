@@ -14,7 +14,7 @@ use Bakgat\Notos\Domain\Model\Resource\BookRepository;
 class IsbnIsUnique implements IsbnSpecification {
 
     /**
-     * @var UserRepository
+     * @var BookRepository
      */
     private $repository;
 
