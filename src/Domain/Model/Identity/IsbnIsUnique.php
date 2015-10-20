@@ -28,10 +28,15 @@ class IsbnIsUnique implements IsbnSpecification {
      * Check to see if the specification is satisfied
      *
      * @param Isbn $isbn
+     * @param $organization
      * @return bool
      */
-    public function isSatisfiedBy(Organization $organization, Isbn $isbn)
+    public function isSatisfiedBy(Isbn $isbn, $organization = null)
     {
+        if(!($organization instanceof Organization)) {
+            throw new \InvalidArgumentException($organization . ' must be of type Organization');
+        }
+
         if(!$this->repository->bookOfIsbn($organization, $isbn)) {
             return true;
         }

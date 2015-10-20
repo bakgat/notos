@@ -42,7 +42,7 @@ class IsbnIsUniqueTest extends TestCase
     public function should_return_true_if_unique()
     {
         $this->bookRepo->shouldReceive('bookOfIsbn')->andReturnNull();
-        $this->assertTrue($this->spec->isSatisfiedBy($this->org, new Isbn('978-3-16-148410-0')));
+        $this->assertTrue($this->spec->isSatisfiedBy(new Isbn('978-3-16-148410-0'), $this->org));
     }
 
     /**
@@ -52,6 +52,6 @@ class IsbnIsUniqueTest extends TestCase
     public function should_return_false_if_not_unique()
     {
         $this->bookRepo->shouldReceive('bookOfIsbn')->andReturn(['id' => 1]);
-        $this->assertFalse($this->spec->isSatisfiedBy($this->org, new Isbn('978-3-16-148410-0')));
+        $this->assertFalse($this->spec->isSatisfiedBy(new Isbn('978-3-16-148410-0'), $this->org));
     }
 }
