@@ -17,8 +17,9 @@ class HashedPasswordTest extends TestCase
     private $pwdTest;
     private $pwdOther;
 
-    public function __construct()
+    public function setUp()
     {
+        parent::setUp();
         $this->pwdTest = md5('test');
         $this->pwdOther = md5('other');
     }

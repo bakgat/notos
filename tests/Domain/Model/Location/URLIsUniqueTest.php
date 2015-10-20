@@ -25,6 +25,7 @@ class URLIsUniqueTest extends TestCase
 
     public function setUp()
     {
+        parent::setUp();
         $this->webRepo = m::mock('Bakgat\Notos\Domain\Model\Location\WebsitesRepository');
         $this->spec = new URLIsUnique($this->webRepo);
     }

@@ -25,6 +25,7 @@ class DomainNameIsUniqueTest extends TestCase
 
     public function setUp()
     {
+        parent::setUp();
         $this->orgRepo = m::mock('Bakgat\Notos\Domain\Model\Identity\OrganizationRepository');
         $this->spec = new DomainNameIsUnique($this->orgRepo);
     }

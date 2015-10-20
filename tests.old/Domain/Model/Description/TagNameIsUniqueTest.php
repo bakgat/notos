@@ -21,6 +21,8 @@ class TagNameIsUniqueTest extends TestCase
     private $spec;
 
     public function setUp() {
+        parent::setUp();
+
         $this->tagRepo = m::mock('Bakgat\Notos\Domain\Model\Descriptive\TagRepository');
         $this->spec = new TagNameIsUnique($this->tagRepo);
     }

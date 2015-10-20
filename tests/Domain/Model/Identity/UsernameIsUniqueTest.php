@@ -25,6 +25,7 @@ class UsernameIsUniqueTest extends TestCase
 
     public function setUp()
     {
+        parent::setUp();
         $this->userRepo = m::mock('Bakgat\Notos\Domain\Model\Identity\UserRepository');
         $this->spec = new UsernameIsUnique($this->userRepo);
     }

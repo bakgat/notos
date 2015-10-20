@@ -30,6 +30,7 @@ class IsbnIsUniqueTest extends TestCase
 
     public function setUp()
     {
+        parent::setUp();
         $this->bookRepo = m::mock('Bakgat\Notos\Domain\Model\Resource\BookRepository');
         $this->org = Organization::register(new Name('VBS De Klimtoren'), new DomainName('klimtoren.be'));
         $this->spec = new IsbnIsUnique($this->bookRepo);
