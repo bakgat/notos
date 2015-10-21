@@ -289,7 +289,6 @@ class UserService
     public function addUserToRole($user, $rolename, $organization)
     {
         $role = $this->roleRepo->get($rolename);
-        //TODO: throw role not found
 
         $this->userRoleRepo->register($user, $role, $organization);
     }

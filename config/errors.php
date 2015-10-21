@@ -23,13 +23,31 @@ return [
         'detail' => 'Uw verzoek was geldig, maar u bent niet geautoriseerd om deze actie uit te voeren.'
     ],
 
+    /* ***************************************************
+     * NOT FOUND - 404
+     * **************************************************/
     'not_found' => [
         'title' => 'De opgevraagde bron is niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
         'detail' => 'De bron die u zoekt is niet gevonden.'
     ],
+    'org_not_found' => [
+        'title' => 'De opgevraagde organisatie werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+        'detail' => 'De organisatie [%s] is niet gevonden.'
+    ],
+
+    'user_not_found' => [
+        'title' => 'De opgevraagde gebruiker werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+        'detail' => 'De gebruiker [%s] is niet gevonden.'
+    ],
+
+    'role_not_found' => [
+        'title' => 'De opgevraagde gebruiker werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+        'detail' => 'De rol [%s] is niet gevonden.'
+    ],
+
 
     /* ***************************************************
-     * PRECONDITION / VALIDATION
+     * PRECONDITION / VALIDATION - 412
      * **************************************************/
     'precondition_failed' => [
         'title' => 'De server voldoet niet aan een van de voorwaarden die werden aangevraagd.',
@@ -61,13 +79,23 @@ return [
         'detail' => '%s is geen geldig webadres.'
     ],
 
-    'url_not_valid' => [
+    'isbn_not_valid' => [
         'title' => 'De server voldoet niet aan een van de voorwaarden die werden aangevraagd.',
         'detail' => '%s is geen geldig isbn-nummer.'
     ],
 
+    'gender_not_valid' => [
+        'title' => 'De server voldoet niet aan een van de voorwaarden die werden aangevraagd.',
+        'detail' => '%s is geen geldig geslacht. U kan kiezen uit: %s'
+    ],
+
+    'hashedpassword_not_valid' => [
+        'title' => 'De server voldoet niet aan een van de voorwaarden die werden aangevraagd.',
+        'detail' => 'De encryptie van het paswoord is niet geldig. Enkel MD5 hashes worden ondersteund.'
+    ],
+
     /* ***************************************************
-     * DUPLICATE
+     * DUPLICATE - 422
      * **************************************************/
     'duplicate' => [
         'title' => 'Het verzoek was geldig, maar de server kon het niet verwerken als gevolg van semantische fouten.',
@@ -79,14 +107,6 @@ return [
         'detail' => 'Uw verzoek met het media-type [%s] wordt niet ondersteund.'
     ],
 
-    'org_not_found' => [
-        'title' => 'De opgevraagde organisatie werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
-        'detail' => 'De organisatie [%s] is niet gevonden.'
-    ],
 
-    'user_not_found' => [
-        'title' => 'De opgevraagde gebruiker werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
-        'detail' => 'De gebruiker [%s] is niet gevonden.'
-    ],
 
 ];

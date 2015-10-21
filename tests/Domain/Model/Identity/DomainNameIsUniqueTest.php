@@ -32,7 +32,7 @@ class DomainNameIsUniqueTest extends TestCase
 
     /**
      * @test
-     * @group username
+     * @group domainname
      */
     public function should_return_true_if_unique()
     {
@@ -42,7 +42,7 @@ class DomainNameIsUniqueTest extends TestCase
 
     /**
      * @test
-     * @group username
+     * @group domainname
      */
     public function should_return_false_if_not_unique()
     {

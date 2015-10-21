@@ -9,6 +9,7 @@
 namespace Bakgat\Notos\Domain\Model\Identity;
 
 use Assert\Assertion;
+use Bakgat\Notos\Domain\Model\Identity\Exceptions\GenderNotValidException;
 use Bakgat\Notos\Domain\Model\ValueObject;
 
 class Gender implements ValueObject
@@ -21,7 +22,9 @@ class Gender implements ValueObject
 
     public function __construct($value)
     {
-        Assertion::inArray($value, ['m', 'f', 'male', 'female', 'M', 'F', 'O', 'Male', 'Female', 'Other']);
+        if (!$this->isValid($value)) {
+            throw new GenderNotValidException($value, join(', ', GenderIsValid::$ALLOWED));
+        }
 
         $this->value = $this->normalize($value);
     }
@@ -84,5 +87,13 @@ class Gender implements ValueObject
     public function toString()
     {
         return $this->value;
+    }
+
+    /* ***************************************************
+     * PRIVATE VALIDATION METHODS
+     * **************************************************/
+    private function isValid($value) {
+        $spec = new GenderIsValid();
+        return $spec->isSatisfiedBy($value);
     }
 }

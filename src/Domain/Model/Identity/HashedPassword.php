@@ -10,13 +10,18 @@ namespace Bakgat\Notos\Domain\Model\Identity;
 
 
 use Assert\Assertion;
+use Bakgat\Notos\Domain\Model\Identity\Exceptions\HashedPasswordNotValidException;
 use Bakgat\Notos\Domain\Model\ValueObject;
 
-class HashedPassword implements ValueObject {
+class HashedPassword implements ValueObject
+{
     private $value;
 
-    public function __construct($value) {
-        Assertion::string($value);
+    public function __construct($value)
+    {
+        if(!(is_string($value)||$this->isValid($value)) || $value==='') {
+            throw new HashedPasswordNotValidException();
+        }
 
         $this->value = $value;
     }
@@ -26,7 +31,8 @@ class HashedPassword implements ValueObject {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->value;
     }
 
@@ -61,5 +67,14 @@ class HashedPassword implements ValueObject {
     public function toString()
     {
         return $this->value;
+    }
+
+    /* ***************************************************
+     * PRIVATE VALIDATION METHODS
+     * **************************************************/
+    private function isValid($value)
+    {
+        $spec = new HashedPasswordIsValid();
+        return $spec->isSatisfiedBy($value);
     }
 }

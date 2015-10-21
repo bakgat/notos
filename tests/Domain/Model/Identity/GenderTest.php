@@ -19,7 +19,7 @@ class GenderTest extends TestCase
      * @group gender
      */
     public function should_require_valid_gender() {
-        $this->setExpectedException('Assert\AssertionFailedException');
+        $this->setExpectedException('Bakgat\Notos\Domain\Model\Identity\Exceptions\GenderNotValidException');
         $gender = new Gender('T');
     }
 

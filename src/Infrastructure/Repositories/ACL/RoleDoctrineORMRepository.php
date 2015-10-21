@@ -32,6 +32,7 @@ class RoleDoctrineORMRepository implements RoleRepository
      *
      * @param $slug
      * @return mixed
+     * @throws RoleNotFoundException
      */
     public function get($slug)
     {
@@ -48,6 +49,9 @@ class RoleDoctrineORMRepository implements RoleRepository
         $role = $this->em->getRepository($this->class)
             ->findOneBy(['slug' => $lowerslug]);
 
+        if (!$role) {
+            throw new RoleNotFoundException($slug);
+        }
         //cache it for next request
         Cache::forever($key, $role);
         return Cache::get($key);

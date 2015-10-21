@@ -20,8 +20,8 @@ class HashedPasswordTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->pwdTest = md5('test');
-        $this->pwdOther = md5('other');
+        $this->pwdTest = bcrypt('test');
+        $this->pwdOther = bcrypt('other');
     }
 
     /**
@@ -30,8 +30,8 @@ class HashedPasswordTest extends TestCase
      */
     public function should_require_valid_password()
     {
-        $this->setExpectedException('Assert\AssertionFailedException');
-        $password = new HashedPassword([]);
+        $this->setExpectedException('Bakgat\Notos\Domain\Model\Identity\Exceptions\HashedPasswordNotValidException');
+        $password = new HashedPassword('');
     }
 
     /**
