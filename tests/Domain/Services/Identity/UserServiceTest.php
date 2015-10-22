@@ -361,7 +361,8 @@ class UserServiceTest extends TestCase
      * @test
      * @group userservice
      */
-    public function should_update_valid_data() {
+    public function should_update_valid_data()
+    {
         $n_data = [
             'id' => 1,
             'first_name' => 'Ulrike',
@@ -390,7 +391,8 @@ class UserServiceTest extends TestCase
      * @test
      * @group userservice
      */
-    public function should_reset_password() {
+    public function should_reset_password()
+    {
         $n_pwd = 'new_password';
         $n_hashed = bcrypt($n_pwd);
 
@@ -401,5 +403,32 @@ class UserServiceTest extends TestCase
         $r_user = $this->userService->resetPassword($this->user, $n_pwd);
 
         $this->assertEquals($n_hashed, $r_user->getAuthPassword());
+    }
+
+    /**
+     * @test
+     * @group userservice
+     */
+    public function should_return_orgs_of_user()
+    {
+        $this->userRepo->shouldReceive('organizationsOfUser')
+            ->andReturn([$this->organization]);
+
+        $r_orgs = $this->userService->organizationsOfUser($this->user);
+        $this->assertCount(1, $r_orgs);
+        $this->assertCount(1, $this->user->getOrganizations());
+    }
+    /**
+     * @test
+     * @group userservice
+     */
+    public function should_return_null_orgs_of_user() {
+        $this->userRepo->shouldReceive('organizationsOfUser')
+            ->andReturnNull();
+
+        $r_orgs = $this->userService->organizationsOfUser($this->user);
+
+        $this->assertNull($r_orgs);
+        $this->assertNull($this->user->getOrganizations());
     }
 }
