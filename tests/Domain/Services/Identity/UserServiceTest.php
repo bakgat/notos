@@ -418,11 +418,13 @@ class UserServiceTest extends TestCase
         $this->assertCount(1, $r_orgs);
         $this->assertCount(1, $this->user->getOrganizations());
     }
+
     /**
      * @test
      * @group userservice
      */
-    public function should_return_null_orgs_of_user() {
+    public function should_return_null_orgs_of_user()
+    {
         $this->userRepo->shouldReceive('organizationsOfUser')
             ->andReturnNull();
 
@@ -431,4 +433,30 @@ class UserServiceTest extends TestCase
         $this->assertNull($r_orgs);
         $this->assertNull($this->user->getOrganizations());
     }
+
+    /**
+     * @test
+     * @group userservice
+     */
+    public function should_add_user_to_role()
+    {
+        //TODO: add user to role
+        //via UserRole::register etc
+    }
+
+    /**
+     * @test
+     * @group userservice
+     */
+    public function should_throw_role_not_found_when_adding_user_to_role()
+    {
+        $this->setExpectedException('Bakgat\Notos\Domain\Model\ACL\Exceptions\RoleNotFoundException');
+
+        $this->roleRepo->shouldReceive('get')
+            ->andThrow('Bakgat\Notos\Domain\Model\ACL\Exceptions\RoleNotFoundException');
+
+        $this->userService->addUserToRole($this->user, 'non_exists', $this->organization);
+    }
+
+
 }

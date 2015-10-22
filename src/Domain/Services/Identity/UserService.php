@@ -18,6 +18,7 @@ use Bakgat\Notos\Domain\Model\Identity\Exceptions\UserNotFoundException;
 use Bakgat\Notos\Domain\Model\Identity\Gender;
 use Bakgat\Notos\Domain\Model\Identity\HashedPassword;
 use Bakgat\Notos\Domain\Model\Identity\Name;
+use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Identity\User;
 use Bakgat\Notos\Domain\Model\Identity\Username;
@@ -286,7 +287,7 @@ class UserService
      * @param $rolename
      * @param $organization
      */
-    public function addUserToRole($user, $rolename, $organization)
+    public function addUserToRole(User $user, $rolename, Organization $organization)
     {
         $role = $this->roleRepo->get($rolename);
 
@@ -294,7 +295,7 @@ class UserService
     }
 
     /* ***************************************************
-     * PRIVATE VALIDATION METHODS
+     * PRIVATE METHODS
      * **************************************************/
 
     /**
