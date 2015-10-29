@@ -6,7 +6,7 @@
  * Time: 19:20
  */
 
-namespace Bakgat\Notos\Infrastructure\Repositories;
+namespace Bakgat\Notos\Infrastructure\Repositories\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Party;

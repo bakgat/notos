@@ -20,7 +20,7 @@ use Bakgat\Notos\Domain\Model\Identity\Group;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CourseDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CurriculumDoctrineORMRepository;
-use Bakgat\Notos\Infrastructure\Repositories\GroupDoctrineORMRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Identity\GroupDoctrineORMRepository;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 

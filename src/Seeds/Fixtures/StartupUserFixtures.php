@@ -20,7 +20,7 @@ use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\User;
 use Bakgat\Notos\Domain\Model\Identity\Username;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelation;
-use Bakgat\Notos\Infrastructure\Repositories\KindCacheRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Identity\KindCacheRepository;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 

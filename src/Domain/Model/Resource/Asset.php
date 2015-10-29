@@ -35,7 +35,7 @@ class Asset extends Resource
      */
     private $mime;
     /**
-     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization")
+     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization", inversedBy="assets")
      */
     private $organization;
 

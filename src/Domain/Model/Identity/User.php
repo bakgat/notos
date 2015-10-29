@@ -9,6 +9,7 @@
 namespace Bakgat\Notos\Domain\Model\Identity;
 
 use Bakgat\Notos\Domain\Model\ACL\HasRole;
+use Bakgat\Notos\Domain\Model\ACL\UserRole;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use DoctrineExtensions\Query\Sqlite\Date;
@@ -279,6 +280,17 @@ class User extends Party implements Authenticatable, CanResetPassword
         return $this->user_roles;
     }
 
+    public function addUserRole(UserRole $userRole)
+    {
+        $this->user_roles[] = $userRole;
+    }
+
+    public function removeUserRole(UserRole $userRole)
+    {
+        $this->user_roles->removeElement($userRole);
+    }
+
+
     /**
      * @JMS\VirtualProperty
      */
@@ -292,7 +304,8 @@ class User extends Party implements Authenticatable, CanResetPassword
         $this->organizations = $organizations;
     }
 
-    public function addToOrganization(Organization $organization) {
+    public function addToOrganization(Organization $organization)
+    {
         $this->organizations[] = $organization;
     }
 

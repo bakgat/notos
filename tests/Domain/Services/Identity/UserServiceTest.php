@@ -436,12 +436,20 @@ class UserServiceTest extends TestCase
 
     /**
      * @test
-     * @group userservice
+     * @group userServRoles
      */
     public function should_add_user_to_role()
     {
+        $roleTest = Role::register('new_role');
         //TODO: add user to role
+        //how can this be tested?
         //via UserRole::register etc
+        $this->roleRepo->shouldReceive('get')
+            ->andReturn($roleTest);
+
+        $this->userRoleRepo->shouldReceive('register');
+
+        $this->userService->addUserToRole($this->user, 'new_role', $this->organization);
     }
 
     /**

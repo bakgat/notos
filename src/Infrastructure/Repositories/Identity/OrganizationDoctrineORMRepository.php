@@ -6,7 +6,7 @@
  * Time: 15:45
  */
 
-namespace Bakgat\Notos\Infrastructure\Repositories;
+namespace Bakgat\Notos\Infrastructure\Repositories\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Domain;
@@ -78,10 +78,6 @@ class OrganizationDoctrineORMRepository implements OrganizationRepository
     {
         $org = $this->em->getRepository($this->class)
             ->findOneBy(['id' => $id]);
-
-        if(!$org) {
-            throw new DuplicateException('URL', 'klimtoren.be');
-        }
 
         return $org;
     }

@@ -85,6 +85,7 @@ class UserRole implements \JsonSerializable
     public function setUser(User $user)
     {
         $this->user = $user;
+        $user->addUserRole($this);
     }
 
     /**

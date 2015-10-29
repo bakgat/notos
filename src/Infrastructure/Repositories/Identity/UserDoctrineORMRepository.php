@@ -6,7 +6,7 @@
  * Time: 09:09
  */
 
-namespace Bakgat\Notos\Infrastructure\Repositories;
+namespace Bakgat\Notos\Infrastructure\Repositories\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Email;
@@ -120,7 +120,7 @@ class UserDoctrineORMRepository implements UserRepository
     public function userOfUsername(Username $username)
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->select('u, p, pi')
+        $qb->select('u')
             ->from($this->class, 'u')
             ->where(
                 $qb->expr()->eq('u.username', '?1')
@@ -160,7 +160,6 @@ class UserDoctrineORMRepository implements UserRepository
      */
     public function organizationsOfUser(User $user)
     {
-        //TODO where user has role USER in organization that's alive
         $qb = $this->em->createQueryBuilder();
         $qb->select('ur, o')
             ->from($this->urClass, 'ur')

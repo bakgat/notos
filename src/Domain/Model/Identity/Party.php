@@ -85,7 +85,7 @@ class Party
      */
     public function setFirstName(Name $firstName)
     {
-        $this->firstName = $firstName;
+        $this->firstName = $firstName->toString();
     }
 
     /**
@@ -93,7 +93,7 @@ class Party
      */
     public function firstName()
     {
-        return $this->firstName;
+        return Name::fromNative($this->firstName);
     }
 
     /**
@@ -102,7 +102,7 @@ class Party
      */
     public function setLastName(Name $lastName)
     {
-        $this->lastName = $lastName;
+        $this->lastName = $lastName->toString();
     }
 
     /**
@@ -110,7 +110,7 @@ class Party
      */
     public function lastName()
     {
-        return $this->lastName;
+        return Name::fromNative($this->lastName);
     }
 
     /**

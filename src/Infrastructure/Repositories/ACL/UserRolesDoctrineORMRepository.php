@@ -81,6 +81,7 @@ class UserRolesDoctrineORMRepository implements UserRolesRepository
     public function register(User $user, Role $role, Organization $organization)
     {
         $user_role = UserRole::register($user, $role, $organization);
+
         $this->add($user_role);
     }
 }

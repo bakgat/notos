@@ -12,7 +12,7 @@ namespace Bakgat\Notos\Tests\Infrastructure\Repositories\Fixtures;
 use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
-use Bakgat\Notos\Infrastructure\Repositories\KindCacheRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Identity\KindCacheRepository;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 

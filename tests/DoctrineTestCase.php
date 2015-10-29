@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Illuminate\Support\Facades\App;
 use Mockery\MockInterface;
 use Mockery as m;
@@ -14,34 +15,83 @@ use Orchestra\Testbench\TestCase;
 
 abstract class DoctrineTestCase extends TestCase
 {
-    /** @var  MockInterface */
+    /** @var  EntityManager */
     protected $em;
-    /** @var  MockInterface */
-    protected $doctrine;
+    /** @var  ORMExecutor */
+    protected $executor;
+    /** @var  Loader */
+    protected $loader;
 
-    public function setUp()
-    {
+
+    public function setUp() {
         parent::setUp();
+        $this->em = $this->app->make(\Doctrine\ORM\EntityManager::class);
+        $this->executor = new ORMExecutor($this->em, new ORMPurger);
+        $this->loader = new Loader;
 
-        $this->em = $this->getMock('EntityManager', array('persist', 'flush'));
-        $this->em
-            ->expects($this->any())
-            ->method('persist')
-            ->will($this->returnValue(true));
-        $this->em
-            ->expects($this->any())
-            ->method('flush')
-            ->will($this->returnValue(true));
-        $this->doctrine = $this->getMock('Doctrine', array('getEntityManager'));
-        $this->doctrine
-            ->expects($this->any())
-            ->method('getEntityManager')
-            ->will($this->returnValue($this->em));
+        $this->em->beginTransaction();
+
+    }
+    public function tearDown() {
+        $this->em->rollback();
     }
 
-    public function tearDown()
+    /*public static function tearDownAfterClass()
     {
-        $this->doctrine = null;
-        $this->em = null;
+
+        $metadataNamespace = 'Bakgat\\Notos\\Domain\\Model\\';
+        $resetTables = [
+        'Identity\Party',
+        'Identity\User',
+        'Identity\Group',
+        'Identity\Organization',
+        'Resource\Resource',
+        'Resource\Asset',
+        'Resource\Book',
+        'Resource\Image',
+        'Location\Location',
+        'Location\Blog',
+        'Location\Website',
+        'Relations\Relation',
+        'Relations\PartyRelation',
+        'ACL\Role',
+        'ACL\UserRole',
+        'ACL\Permission',
+        'Curricula\Course',
+        'Curricula\Curriculum',
+        'Curricula\Objective',
+        'Curricula\ObjectiveControlLevel',
+        'Curricula\Structure',
+        'Kind'
+    ];
+
+        $em = App::make(\Doctrine\ORM\EntityManager::class);
+        $connection = self::$em->getConnection();
+        $dbPlatform = $connection->getDatabasePlatform();
+
+        foreach ($resetTables as $name) {
+            $className = $metadataNamespace . $name;
+
+            $cmd = $em->getClassMetadata($className);
+            $connection->beginTransaction();
+            try {
+                $connection->query('SET FOREIGN_KEY_CHECKS=0');
+                $q = $dbPlatform->getTruncateTableSql($cmd->getTableName());
+                $connection->executeUpdate($q);
+                $connection->query('SET FOREIGN_KEY_CHECKS=1');
+                $connection->exec('ALTER TABLE ' . $cmd->getTableName() . ' AUTO_INCREMENT = 1;');
+                $connection->commit();
+            } catch (\Exception $e) {
+                $connection->rollback();
+            }
+        }
+    }
+*/
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Bakgat\Notos\NotosServiceProvider::class,
+        ];
+
     }
 }

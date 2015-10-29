@@ -6,7 +6,7 @@
  * Time: 11:12
  */
 
-namespace Bakgat\Notos\Infrastructure\Repositories;
+namespace Bakgat\Notos\Infrastructure\Repositories\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Name;
