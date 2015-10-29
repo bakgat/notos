@@ -23,7 +23,8 @@ abstract class DoctrineTestCase extends TestCase
     protected $loader;
 
 
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
         $this->em = $this->app->make(\Doctrine\ORM\EntityManager::class);
         $this->executor = new ORMExecutor($this->em, new ORMPurger);
@@ -32,61 +33,14 @@ abstract class DoctrineTestCase extends TestCase
         $this->em->beginTransaction();
 
     }
-    public function tearDown() {
-        $this->em->rollback();
-    }
 
-    /*public static function tearDownAfterClass()
+    public function tearDown()
     {
-
-        $metadataNamespace = 'Bakgat\\Notos\\Domain\\Model\\';
-        $resetTables = [
-        'Identity\Party',
-        'Identity\User',
-        'Identity\Group',
-        'Identity\Organization',
-        'Resource\Resource',
-        'Resource\Asset',
-        'Resource\Book',
-        'Resource\Image',
-        'Location\Location',
-        'Location\Blog',
-        'Location\Website',
-        'Relations\Relation',
-        'Relations\PartyRelation',
-        'ACL\Role',
-        'ACL\UserRole',
-        'ACL\Permission',
-        'Curricula\Course',
-        'Curricula\Curriculum',
-        'Curricula\Objective',
-        'Curricula\ObjectiveControlLevel',
-        'Curricula\Structure',
-        'Kind'
-    ];
-
-        $em = App::make(\Doctrine\ORM\EntityManager::class);
-        $connection = self::$em->getConnection();
-        $dbPlatform = $connection->getDatabasePlatform();
-
-        foreach ($resetTables as $name) {
-            $className = $metadataNamespace . $name;
-
-            $cmd = $em->getClassMetadata($className);
-            $connection->beginTransaction();
-            try {
-                $connection->query('SET FOREIGN_KEY_CHECKS=0');
-                $q = $dbPlatform->getTruncateTableSql($cmd->getTableName());
-                $connection->executeUpdate($q);
-                $connection->query('SET FOREIGN_KEY_CHECKS=1');
-                $connection->exec('ALTER TABLE ' . $cmd->getTableName() . ' AUTO_INCREMENT = 1;');
-                $connection->commit();
-            } catch (\Exception $e) {
-                $connection->rollback();
-            }
+        if ($this->em) {
+            $this->em->rollback();
         }
     }
-*/
+
     protected function getPackageProviders($app)
     {
         return [

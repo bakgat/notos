@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 
+require_once __DIR__ . "/vendor/autoload.php";
+
 // Bootstrap the JMS custom annotations for Object to Json mapping
 \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
     'JMS\Serializer\Annotation',
