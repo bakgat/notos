@@ -64,7 +64,6 @@ class UserDoctrineORMRepository implements UserRepository
         return $qb->getQuery()->getResult();
     }
 
-
     /**
      * Adds a new User
      *
@@ -126,14 +125,14 @@ class UserDoctrineORMRepository implements UserRepository
                 $qb->expr()->eq('u.username', '?1')
             )
             ->setParameter(1, $username->toString());
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
      * Find a user by their username and load all ACL along
      * @param Username $username
      * @param Organization $organization
-     * @return mixed
+     * @return User
      */
     public function userWithACL(Username $username, Organization $organization)
     {
@@ -149,7 +148,7 @@ class UserDoctrineORMRepository implements UserRepository
             ->setParameter(1, $username->toString())
             ->setParameter(2, $organization->id());
 
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**

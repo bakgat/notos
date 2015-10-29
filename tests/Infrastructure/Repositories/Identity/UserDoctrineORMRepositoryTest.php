@@ -10,6 +10,9 @@ namespace Bakgat\Notos\Tests\Infrastructure\Repositories\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Identity\DomainName;
+use Bakgat\Notos\Domain\Model\Identity\Email;
+use Bakgat\Notos\Domain\Model\Identity\Gender;
+use Bakgat\Notos\Domain\Model\Identity\HashedPassword;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
@@ -48,7 +51,7 @@ class UserDoctrineORMRepositoryTest extends DoctrineTestCase
      * @test
      * @group userrepo
      */
-    public function should_return_user_with_id_1()
+    public function should_return_user_with_id()
     {
         $karl = $this->getUser('karl.vaniseghem@klimtoren.be');
         $id = $karl->id();
@@ -81,6 +84,18 @@ class UserDoctrineORMRepositoryTest extends DoctrineTestCase
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\User', $user);
         $this->assertTrue($user->username()->equals($username));
         $this->assertEquals('Karl', $user->firstName());
+    }
+
+    /**
+     * @test
+     * @group userrepo
+     */
+    public function should_return_null_when_username_not_found()
+    {
+        $username = new Username('foo@bar.be');
+        $user = $this->userRepo->userOfUsername($username);
+
+        $this->assertNull($user);
     }
 
     /**
@@ -121,6 +136,99 @@ class UserDoctrineORMRepositoryTest extends DoctrineTestCase
         $this->assertEmpty($users);
     }
 
+    /**
+     * @test
+     * @group userrepo
+     */
+    public function should_have_2_roles_for_karl_in_klimtoren()
+    {
+        $username = new Username('karl.vaniseghem@klimtoren.be');
+        $klimtoren = $this->getOrg('klimtoren.be');
+
+        $user = $this->userRepo->userWithACL($username, $klimtoren);
+
+        $this->assertCount(2, $user->getRoles());
+        $this->assertTrue(in_array('sa', $user->getRoles()));
+    }
+
+    /**
+     * @test
+     * @group userrepo
+     */
+    public function should_have_3_roles_for_rebekka_in_klimtoren()
+    {
+        $username = new Username('rebekka.buyse@klimtoren.be');
+        $klimtoren = $this->getOrg('klimtoren.be');
+
+        $user = $this->userRepo->userWithACL($username, $klimtoren);
+
+        $this->assertCount(3, $user->getRoles());
+        $this->assertTrue(in_array('book_manager', $user->getRoles()));
+        $this->assertFalse(in_array('website_manager', $user->getRoles()));
+    }
+
+    /**
+     * @test
+     * @group userrepo
+     */
+    public function should_return_null_when_username_with_acl_not_found()
+    {
+        $username = new Username('foo@bar.be');
+        $klimtoren = $this->getOrg('klimtoren.be');
+
+        $user = $this->userRepo->userWithACL($username, $klimtoren);
+        $this->assertNull($user);
+    }
+
+    /**
+     * @test
+     * @group userrepo
+     */
+    public function should_return_null_when_org_with_acl_not_found()
+    {
+        $username = new Username('karl.vaniseghem@klimtoren.be');
+        $n_foo = new Name('foo');
+        $dn_foo = new DomainName('bar.be');
+        $foo = Organization::register($n_foo, $dn_foo);
+
+        $user = $this->userRepo->userWithACL($username, $foo);
+        $this->assertNull($user);
+    }
+
+    /**
+     * @test
+     * @group userrepo
+     */
+    public function should_return_2_organizations_for_karl()
+    {
+        $user = $this->getUser('karl.vaniseghem@klimtoren.be');
+        $organizations = $this->userRepo->organizationsOfUser($user);
+
+        $this->assertCount(2, $organizations);
+        $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\Organization', $organizations[0]);
+    }
+
+    /**
+     * @test
+     * @group userrepo
+     */
+    public function should_return_null_organizations_for_foo()
+    {
+        $fn_foo = new Name('foo');
+        $ln_foo = new Name('bar');
+        $un_foo = new Username('foo@bar.be');
+        $e_foo = new Email($un_foo->toString());
+        $pwd_foo = new HashedPassword(bcrypt('password'));
+        $g_foo = new Gender(Gender::OTHER);
+
+        $foo = User::register($fn_foo, $ln_foo, $un_foo, $pwd_foo, $e_foo, $g_foo);
+        $organizations = $this->userRepo->organizationsOfUser($foo);
+
+        $this->assertEmpty($organizations);
+    }
+
+    //TODO add and update tests
+    //TODO by email test
 
     /* ***************************************************
      * private methods

@@ -76,21 +76,39 @@ class UserFixtures implements FixtureInterface
          * ROLES
          * **************************************************/
         $user_role = new Role('user');
+        $admin_role = new Role('admin');
+        $sa_role = new Role('sa');
+        $book_manager_role = new Role('book_manager');
+        $website_manager_role = new Role('website_manager');
+
         $manager->persist($user_role);
+        $manager->persist($admin_role);
+        $manager->persist($sa_role);
+        $manager->persist($book_manager_role);
+        $manager->persist($website_manager_role);
 
         /* ***************************************************
-         * RELATIONS USERS - ORGS
+         * USERROLES
          * **************************************************/
-
-
-
-
         $karl_user_klimtoren = UserRole::register($karl, $user_role, $klimtoren);
         $rebekka_user_klimtoren = UserRole::register($rebekka, $user_role, $klimtoren);
         $karl_user_wassenaard = UserRole::register($karl, $user_role, $wassenaard);
+
         $manager->persist($karl_user_klimtoren);
         $manager->persist($rebekka_user_klimtoren);
         $manager->persist($karl_user_wassenaard);
+
+
+        $karl_sa_klimtoren = UserRole::register($karl, $sa_role, $klimtoren);
+        $karl_website_manager_wassenaard = UserRole::register($karl, $website_manager_role, $wassenaard);
+        $rebekka_book_manager_klimtoren = UserRole::register($rebekka, $book_manager_role, $klimtoren);
+        $rebekka_admin_klimtoren = UserRole::register($rebekka, $admin_role, $klimtoren);
+
+        $manager->persist($karl_sa_klimtoren);
+        $manager->persist($karl_website_manager_wassenaard);
+        $manager->persist($rebekka_book_manager_klimtoren);
+        $manager->persist($rebekka_admin_klimtoren);
+
 
         $manager->flush();
     }

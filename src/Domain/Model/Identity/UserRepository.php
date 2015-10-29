@@ -65,7 +65,7 @@ interface UserRepository {
      *
      * @param Username $user
      * @param Organization $organization
-     * @return mixed
+     * @return User
      */
     public function userWithACL(Username $user, Organization $organization);
 
