@@ -30,8 +30,8 @@ interface GroupRepository
 
     /**
      * Find a group by it's id
-     * @param $groupId
-     * @return mixed
+     * @param $id
+     * @return Group
      */
     public function groupOfId($id);
 }

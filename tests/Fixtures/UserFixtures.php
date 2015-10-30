@@ -14,6 +14,7 @@ use Bakgat\Notos\Domain\Model\ACL\UserRole;
 use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\Email;
 use Bakgat\Notos\Domain\Model\Identity\Gender;
+use Bakgat\Notos\Domain\Model\Identity\Group;
 use Bakgat\Notos\Domain\Model\Identity\HashedPassword;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
@@ -88,6 +89,18 @@ class UserFixtures implements FixtureInterface
         $manager->persist($website_manager_role);
 
         /* ***************************************************
+         * KINDS
+         * **************************************************/
+        $k_employee = new Kind('employee');
+        $k_level = new Kind('level');
+        $k_classgroup = new Kind('classgroup');
+
+        $manager->persist($k_employee);
+        $manager->persist($k_level);
+        $manager->persist($k_classgroup);
+
+
+        /* ***************************************************
          * USERROLES
          * **************************************************/
         $karl_user_klimtoren = UserRole::register($karl, $user_role, $klimtoren);
@@ -109,6 +122,24 @@ class UserFixtures implements FixtureInterface
         $manager->persist($rebekka_book_manager_klimtoren);
         $manager->persist($rebekka_admin_klimtoren);
 
+        /* ***************************************************
+         * GROUPS
+         * **************************************************/
+        $level_jkl = Group::register(new Name('JK'));
+        $level_jkl->setKind($k_level);
+        $level_okl = Group::register(new Name('OK'));
+        $level_okl->setKind($k_level);
+        $level_l1 = Group::register(new Name('L1'));
+        $level_l1->setKind($k_level);
+
+        $cg_K1 = Group::register(new Name('1KA'));
+        $cg_K1->setKind($k_classgroup);
+
+        $manager->persist($level_jkl);
+        $manager->persist($level_okl);
+        $manager->persist($level_l1);
+
+        $manager->persist($cg_K1);
 
         $manager->flush();
     }
