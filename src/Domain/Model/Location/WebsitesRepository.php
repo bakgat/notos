@@ -14,7 +14,7 @@ interface WebsitesRepository
     /**
      * Returns all websites
      *
-     * @return mixed
+     * @return ArrayCollection
      */
     public function all();
 
@@ -37,7 +37,7 @@ interface WebsitesRepository
     /**
      * Find a website by it's id
      * @param $id
-     * @return mixed
+     * @return Website
      */
     public function websiteofId($id);
 
@@ -45,14 +45,14 @@ interface WebsitesRepository
      * Find a website by it's url
      *
      * @param URL $URL
-     * @return mixed
+     * @return Website
      */
     public function websiteOfURL(URL $URL);
 
     /**
      * Get all websites, fully loaded with all relations
      *
-     * @return mixed
+     * @return ArrayCollection
      */
     public function full();
 

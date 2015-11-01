@@ -9,6 +9,7 @@
 namespace Bakgat\Notos\Infrastructure\Repositories\Descriptive;
 
 
+use Bakgat\Notos\Domain\Model\Descriptive\Tag;
 use Bakgat\Notos\Domain\Model\Descriptive\TagName;
 use Bakgat\Notos\Domain\Model\Descriptive\TagRepository;
 use Bakgat\Notos\Domain\Model\Identity\Name;

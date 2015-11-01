@@ -12,6 +12,7 @@ namespace Bakgat\Notos\Infrastructure\Repositories\Location;
 use Bakgat\Notos\Domain\Model\Location\URL;
 use Bakgat\Notos\Domain\Model\Location\Website;
 use Bakgat\Notos\Domain\Model\Location\WebsitesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 
 class WebsitesDoctrineORMRepository implements WebsitesRepository
@@ -31,7 +32,7 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
     /**
      * Returns all websites
      *
-     * @return mixed
+     * @return ArrayCollection
      */
     public function all()
     {
@@ -44,7 +45,7 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
     /**
      * Get all websites, fully loaded with all relations
      *
-     * @return mixed
+     * @return ArrayCollection
      */
     public function full()
     {
@@ -84,7 +85,7 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
     /**
      * Find a website by it's id
      * @param $id
-     * @return mixed
+     * @return Website
      */
     public function websiteofId($id)
     {
@@ -98,28 +99,28 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
                 $qb->expr()->eq('w.id', '?1')
             )
             ->setParameter(1, $id);
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
      * Find a website by it's url
      *
      * @param URL $URL
-     * @return mixed
+     * @return Website
      */
     public function websiteOfURL(URL $URL)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('w, wo, l, t')
             ->from($this->wsClass, 'w')
-            ->join('w.objectives', 'wo')
+            ->leftJoin('w.objectives', 'wo')
             ->leftJoin('wo.levels', 'l')
             ->leftJoin('w.tags', 't')
             ->where(
                 $qb->expr()->eq('w.url', '?1')
             )
             ->setParameter(1, $URL->toString());
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
 

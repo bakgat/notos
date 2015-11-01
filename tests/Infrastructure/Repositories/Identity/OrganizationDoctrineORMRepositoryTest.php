@@ -13,7 +13,7 @@ use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Identity\OrganizationDoctrineORMRepository;
 use Bakgat\Notos\Tests\DoctrineTestCase;
-use Bakgat\Notos\Tests\Fixtures\UserFixtures;
+use Bakgat\Notos\Tests\Fixtures\TestFixtures;
 use Mockery as m;
 use Mockery\MockInterface;
 
@@ -28,7 +28,7 @@ class OrganizationDoctrineORMRepositoryTest extends DoctrineTestCase
 
         $this->orgRepo = new OrganizationDoctrineORMRepository($this->em);
 
-        $this->loader->addFixture(new UserFixtures);
+        $this->loader->addFixture(new TestFixtures);
         $this->executor->execute($this->loader->getFixtures());
     }
 

@@ -790,7 +790,7 @@ return array(
                     array('name' => 'Bij een niet-opgaande staartdeling (de deler is een natuurlijk getal) de juiste waarde van de rest bepalen.',
                         'code' => 'WIS B44', 'level' => '00000244'), //B44
                     array('name' => 'De procedures om te cijferen (cijferalgoritmes) begrijpen, mede op basis van inzicht in de tientalligheid en het plaatswaardesysteem van ons talstelsel.',
-                        'code' => 'WIS B44', 'level' => '00002444'), //B45
+                        'code' => 'WIS B45', 'level' => '00002444'), //B45
                     array('name' => 'De uitgevoerde bewerkingen controleren: ',
                         'code' => 'WIS B46',
                         'obj' => array(

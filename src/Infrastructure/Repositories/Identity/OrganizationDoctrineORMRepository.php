@@ -82,7 +82,6 @@ class OrganizationDoctrineORMRepository implements OrganizationRepository
         return $org;
     }
 
-
     /**
      * Find an Organization by their domain name
      *

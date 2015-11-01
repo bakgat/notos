@@ -11,6 +11,7 @@ namespace Bakgat\Notos\Seeds\Fixtures;
 
 use Bakgat\Notos\Domain\Model\Curricula\CurriculumRepository;
 use Bakgat\Notos\Domain\Model\Descriptive\Tag;
+use Bakgat\Notos\Domain\Model\Descriptive\TagName;
 use Bakgat\Notos\Domain\Model\Descriptive\TagRepository;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Location\URL;
@@ -54,7 +55,7 @@ class WebsiteFixtures implements FixtureInterface
     public function createTags()
     {
         foreach ($this->tags as $name) {
-            $tag = Tag::register(new Name($name));
+            $tag = Tag::register(new TagName($name));
             $this->tagRepo->add($tag);
         }
     }
@@ -70,7 +71,7 @@ class WebsiteFixtures implements FixtureInterface
             $website = Website::register(new Name($awebsite['n']), new URL($awebsite['u']));
 
             foreach ($awebsite['t'] as $atag) {
-                $tag = $this->tagRepo->tagOfName(new Name($atag));
+                $tag = $this->tagRepo->tagOfName(new TagName($atag));
                 $website->addTag($tag);
             }
             foreach ($awebsite['o'] as $aobjective) {

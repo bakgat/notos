@@ -21,11 +21,13 @@ use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\User;
 use Bakgat\Notos\Domain\Model\Identity\Username;
 use Bakgat\Notos\Domain\Model\Kind;
+use Bakgat\Notos\Domain\Model\Location\URL;
+use Bakgat\Notos\Domain\Model\Location\Website;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelation;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class UserFixtures implements FixtureInterface
+class TestFixtures implements FixtureInterface
 {
 
     /**
@@ -140,6 +142,32 @@ class UserFixtures implements FixtureInterface
         $manager->persist($level_l1);
 
         $manager->persist($cg_K1);
+
+
+        /* ***************************************************
+         * WEBSITES
+         * **************************************************/
+        $sites = [
+            ['name' => 'Google', 'url' => 'www.google.be'],
+            ['name' => 'VBS De Klimtoren', 'url' => 'www.klimtoren.be'],
+            ['name' => 'Apple', 'url' => 'www.apple.com/benl'],
+            ['name' => 'De Wassenaard', 'url' => 'www.wassenaard.be'],
+            ['name' => 'Rekenmeester', 'url' => 'www.rekenmeester.be'],
+            ['name' => 'C.A.R.E', 'url' => 'http://care-india.be/'],
+            ['name' => 'VBS Ichtegem', 'url' => 'www.vbsichtegem.be'],
+            ['name' => 'Replay', 'url' => 'http://www.replaycoverband.be'],
+            ['name' => 'HP', 'url' => 'http://www.hp.com'],
+            ['name' => 'Microsoft', 'url' => 'http://www.microsoft.com/'],
+        ];
+
+
+        foreach ($sites as $site) {
+            $n_s = new Name($site['name']);
+            $u_s = new URL($site['url']);
+            $s = Website::register($n_s, $u_s);
+            $manager->persist($s);
+        }
+
 
         $manager->flush();
     }
