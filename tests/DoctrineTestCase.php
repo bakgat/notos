@@ -2,6 +2,7 @@
 
 namespace Bakgat\Notos\Tests;
 
+use Bakgat\Notos\Tests\Fixtures\TestFixtures;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
