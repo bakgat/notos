@@ -9,6 +9,7 @@
 namespace Bakgat\Notos\Infrastructure\Repositories\ACL;
 
 
+use Bakgat\Notos\Domain\Model\ACL\Exceptions\RoleNotFoundException;
 use Bakgat\Notos\Domain\Model\ACL\RoleRepository;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Cache;

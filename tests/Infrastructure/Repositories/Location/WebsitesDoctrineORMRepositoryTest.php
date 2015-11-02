@@ -92,4 +92,22 @@ class WebsitesDoctrineORMRepositoryTest extends DoctrineTestCase
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Location\Website', $site);
         $this->assertEquals('http://www.google.be/', $site->url()->toString());
     }
+
+    /**
+     * @test
+     * @group websitesrepo
+     */
+    public function should_return_null_when_website_not_found_with_url()
+    {
+        $url = new URL('foo.be');
+
+        $site = $this->websiteRepo->websiteOfURL($url);
+        $this->assertNull($site);
+    }
+
+    //TODO ADD AND UPDATE FUNCTIONS
+
+    //TODO ClearObjetives, clearTags
+
+    //TODO objectives, tags, ... in fixtures
 }
