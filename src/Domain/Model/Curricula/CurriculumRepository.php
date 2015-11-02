@@ -22,7 +22,7 @@ interface CurriculumRepository
 
     /**
      * @param Curriculum $curriculum
-     * @return mixed
+     * @return Curriculum
      */
     public function add(Curriculum $curriculum);
 
@@ -52,7 +52,7 @@ interface CurriculumRepository
      * Find the latest active curriculum by it's course name
      *
      * @param Course $course
-     * @return mixed
+     * @return Curriculum
      */
     public function curriculumOfCourse(Course $course);
 
@@ -72,5 +72,12 @@ interface CurriculumRepository
      */
     public function objectiveOfId($id);
 
+    /**
+     * @param Curriculum $curriculum
+     * @param $parent_id
+     * @param $name
+     * @param $type
+     * @return Structure
+     */
     public function structure(Curriculum $curriculum, $parent_id, $name, $type);
 }

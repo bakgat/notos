@@ -88,7 +88,7 @@ class Structure
      */
     public function setName(Name $name)
     {
-        $this->name = $name;
+        $this->name = $name->toString();
     }
 
     /**
@@ -96,7 +96,7 @@ class Structure
      */
     public function name()
     {
-        return $this->name;
+        return Name::fromNative($this->name);
     }
 
     /**

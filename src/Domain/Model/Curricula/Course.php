@@ -61,7 +61,7 @@ class Course
      */
     public function setName(Name $name)
     {
-        $this->name = $name;
+        $this->name = $name->toString();
     }
 
     /**
@@ -69,7 +69,7 @@ class Course
      */
     public function name()
     {
-        return $this->name;
+        return Name::fromNative($this->name);
     }
 
     /**

@@ -10,13 +10,14 @@ namespace Bakgat\Notos\Domain\Model\Curricula;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Name;
+use Doctrine\Common\Collections\ArrayCollection;
 
 interface CourseRepository
 {
     /**
      * Returns all courses
      *
-     * @return mixed
+     * @return ArrayCollection
      */
     public function all();
 
@@ -24,14 +25,14 @@ interface CourseRepository
      * Find a course by it's id.
      *
      * @param $id
-     * @return mixed
+     * @return Course
      */
     public function courseOfId($id);
     /**
      * Returns a course by it's name
      *
      * @param Name $name
-     * @return mixed
+     * @return Course
      */
     public function courseOfName(Name $name);
 }

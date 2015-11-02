@@ -41,8 +41,14 @@ return [
     ],
 
     'role_not_found' => [
-        'title' => 'De opgevraagde gebruiker werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+        'title' => 'De opgevraagde rol werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
         'detail' => 'De rol [%s] is niet gevonden.'
+    ],
+    [
+      'curriculum_not_found' => [
+          'title' => 'Het opgevraagde leerplan werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+          'detail' => 'Het leerplan met id [%s] is niet gevonden.'
+      ]
     ],
 
 

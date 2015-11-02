@@ -9,8 +9,10 @@
 namespace Bakgat\Notos\Infrastructure\Repositories\Curriculum;
 
 
+use Bakgat\Notos\Domain\Model\Curricula\Course;
 use Bakgat\Notos\Domain\Model\Curricula\CourseRepository;
 use Bakgat\Notos\Domain\Model\Identity\Name;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 
 class CourseDoctrineORMRepository implements CourseRepository
@@ -30,7 +32,7 @@ class CourseDoctrineORMRepository implements CourseRepository
     /**
      * Returns all courses
      *
-     * @return mixed
+     * @return ArrayCollection
      */
     public function all()
     {
@@ -42,7 +44,7 @@ class CourseDoctrineORMRepository implements CourseRepository
      * Find a course by it's id.
      *
      * @param $id
-     * @return mixed
+     * @return Course
      */
     public function courseOfId($id)
     {

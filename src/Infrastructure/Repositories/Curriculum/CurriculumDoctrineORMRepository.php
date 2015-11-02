@@ -12,6 +12,7 @@ namespace Bakgat\Notos\Infrastructure\Repositories\Curriculum;
 use Bakgat\Notos\Domain\Model\Curricula\Course;
 use Bakgat\Notos\Domain\Model\Curricula\Curriculum;
 use Bakgat\Notos\Domain\Model\Curricula\CurriculumRepository;
+use Bakgat\Notos\Domain\Model\Curricula\Exceptions\CurriculumNotFoundException;
 use Bakgat\Notos\Domain\Model\Curricula\Group;
 use Bakgat\Notos\Domain\Model\Curricula\Objective;
 use Bakgat\Notos\Domain\Model\Curricula\ObjectiveControlLevel;
@@ -60,6 +61,10 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
         $curriculum = $this->em->getRepository($this->currClass)
             ->find($curriculumId);
 
+        if (!$curriculum) {
+            throw new CurriculumNotFoundException($curriculumId);
+        }
+        $this->em->persist($structure);
         $curriculum->addStructure($structure);
         $this->em->persist($curriculum);
         $this->em->flush();
@@ -127,7 +132,7 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
      * Find the latest active curriculum by it's course name
      *
      * @param Course $course
-     * @return mixed
+     * @return Curriculum
      */
     public function curriculumOfCourse(Course $course)
     {
@@ -174,6 +179,13 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
             ->find($id);
     }
 
+    /**
+     * @param Curriculum $curriculum
+     * @param $parent
+     * @param $name
+     * @param $type
+     * @return Structure
+     */
     public function structure(Curriculum $curriculum, $parent, $name, $type)
     {
         $qb = $this->em->createQueryBuilder();
@@ -192,7 +204,7 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
             $qb->andWhere(
                 $qb->expr()->eq('s.parent', '?4')
             )
-            ->setParameter(4, $parent->id());
+                ->setParameter(4, $parent->id());
         } else {
             $qb->andWhere(
                 $qb->expr()->isNull('s.parent')
