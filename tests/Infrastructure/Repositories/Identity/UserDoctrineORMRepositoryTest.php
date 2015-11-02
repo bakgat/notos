@@ -22,10 +22,8 @@ use Bakgat\Notos\Domain\Model\Identity\UserRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Identity\OrganizationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Identity\UserDoctrineORMRepository;
 use Bakgat\Notos\Tests\DoctrineTestCase;
-use Bakgat\Notos\Tests\Fixtures\TestFixtures;
 use Mockery as m;
 use Mockery\MockInterface;
-use Orchestra\Testbench\TestCase;
 
 class UserDoctrineORMRepositoryTest extends DoctrineTestCase
 {
@@ -42,7 +40,6 @@ class UserDoctrineORMRepositoryTest extends DoctrineTestCase
         $this->userRepo = new UserDoctrineORMRepository($this->em);
         $this->orgRepo = new OrganizationDoctrineORMRepository($this->em);
 
-        $this->loader->addFixture(new TestFixtures());
 
         $this->executor->execute($this->loader->getFixtures());
     }

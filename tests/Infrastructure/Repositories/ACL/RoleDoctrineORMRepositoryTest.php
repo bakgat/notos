@@ -12,7 +12,6 @@ namespace Bakgat\Notos\Tests\Infrastructure\Repositories\ACL;
 use Bakgat\Notos\Domain\Model\ACL\RoleRepository;
 use Bakgat\Notos\Infrastructure\Repositories\ACL\RoleDoctrineORMRepository;
 use Bakgat\Notos\Tests\DoctrineTestCase;
-use Bakgat\Notos\Tests\Fixtures\TestFixtures;
 
 class RoleDoctrineORMRepositoryTest extends DoctrineTestCase
 {
@@ -25,7 +24,6 @@ class RoleDoctrineORMRepositoryTest extends DoctrineTestCase
 
         $this->roleRepo = new RoleDoctrineORMRepository($this->em);
 
-        $this->loader->addFixture(new TestFixtures);
         $this->executor->execute($this->loader->getFixtures());
     }
 

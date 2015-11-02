@@ -14,7 +14,6 @@ use Bakgat\Notos\Domain\Model\Kind;
 use Bakgat\Notos\Infrastructure\Repositories\Identity\GroupDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Identity\KindCacheRepository;
 use Bakgat\Notos\Tests\DoctrineTestCase;
-use Bakgat\Notos\Tests\Fixtures\TestFixtures;
 
 class GroupDoctrineORMRepositoryTest extends DoctrineTestCase
 {
@@ -30,7 +29,6 @@ class GroupDoctrineORMRepositoryTest extends DoctrineTestCase
         $this->groupRepo = new GroupDoctrineORMRepository($this->em);
         $this->kindRepo = new KindCacheRepository($this->em);
 
-        $this->loader->addFixture(new TestFixtures);
         $this->executor->execute($this->loader->getFixtures());
     }
 

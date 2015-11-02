@@ -12,10 +12,8 @@ namespace Bakgat\Notos\Tests\Infrastructure\Location;
 use Bakgat\Notos\Domain\Model\Location\URL;
 use Bakgat\Notos\Domain\Model\Location\WebsitesRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Location\WebsitesDoctrineORMRepository;
-use Bakgat\Notos\Seeds\Fixtures\CourseFixtures;
-use Bakgat\Notos\Seeds\Fixtures\WebsiteFixtures;
+
 use Bakgat\Notos\Tests\DoctrineTestCase;
-use Bakgat\Notos\Tests\Fixtures\TestFixtures;
 
 class WebsitesDoctrineORMRepositoryTest extends DoctrineTestCase
 {
@@ -28,7 +26,6 @@ class WebsitesDoctrineORMRepositoryTest extends DoctrineTestCase
 
         $this->websiteRepo = new WebsitesDoctrineORMRepository($this->em);
 
-        $this->loader->addFixture(new TestFixtures);
         $this->executor->execute($this->loader->getFixtures());
     }
 
