@@ -11,6 +11,7 @@ namespace Bakgat\Notos\Tests\Fixtures;
 
 use Bakgat\Notos\Domain\Model\ACL\Role;
 use Bakgat\Notos\Domain\Model\ACL\UserRole;
+use Bakgat\Notos\Domain\Model\Curricula\Course;
 use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\Email;
 use Bakgat\Notos\Domain\Model\Identity\Gender;
@@ -143,6 +144,25 @@ class TestFixtures implements FixtureInterface
 
         $manager->persist($cg_K1);
 
+        /* ***************************************************
+         * COURSES
+         * **************************************************/
+        $n_maths = new Name('wiskunde');
+        $maths = Course::register($n_maths);
+
+        $n_gk = new Name('getallenkennis');
+        $gk = Course::register($n_gk);
+
+        $n_lang = new Name('nederlands');
+        $lang = Course::register($n_lang);
+
+        $n_sp = new Name('spelling');
+        $sp = Course::register($n_sp);
+
+        $manager->persist($maths);
+        $manager->persist($gk);
+        $manager->persist($lang);
+        $manager->persist($sp);
 
         /* ***************************************************
          * WEBSITES
