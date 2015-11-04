@@ -9,6 +9,9 @@
 namespace Bakgat\Notos\Domain\Model\Curricula;
 
 
+
+use Bakgat\Notos\Domain\Model\Identity\Group;
+
 interface CurriculumRepository
 {
     /**
@@ -29,7 +32,8 @@ interface CurriculumRepository
     /**
      * @param Structure $structure
      * @param $curriculumId
-     * @return mixed
+     * @return mix
+     * @throws CurriculumNotFoundException
      */
     public function addStructure(Structure $structure, $curriculumId);
 
@@ -37,6 +41,7 @@ interface CurriculumRepository
      * @param Objective $objective
      * @param $structureId
      * @return mixed
+     * @throws StructureNotFoundException
      */
     public function addObjective(Objective $objective, $structureId);
 
@@ -45,6 +50,7 @@ interface CurriculumRepository
      * @param Group $group
      * @param $level
      * @return mixed
+     *
      */
     public function addObjectiveLevel(Objective $objective, Group $group, $level);
 

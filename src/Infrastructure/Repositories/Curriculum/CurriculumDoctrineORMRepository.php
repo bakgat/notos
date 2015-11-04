@@ -13,10 +13,11 @@ use Bakgat\Notos\Domain\Model\Curricula\Course;
 use Bakgat\Notos\Domain\Model\Curricula\Curriculum;
 use Bakgat\Notos\Domain\Model\Curricula\CurriculumRepository;
 use Bakgat\Notos\Domain\Model\Curricula\Exceptions\CurriculumNotFoundException;
-use Bakgat\Notos\Domain\Model\Curricula\Group;
+use Bakgat\Notos\Domain\Model\Curricula\Exceptions\StructureNotFoundException;
 use Bakgat\Notos\Domain\Model\Curricula\Objective;
 use Bakgat\Notos\Domain\Model\Curricula\ObjectiveControlLevel;
 use Bakgat\Notos\Domain\Model\Curricula\Structure;
+use Bakgat\Notos\Domain\Model\Identity\Group;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Cache;
 
@@ -54,6 +55,7 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
      * @param Structure $structure
      * @param $curriculumId
      * @return mixed
+     * @throws CurriculumNotFoundException
      */
     public function addStructure(Structure $structure, $curriculumId)
     {
@@ -74,6 +76,7 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
      * @param Objective $objective
      * @param $structureId
      * @return mixed
+     * @throws StructureNotFoundException
      */
     public function addObjective(Objective $objective, $structureId)
     {
@@ -81,6 +84,10 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
         $structure = $this->em->getRepository($this->strucClass)
             ->find($structureId);
 
+        if (!$structure) {
+            throw new StructureNotFoundException($structureId);
+        }
+        $this->em->persist($objective);
         $structure->addObjective($objective);
         $this->em->persist($structure);
         $this->em->flush();
@@ -136,7 +143,6 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
      */
     public function curriculumOfCourse(Course $course)
     {
-
         $qb = $this->em->createQueryBuilder();
         $qb->select('c')
             ->from($this->currClass, 'c')
@@ -145,7 +151,7 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
             )
             ->setParameter(1, $course->id());
 
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -188,6 +194,7 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
      */
     public function structure(Curriculum $curriculum, $parent, $name, $type)
     {
+
         $qb = $this->em->createQueryBuilder();
         $qb->select('s')
             ->from($this->strucClass, 's')
@@ -201,10 +208,12 @@ class CurriculumDoctrineORMRepository implements CurriculumRepository
             ->setParameter(3, $curriculum->id());
 
         if ($parent) {
-            $qb->andWhere(
-                $qb->expr()->eq('s.parent', '?4')
-            )
-                ->setParameter(4, $parent->id());
+            if ($parent instanceof Structure) {
+                $qb->andWhere(
+                    $qb->expr()->eq('s.parent', '?4')
+                )
+                    ->setParameter(4, $parent->id());
+            }
         } else {
             $qb->andWhere(
                 $qb->expr()->isNull('s.parent')

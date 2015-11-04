@@ -13,6 +13,11 @@ use Bakgat\Notos\Domain\Model\ACL\Role;
 use Bakgat\Notos\Domain\Model\ACL\UserRole;
 use Bakgat\Notos\Domain\Model\Curricula\Course;
 use Bakgat\Notos\Domain\Model\Curricula\Curriculum;
+use Bakgat\Notos\Domain\Model\Curricula\Objective;
+use Bakgat\Notos\Domain\Model\Curricula\ObjectiveControlLevel;
+use Bakgat\Notos\Domain\Model\Curricula\Structure;
+use Bakgat\Notos\Domain\Model\Descriptive\Tag;
+use Bakgat\Notos\Domain\Model\Descriptive\TagName;
 use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\Email;
 use Bakgat\Notos\Domain\Model\Identity\Gender;
@@ -136,14 +141,14 @@ class TestFixtures implements FixtureInterface
         $level_l1 = Group::register(new Name('L1'));
         $level_l1->setKind($k_level);
 
-        $cg_K1 = Group::register(new Name('1KA'));
-        $cg_K1->setKind($k_classgroup);
+        $cg_K1A = Group::register(new Name('1KA'));
+        $cg_K1A->setKind($k_classgroup);
 
         $manager->persist($level_jkl);
         $manager->persist($level_okl);
         $manager->persist($level_l1);
 
-        $manager->persist($cg_K1);
+        $manager->persist($cg_K1A);
 
         /* ***************************************************
          * COURSES
@@ -173,6 +178,32 @@ class TestFixtures implements FixtureInterface
 
         $manager->persist($curr_maths);
 
+        $struc = new Structure();
+        $struc->setName(new Name('chapter 1'));
+        $struc->setType('chapter');
+        $struc->setCurriculum($curr_maths);
+
+        $manager->persist($struc);
+
+        $n_obj = new Name('Doel 1a');
+        $c_obj = 'D0.1.a';
+        $objective = Objective::register($n_obj, $c_obj, $struc);
+
+        $manager->persist($objective);
+
+        $obj_level = ObjectiveControlLevel::register($cg_K1A, $objective, 1);
+
+        $manager->persist($obj_level);
+
+        /* ***************************************************
+         * TAGS
+         * **************************************************/
+        $tag1 = Tag::register(new TagName('tag1'));
+        $tag2 = Tag::register(new TagName('tag2'));
+        $manager->persist($tag1);
+        $manager->persist($tag2);
+        $tags = [$tag1, $tag2];
+
         /* ***************************************************
          * WEBSITES
          * **************************************************/
@@ -194,8 +225,12 @@ class TestFixtures implements FixtureInterface
             $n_s = new Name($site['name']);
             $u_s = new URL($site['url']);
             $s = Website::register($n_s, $u_s);
+            $s->addTag($tags[rand(0,1)]);
+
             $manager->persist($s);
         }
+
+
 
 
         $manager->flush();

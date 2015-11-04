@@ -123,7 +123,7 @@ class Objective
      */
     public function setName(Name $name)
     {
-        $this->name = $name;
+        $this->name = $name->toString();
     }
 
     /**
@@ -131,7 +131,7 @@ class Objective
      */
     public function name()
     {
-        return $this->name;
+        return Name::fromNative($this->name);
     }
 
     /**

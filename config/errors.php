@@ -44,11 +44,15 @@ return [
         'title' => 'De opgevraagde rol werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
         'detail' => 'De rol [%s] is niet gevonden.'
     ],
-    [
-      'curriculum_not_found' => [
-          'title' => 'Het opgevraagde leerplan werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
-          'detail' => 'Het leerplan met id [%s] is niet gevonden.'
-      ]
+
+    'curriculum_not_found' => [
+        'title' => 'Het opgevraagde leerplan werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+        'detail' => 'Het leerplan met id [%s] is niet gevonden.'
+    ],
+
+    'curr_structure_not_found' => [
+        'title' => 'De opgevraagde structuur uit het leerplan werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+        'detail' => 'De opgevraagde structuur [%s] uit het leerplan is niet gevonden.'
     ],
 
 
@@ -112,7 +116,6 @@ return [
         'title' => 'Het verzoek heeft een media-type dat de server niet ondersteunt.',
         'detail' => 'Uw verzoek met het media-type [%s] wordt niet ondersteund.'
     ],
-
 
 
 ];

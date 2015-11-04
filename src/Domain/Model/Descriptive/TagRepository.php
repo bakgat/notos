@@ -44,7 +44,7 @@ interface TagRepository
      * Finds a tag by it's name
      *
      * @param TagName $name
-     * @return mixed
+     * @return Tag
      */
     public function tagOfName(TagName $name);
 
@@ -52,7 +52,7 @@ interface TagRepository
      * Finds a tag by it's name or create one
      *
      * @param TagName $name
-     * @return mixed
+     * @return Tag
      */
     public function tagOfNameOrCreate(TagName $name);
 }

@@ -92,7 +92,7 @@ class TagDoctrineORMRepository implements TagRepository
      * Finds a tag by it's name or create one
      *
      * @param TagName $name
-     * @return mixed
+     * @return Tag
      */
     public function tagOfNameOrCreate(TagName $name)
     {
