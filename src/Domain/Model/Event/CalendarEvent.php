@@ -8,6 +8,8 @@
 
 namespace Bakgat\Notos\Domain\Model\Event;
 
+use Bakgat\Notos\Domain\Model\Identity\Group;
+use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -34,7 +36,7 @@ class CalendarEvent extends Event
      */
     private $groups;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @JMS\Groups({"list","detail","full"})
      */
     private $description;
@@ -52,9 +54,10 @@ class CalendarEvent extends Event
     public function __construct(Name $name, Organization $organization, DateTime $start = null, DateTime $end = null, $allDay = false)
     {
         parent::__construct($name, $start);
-        if (!$end) {
+        if ($end) {
             $this->setEnd($end);
         }
+        $this->setOrganization($organization);
         $this->setAllDay($allDay);
 
         $this->groups = new ArrayCollection;
@@ -66,8 +69,7 @@ class CalendarEvent extends Event
     }
 
     /**
-     * @param DateTime end
-     * @return void
+     * @param DateTime $end
      */
     public function setEnd(DateTime $end)
     {
@@ -101,10 +103,10 @@ class CalendarEvent extends Event
     }
 
     /**
-     * @param string description
+     * @param  description
      * @return void
      */
-    public function setDescription(string $description)
+    public function setDescription($description)
     {
         $this->description = $description;
     }

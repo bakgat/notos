@@ -51,8 +51,15 @@ abstract class Event
     }
 
     /**
-     * @param Name name
-     * @return void
+     * @return int
+     */
+    public function id()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param Name $name
      */
     public function setName(Name $name)
     {
@@ -68,8 +75,7 @@ abstract class Event
     }
 
     /**
-     * @param DateTime start
-     * @return void
+     * @param DateTime $start
      */
     public function setStart(DateTime $start)
     {

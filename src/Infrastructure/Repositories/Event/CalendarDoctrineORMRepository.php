@@ -14,6 +14,7 @@ use Bakgat\Notos\Domain\Model\Event\CalendarRepository;
 use Bakgat\Notos\Domain\Model\Identity\Group;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 
 class CalendarDoctrineORMRepository implements CalendarRepository
@@ -33,7 +34,7 @@ class CalendarDoctrineORMRepository implements CalendarRepository
      * Get all events of one Organization
      *
      * @param Organization $organization
-     * @return mixed
+     * @return ArrayCollection
      */
     public function all(Organization $organization)
     {
@@ -58,7 +59,7 @@ class CalendarDoctrineORMRepository implements CalendarRepository
      * Adds a new event.
      *
      * @param CalendarEvent $event
-     * @return mixed
+     * @return void
      */
     public function add(CalendarEvent $event)
     {
@@ -70,7 +71,7 @@ class CalendarDoctrineORMRepository implements CalendarRepository
      * Updates an existing event
      *
      * @param CalendarEvent $event
-     * @return mixed
+     * @return void
      */
     public function update(CalendarEvent $event)
     {
@@ -81,7 +82,7 @@ class CalendarDoctrineORMRepository implements CalendarRepository
     /**
      * If the event exists, it will be removed
      * @param CalendarEvent $event
-     * @return mixed
+     * @return void
      */
     public function remove(CalendarEvent $event)
     {
@@ -93,7 +94,7 @@ class CalendarDoctrineORMRepository implements CalendarRepository
      * Returns all events of a certian group
      *
      * @param Group $group
-     * @return mixed
+     * @return ArrayCollection
      */
     public function eventsOfGroup(Group $group)
     {
@@ -110,7 +111,8 @@ class CalendarDoctrineORMRepository implements CalendarRepository
                     ),
                     $qb->expr()->gt('c.end', '?2')
                 ))
-            ->setParameter(1, $group->id());
+            ->setParameter(1, $group->id())
+            ->setParameter(2, new DateTime);
         return $qb->getQuery()->getResult();
     }
 
@@ -118,7 +120,7 @@ class CalendarDoctrineORMRepository implements CalendarRepository
      * Returns an event with a specific id
      *
      * @param $id
-     * @return mixed
+     * @return CalendarEvent
      */
     public function eventOfId($id)
     {
@@ -131,7 +133,7 @@ class CalendarDoctrineORMRepository implements CalendarRepository
      * @param Organization $organization
      * @param $start
      * @param $end
-     * @return mixed
+     * @return ArrayCollection
      */
     public function eventsBetween(Organization $organization, $start, $end)
     {
@@ -140,10 +142,15 @@ class CalendarDoctrineORMRepository implements CalendarRepository
             ->from($this->calendarClass, 'c')
             ->where(
                 $qb->expr()->eq('c.organization', '?1'),
-                $qb->expr()->gte('c.start', '?2'),
                 $qb->expr()->orX(
-                    $qb->expr()->gt('c.end', '?3'),
-                    $qb->expr()->isNull('c.end')
+                    $qb->expr()->andX(
+                        $qb->expr()->gte('c.start', '?2'),
+                        $qb->expr()->lte('c.start', '?3')
+                    ),
+                    $qb->expr()->andX(
+                        $qb->expr()->gte('c.end', '?2'),
+                        $qb->expr()->lte('c.end', '?3')
+                    )
                 ))
             ->setParameter(1, $organization->id())
             ->setParameter(2, $start)

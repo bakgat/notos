@@ -18,6 +18,7 @@ use Bakgat\Notos\Domain\Model\Curricula\ObjectiveControlLevel;
 use Bakgat\Notos\Domain\Model\Curricula\Structure;
 use Bakgat\Notos\Domain\Model\Descriptive\Tag;
 use Bakgat\Notos\Domain\Model\Descriptive\TagName;
+use Bakgat\Notos\Domain\Model\Event\CalendarEvent;
 use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\Email;
 use Bakgat\Notos\Domain\Model\Identity\Gender;
@@ -31,6 +32,7 @@ use Bakgat\Notos\Domain\Model\Kind;
 use Bakgat\Notos\Domain\Model\Location\URL;
 use Bakgat\Notos\Domain\Model\Location\Website;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelation;
+use DateTime;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -230,8 +232,35 @@ class TestFixtures implements FixtureInterface
             $manager->persist($s);
         }
 
+        /* ***************************************************
+         * EVENTS
+         * **************************************************/
+        $i = 0;
+        //5 in the future
+        while($i < 5) {
+            $n_event = new Name('event ' . ++$i);
+            $s_int = mt_rand(1462104000,1515758400); // 1/5/2016 - 12/12/2018
+            $s_date = date("Y-m-d H:i:s",$s_int);
+            $event = CalendarEvent::register($n_event, $klimtoren, new DateTime($s_date));
+            if($i<4) {
+                $event->addGroup($cg_K1A);
+            }
 
+            $manager->persist($event);
+        }
 
+        //5 in the past
+        while($i < 10) {
+            $n_event = new Name('event ' . ++$i);
+            $s_int = mt_rand(957182400,1241179200); // 1/5/2000 - 1/5/2009
+            $s_date = date("Y-m-d H:i:s",$s_int);
+            $event = CalendarEvent::register($n_event, $klimtoren, new DateTime($s_date));
+            if($i<9) {
+                $event->addGroup($cg_K1A);
+            }
+
+            $manager->persist($event);
+        }
 
         $manager->flush();
     }

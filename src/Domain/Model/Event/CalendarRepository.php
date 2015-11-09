@@ -11,6 +11,7 @@ namespace Bakgat\Notos\Domain\Model\Event;
 
 use Bakgat\Notos\Domain\Model\Identity\Group;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
+use Doctrine\Common\Collections\ArrayCollection;
 
 interface CalendarRepository
 {
@@ -18,7 +19,7 @@ interface CalendarRepository
      * Get all events of one Organization
      *
      * @param Organization $organization
-     * @return mixed
+     * @return ArrayCollection
      */
     public function all(Organization $organization);
 
@@ -26,7 +27,7 @@ interface CalendarRepository
      * Adds a new event.
      *
      * @param CalendarEvent $event
-     * @return mixed
+     * @return void
      */
     public function add(CalendarEvent $event);
 
@@ -34,14 +35,14 @@ interface CalendarRepository
      * Updates an existing event
      *
      * @param CalendarEvent $event
-     * @return mixed
+     * @return void
      */
     public function update(CalendarEvent $event);
 
     /**
      * If the event exists, it will be removed
      * @param CalendarEvent $event
-     * @return mixed
+     * @return void
      */
     public function remove(CalendarEvent $event);
 
@@ -49,7 +50,7 @@ interface CalendarRepository
      * Returns all events of a certian group
      *
      * @param Group $group
-     * @return mixed
+     * @return ArrayCollection
      */
     public function eventsOfGroup(Group $group);
 
@@ -57,7 +58,7 @@ interface CalendarRepository
      * Returns an event with a specific id
      *
      * @param $id
-     * @return mixed
+     * @return CalendarEvent
      */
     public function eventOfId($id);
 
@@ -66,7 +67,7 @@ interface CalendarRepository
      * @param Organization $organization
      * @param $start
      * @param $end
-     * @return mixed
+     * @return ArrayCollection
      */
     public function eventsBetween(Organization $organization, $start, $end);
 
