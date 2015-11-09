@@ -8,6 +8,7 @@
 
 namespace Bakgat\Notos\Domain\Model\Resource;
 
+use Bakgat\Notos\Domain\Model\Identity\Guid;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Doctrine\ORM\Mapping as ORM;
@@ -39,7 +40,13 @@ class Asset extends Resource
      */
     private $organization;
 
-    public function __construct($guid, Name $name, $mime, Organization $organization)
+    /**
+     * @ORM\Column(type="string")
+     * @var string $path
+     */
+    private $path;
+
+    public function __construct(Guid $guid, Name $name, $mime, Organization $organization)
     {
         parent::__construct($name);
 
@@ -48,26 +55,26 @@ class Asset extends Resource
         $this->setOrganization($organization);
     }
 
-    public static function register(Name $name, $guid, $mime, Organization $organization)
+    public static function register(Name $name, Guid $guid, $mime, Organization $organization)
     {
         return new Asset($guid, $name, $mime, $organization);
     }
 
     /**
-     * @param  guid
+     * @param Guid guid
      * @return void
      */
-    public function setGuid($guid)
+    public function setGuid(Guid $guid)
     {
-        $this->guid = $guid;
+        $this->guid = $guid->toString();
     }
 
     /**
-     * @return
+     * @return Guid
      */
     public function guid()
     {
-        return $this->guid;
+        return Guid::fromNative($this->guid);
     }
 
     /**
@@ -120,5 +127,22 @@ class Asset extends Resource
     public function organization()
     {
         return $this->organization;
+    }
+
+    /**
+     * @param path
+     * @return void
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    }
+
+    /**
+     * @return string
+     */
+    public function path()
+    {
+        return $this->path;
     }
 }
