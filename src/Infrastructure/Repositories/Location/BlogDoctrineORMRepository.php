@@ -12,6 +12,7 @@ namespace Bakgat\Notos\Infrastructure\Repositories\Location;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Location\Blog;
 use Bakgat\Notos\Domain\Model\Location\BlogRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 
 class BlogDoctrineORMRepository implements BlogRepository
@@ -27,6 +28,10 @@ class BlogDoctrineORMRepository implements BlogRepository
         $this->blogClass = 'Bakgat\Notos\Domain\Model\Location\Blog';
     }
 
+    /**
+     * @param Organization $organization
+     * @return ArrayCollection
+     */
     public function all(Organization $organization)
     {
         $qb = $this->em->createQueryBuilder();
@@ -59,6 +64,10 @@ class BlogDoctrineORMRepository implements BlogRepository
         $this->em->flush();
     }
 
+    /**
+     * @param $id
+     * @return Blog
+     */
     public function blogOfId($id)
     {
         return $this->em->getRepository($this->blogClass)

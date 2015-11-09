@@ -10,9 +10,14 @@ namespace Bakgat\Notos\Domain\Model\Location;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Organization;
+use Doctrine\Common\Collections\ArrayCollection;
 
 interface BlogRepository
 {
+    /**
+     * @param Organization $organization
+     * @return ArrayCollection
+     */
     public function all(Organization $organization);
 
     public function add(Blog $blog);
@@ -21,6 +26,10 @@ interface BlogRepository
 
     public function remove(Blog $blog);
 
+    /**
+     * @param $id
+     * @return Blog
+     */
     public function blogOfId($id);
 
 }

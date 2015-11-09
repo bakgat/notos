@@ -41,6 +41,7 @@ class Blog extends Location
      * @JMS\Exclude
      */
     private $organization;
+
     /** @ORM\Column(type="smallint", nullable=true) */
     private $weborder;
 
@@ -62,7 +63,7 @@ class Blog extends Location
      */
     public function setURL(URL $url)
     {
-        $this->url = $url;
+        $this->url = $url->toString();
     }
 
     /**
@@ -70,7 +71,7 @@ class Blog extends Location
      */
     public function url()
     {
-        return $this->url;
+        return URL::fromNative($this->url);
     }
 
     /**
@@ -122,5 +123,22 @@ class Blog extends Location
     public function organization()
     {
         return $this->organization;
+    }
+
+    /**
+     * @param  weborder
+     * @return void
+     */
+    public function setWeborder($weborder)
+    {
+        $this->weborder = $weborder;
+    }
+
+    /**
+     * @return
+     */
+    public function weborder()
+    {
+        return $this->weborder;
     }
 }

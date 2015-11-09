@@ -59,7 +59,7 @@ class Location
      */
     public function setName(Name $name)
     {
-        $this->name = $name;
+        $this->name = $name->toString();
     }
 
     /**
@@ -67,7 +67,7 @@ class Location
      */
     public function name()
     {
-        return $this->name;
+        return Name::fromNative($this->name);
     }
 
     /**

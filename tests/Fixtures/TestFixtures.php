@@ -29,6 +29,7 @@ use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\User;
 use Bakgat\Notos\Domain\Model\Identity\Username;
 use Bakgat\Notos\Domain\Model\Kind;
+use Bakgat\Notos\Domain\Model\Location\Blog;
 use Bakgat\Notos\Domain\Model\Location\URL;
 use Bakgat\Notos\Domain\Model\Location\Website;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelation;
@@ -231,6 +232,30 @@ class TestFixtures implements FixtureInterface
 
             $manager->persist($s);
         }
+
+
+        /* ***************************************************
+         * BLOGS
+         * **************************************************/
+        $n_blog1 = new Name('blog 1');
+        $url_blog1 = new URL('www.blog1.bar');
+        $blog1 = Blog::register($n_blog1, $url_blog1, $klimtoren);
+        $blog1->setWeborder(1);
+
+        $n_blog2 = new Name('blog 2');
+        $url_blog2 = new URL('www.blog2.bar');
+        $blog2 = Blog::register($n_blog2, $url_blog2, $klimtoren);
+        $blog2->setWeborder(2);
+
+        $n_blog3 = new Name('blog 3');
+        $url_blog3 = new URL('www.blog3.bar');
+        $blog3 = Blog::register($n_blog3, $url_blog3, $wassenaard);
+        $blog3->setWeborder(1);
+
+
+        $manager->persist($blog1);
+        $manager->persist($blog2);
+        $manager->persist($blog3);
 
         /* ***************************************************
          * EVENTS
