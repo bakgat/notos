@@ -11,6 +11,7 @@ namespace Bakgat\Notos\Domain\Services\Identity;
 
 use Bakgat\Notos\Domain\Model\Identity\GroupRepository;
 use Bakgat\Notos\Domain\Model\KindRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class GroupService
 {
@@ -23,6 +24,11 @@ class GroupService
         $this->kindRepo = $kindRepository;
         $this->groupRepo = $groupRepository;
     }
+
+    /**
+     * @param $kind_name
+     * @return ArrayCollection
+     */
     public function groupsOfKind($kind_name)
     {
         $level = $this->kindRepo->get($kind_name);
