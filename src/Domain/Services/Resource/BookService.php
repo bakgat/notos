@@ -9,7 +9,7 @@
 namespace Bakgat\Notos\Domain\Services\Resource;
 
 
-use Bakgat\Notos\Domain\Model\Identity\Organization;
+use Bakgat\Notos\Domain\Model\Identity\Exceptions\OrganizationNotFoundException;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Resource\BookRepository;
 
@@ -28,6 +28,10 @@ class BookService
     public function all($orgId)
     {
         $organization = $this->orgRepo->organizationOfId($orgId);
+        if(!$organization) {
+            throw new OrganizationNotFoundException($orgId);
+        }
+
         return $this->bookRepo->all($organization);
     }
 }

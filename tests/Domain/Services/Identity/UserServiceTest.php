@@ -20,12 +20,15 @@ use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\User;
 use Bakgat\Notos\Domain\Model\Identity\Username;
 use Bakgat\Notos\Domain\Services\Identity\UserService;
+use Bakgat\Notos\Tests\Domain\Services\TestDataTrait;
 use Mockery as m;
 use Mockery\MockInterface;
 use Orchestra\Testbench\TestCase;
 
 class UserServiceTest extends TestCase
 {
+    use TestDataTrait;
+
     /** @var MockInterface $userRepo */
     private $userRepo;
     /** @var MockInterface */
@@ -39,59 +42,19 @@ class UserServiceTest extends TestCase
 
     /** @var UserService $userService */
     private $userService;
-    /** @var User $user */
-    private $user;
-    /** @var Organization $organization */
-    private $organization;
-    /** @var Role $roleUser */
-    private $roleUser;
-    /** @var array $userData */
-    private $userData;
+
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->userRepo = m::mock('Bakgat\Notos\Domain\Model\Identity\UserRepository');
-        $this->orgRepo = m::mock('Bakgat\Notos\Domain\Model\Identity\OrganizationRepository');
-        $this->roleRepo = m::mock('Bakgat\Notos\Domain\Model\ACL\RoleRepository');
-        $this->userRoleRepo = m::mock('Bakgat\Notos\Domain\Model\ACL\UserRolesRepository');
-        $this->roleRepo = m::mock('Bakgat\Notos\Domain\Model\ACL\RoleRepository');
-        $this->hasher = m::mock('Illuminate\Contracts\Hashing\Hasher');
+        $this->setupMocks();
+
         $this->userService = new UserService($this->userRepo, $this->orgRepo,
             $this->roleRepo, $this->userRoleRepo,
             $this->hasher);
 
-        //USER
-        $fname = new Name('Karl');
-        $lname = new Name('Van Iseghem');
-        $uname = new Username('karl.vaniseghem@klimtoren.be');
-        $pwd = new HashedPassword(bcrypt('password'));
-        $gender = new Gender(Gender::MALE);
-        $email = new Email($uname->toString());
-
-        $this->user = User::register($fname, $lname, $uname, $pwd, $email, $gender);
-
-        //ORGANIZATION
-        $orgName = new Name('VBS De Klimtoren');
-        $domainName = new DomainName('klimtoren.be');
-
-        $this->organization = Organization::register($orgName, $domainName);
-
-        //ACL
-        $role_admin = Role::register('admin');
-        $role_sa = Role::register('sa');
-        $this->roleUser = Role::register('user');
-        UserRole::register($this->user, $role_admin, $this->organization);
-        UserRole::register($this->user, $role_sa, $this->organization);
-
-        $this->userData = [
-            'first_name' => 'Karl',
-            'last_name' => 'Van Iseghem',
-            'username' => 'karl.vaniseghem@klimtoren.be',
-            'password' => 'password',
-            'gender' => 'M'
-        ];
+        $this->setupTestData();
     }
 
     /**
@@ -104,7 +67,7 @@ class UserServiceTest extends TestCase
 
         $this->orgRepo->shouldReceive('organizationOfId')
             ->with($orgId)
-            ->andReturn($this->organization);
+            ->andReturn($this->klimtoren);
 
         $this->userRepo->shouldReceive('all')
             ->andReturn([['id' => 1], ['id' => 2]]);
@@ -138,12 +101,12 @@ class UserServiceTest extends TestCase
     {
         $userId = 1;
         $this->userRepo->shouldReceive('userOfId')
-            ->andReturn($this->user);
+            ->andReturn($this->karl);
 
         $r_user = $this->userService->userOfId($userId);
 
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\User', $r_user);
-        $this->assertEquals($this->user->username(), $r_user->username());
+        $this->assertEquals($this->karl->username(), $r_user->username());
     }
 
     /**
@@ -170,12 +133,12 @@ class UserServiceTest extends TestCase
 
         $username = 'karl.vaniseghem@klimtoren.be';
         $this->userRepo->shouldReceive('userOfUsername')
-            ->andReturn($this->user);
+            ->andReturn($this->karl);
 
         $r_user = $this->userService->userOfUsername($username);
 
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Identity\User', $r_user);
-        $this->assertEquals($this->user->username(), $r_user->username());
+        $this->assertEquals($this->karl->username(), $r_user->username());
     }
 
     /**
@@ -203,12 +166,12 @@ class UserServiceTest extends TestCase
         $orgId = 2;
 
         $this->orgRepo->shouldReceive('organizationOfId')
-            ->andReturn($this->organization);
+            ->andReturn($this->klimtoren);
         $this->userRepo->shouldReceive('userOfId')
-            ->andReturn($this->user);
+            ->andReturn($this->karl);
 
         $this->userRepo->shouldReceive('userWithACL')
-            ->andReturn($this->user);
+            ->andReturn($this->karl);
 
         /** @var User $r_user */
         $r_user = $this->userService->getUserWithACL($userId, $orgId);
@@ -239,7 +202,7 @@ class UserServiceTest extends TestCase
 
         /* GET THE ORGANIZATION */
         $this->orgRepo->shouldReceive('organizationOfId')
-            ->andReturn($this->organization);
+            ->andReturn($this->klimtoren);
 
         /* CHECK USERNAME DUPLICATES */
         $this->userRepo->shouldReceive('userOfUsername')
@@ -254,15 +217,15 @@ class UserServiceTest extends TestCase
 
         /* GET PROFILE */
         $this->userRepo->shouldReceive('userOfId')
-            ->andReturn($this->user);
+            ->andReturn($this->karl);
         $this->userRepo->shouldReceive('userWithACL')
-            ->andReturn($this->user);
+            ->andReturn($this->karl);
         $this->userRepo->shouldReceive('organizationsOfUser')
-            ->andReturn([$this->organization]);
+            ->andReturn([$this->klimtoren]);
         //END GET PROFILE
 
         $this->userRepo->shouldReceive('add')
-            ->andReturn($this->user);
+            ->andReturn($this->karl);
 
         $r_user = $this->userService->add($this->userData, $orgId);
 
@@ -299,11 +262,11 @@ class UserServiceTest extends TestCase
 
         /* GET THE ORGANIZATION */
         $this->orgRepo->shouldReceive('organizationOfId')
-            ->andReturn($this->organization);
+            ->andReturn($this->klimtoren);
 
         /* CHECK USERNAME DUPLICATES */
         $this->userRepo->shouldReceive('userOfUsername')
-            ->andReturn($this->user);
+            ->andReturn($this->karl);
 
         $this->userService->add($this->userData, $orgId);
     }
@@ -371,7 +334,7 @@ class UserServiceTest extends TestCase
         ];
 
         $this->userRepo->shouldReceive('userOfId')
-            ->andReturn($this->user);
+            ->andReturn($this->karl);
 
         $this->userRepo->shouldReceive('update');
 
@@ -382,7 +345,7 @@ class UserServiceTest extends TestCase
         $this->assertEquals(strtoupper($n_data['gender']), $r_user->gender()->toString());
 
         //username was not updated
-        $this->assertEquals($this->user->username(), $r_user->username());
+        $this->assertEquals($this->karl->username(), $r_user->username());
     }
 
     //TODO: make and test destroy method
@@ -400,7 +363,7 @@ class UserServiceTest extends TestCase
             ->andReturn($n_hashed);
         $this->userRepo->shouldReceive('update');
 
-        $r_user = $this->userService->resetPassword($this->user, $n_pwd);
+        $r_user = $this->userService->resetPassword($this->karl, $n_pwd);
 
         $this->assertEquals($n_hashed, $r_user->getAuthPassword());
     }
@@ -412,11 +375,11 @@ class UserServiceTest extends TestCase
     public function should_return_orgs_of_user()
     {
         $this->userRepo->shouldReceive('organizationsOfUser')
-            ->andReturn([$this->organization]);
+            ->andReturn([$this->klimtoren]);
 
-        $r_orgs = $this->userService->organizationsOfUser($this->user);
+        $r_orgs = $this->userService->organizationsOfUser($this->karl);
         $this->assertCount(1, $r_orgs);
-        $this->assertCount(1, $this->user->getOrganizations());
+        $this->assertCount(1, $this->karl->getOrganizations());
     }
 
     /**
@@ -428,10 +391,10 @@ class UserServiceTest extends TestCase
         $this->userRepo->shouldReceive('organizationsOfUser')
             ->andReturnNull();
 
-        $r_orgs = $this->userService->organizationsOfUser($this->user);
+        $r_orgs = $this->userService->organizationsOfUser($this->karl);
 
         $this->assertNull($r_orgs);
-        $this->assertNull($this->user->getOrganizations());
+        $this->assertNull($this->karl->getOrganizations());
     }
 
     /**
@@ -449,7 +412,7 @@ class UserServiceTest extends TestCase
 
         $this->userRoleRepo->shouldReceive('register');
 
-        $this->userService->addUserToRole($this->user, 'new_role', $this->organization);
+        $this->userService->addUserToRole($this->karl, 'new_role', $this->klimtoren);
     }
 
     /**
@@ -463,7 +426,17 @@ class UserServiceTest extends TestCase
         $this->roleRepo->shouldReceive('get')
             ->andThrow('Bakgat\Notos\Domain\Model\ACL\Exceptions\RoleNotFoundException');
 
-        $this->userService->addUserToRole($this->user, 'non_exists', $this->organization);
+        $this->userService->addUserToRole($this->karl, 'non_exists', $this->klimtoren);
+    }
+
+    private function setupMocks()
+    {
+        $this->userRepo = m::mock('Bakgat\Notos\Domain\Model\Identity\UserRepository');
+        $this->orgRepo = m::mock('Bakgat\Notos\Domain\Model\Identity\OrganizationRepository');
+        $this->roleRepo = m::mock('Bakgat\Notos\Domain\Model\ACL\RoleRepository');
+        $this->userRoleRepo = m::mock('Bakgat\Notos\Domain\Model\ACL\UserRolesRepository');
+        $this->roleRepo = m::mock('Bakgat\Notos\Domain\Model\ACL\RoleRepository');
+        $this->hasher = m::mock('Illuminate\Contracts\Hashing\Hasher');
     }
 
 

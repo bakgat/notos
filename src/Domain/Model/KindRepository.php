@@ -14,7 +14,7 @@ interface KindRepository {
      * Get the kind by name
      *
      * @param $name
-     * @return mixed
+     * @return Kind
      */
     public function get($name);
 }
