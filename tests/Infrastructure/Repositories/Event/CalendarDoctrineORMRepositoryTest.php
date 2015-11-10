@@ -38,7 +38,6 @@ class CalendarDoctrineORMRepositoryTest extends DoctrineTestCase
         $this->orgRepo = new OrganizationDoctrineORMRepository($this->em);
         $this->groupRepo = new GroupDoctrineORMRepository($this->em);
 
-        $this->executor->execute($this->loader->getFixtures());
     }
 
     /**

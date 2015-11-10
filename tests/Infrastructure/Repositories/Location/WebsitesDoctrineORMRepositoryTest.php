@@ -26,7 +26,6 @@ class WebsitesDoctrineORMRepositoryTest extends DoctrineTestCase
 
         $this->websiteRepo = new WebsitesDoctrineORMRepository($this->em);
 
-        $this->executor->execute($this->loader->getFixtures());
     }
 
 

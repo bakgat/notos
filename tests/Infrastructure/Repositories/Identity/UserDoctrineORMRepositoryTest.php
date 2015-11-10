@@ -41,7 +41,6 @@ class UserDoctrineORMRepositoryTest extends DoctrineTestCase
         $this->orgRepo = new OrganizationDoctrineORMRepository($this->em);
 
 
-        $this->executor->execute($this->loader->getFixtures());
     }
 
     /**

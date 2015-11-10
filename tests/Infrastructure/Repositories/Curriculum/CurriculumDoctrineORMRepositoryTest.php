@@ -39,7 +39,6 @@ class CurriculumDoctrineORMRepositoryTest extends DoctrineTestCase
         $this->courseRepo = new CourseDoctrineORMRepository($this->em);
         $this->groupRepo = new GroupDoctrineORMRepository($this->em);
 
-        $this->executor->execute($this->loader->getFixtures());
     }
 
     /**

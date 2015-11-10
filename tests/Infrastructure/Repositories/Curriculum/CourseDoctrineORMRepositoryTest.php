@@ -23,7 +23,7 @@ class CourseDoctrineORMRepositoryTest extends DoctrineTestCase
     {
         parent::setUp();
         $this->courseRepo = new CourseDoctrineORMRepository($this->em);
-        $this->executor->execute($this->loader->getFixtures());
+
     }
 
     /**

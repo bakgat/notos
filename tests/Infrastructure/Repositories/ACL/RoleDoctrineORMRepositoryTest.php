@@ -24,7 +24,6 @@ class RoleDoctrineORMRepositoryTest extends DoctrineTestCase
 
         $this->roleRepo = new RoleDoctrineORMRepository($this->em);
 
-        $this->executor->execute($this->loader->getFixtures());
     }
 
     /**

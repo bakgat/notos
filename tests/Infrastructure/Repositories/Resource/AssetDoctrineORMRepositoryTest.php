@@ -30,7 +30,6 @@ class AssetDoctrineORMRepositoryTest extends DoctrineTestCase
         $this->assetRepo = new AssetDoctrineORMRepository($this->em);
         $this->orgRepo = new OrganizationDoctrineORMRepository($this->em);
 
-        $this->executor->execute($this->loader->getFixtures());
     }
 
     /**

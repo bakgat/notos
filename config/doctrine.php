@@ -26,16 +26,20 @@
      */
     'connections' => [
         // Override your laravel environment database selection here if desired
-         'default' => 'mysql',
+        'default' => 'sqlite',
 
         // Override your laravel values here if desired.
         'mysql' => [
             'driver' => 'mysqli',
-            'host'      => env('DB_HOST', 'localhost'),
-            'dbname'  => env('DB_DATABASE', 'notosplus'),
-            'user'  => env('DB_USERNAME', 'root'),
-            'password'  => env('DB_PASSWORD', 'root'),
+            'host' => env('DB_HOST', 'localhost'),
+            'dbname' => env('DB_DATABASE', 'notosplus'),
+            'user' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', 'root'),
             'prefix' => ''
+        ],
+        'sqlite' => [
+            'driver' => 'pdo_sqlite',
+            'path' => __DIR__.'/../notostest',
         ],
     ],
 
@@ -59,8 +63,8 @@
         ],
 
         'redis' => [
-            'host'     => '127.0.0.1',
-            'port'     => 6379,
+            'host' => '127.0.0.1',
+            'port' => 6379,
             'database' => 1
         ],
 
@@ -100,10 +104,9 @@
     ],
 
 
-
     'migrations' => [
         'directory' => '/database/doctrine-migrations',
-        'namespace'  => 'DoctrineMigrations',
+        'namespace' => 'DoctrineMigrations',
         'table_name' => 'doctrine_migration_versions'
     ],
 

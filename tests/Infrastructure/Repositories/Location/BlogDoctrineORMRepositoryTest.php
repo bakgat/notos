@@ -30,7 +30,6 @@ class BlogDoctrineORMRepositoryTest extends DoctrineTestCase
         $this->blogRepo = new BlogDoctrineORMRepository($this->em);
         $this->orgRepo = new OrganizationDoctrineORMRepository($this->em);
 
-        $this->executor->execute($this->loader->getFixtures());
     }
 
     /**

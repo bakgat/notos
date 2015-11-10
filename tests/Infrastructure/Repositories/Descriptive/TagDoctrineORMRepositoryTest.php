@@ -25,7 +25,6 @@ class TagDoctrineORMRepositoryTest extends DoctrineTestCase
 
         $this->tagRepo = new TagDoctrineORMRepository($this->em);
 
-        $this->executor->execute($this->loader->getFixtures());
     }
 
     /**

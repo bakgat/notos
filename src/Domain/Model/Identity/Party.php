@@ -123,13 +123,11 @@ class Party
     }
 
     /**
-     * @param Kind kind
-     * @return void
+     * @param Kind $kind
      */
     public function setKind(Kind $kind)
     {
         $this->kind = $kind;
-        return $this;
     }
 
     /**

@@ -29,7 +29,7 @@ class GroupDoctrineORMRepositoryTest extends DoctrineTestCase
         $this->groupRepo = new GroupDoctrineORMRepository($this->em);
         $this->kindRepo = new KindCacheRepository($this->em);
 
-        $this->executor->execute($this->loader->getFixtures());
+        //$this->executor->execute($this->loader->getFixtures());
     }
 
     /**

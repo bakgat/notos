@@ -13,30 +13,73 @@ use Mockery\MockInterface;
 use Mockery as m;
 use Orchestra\Testbench\TestCase;
 
-
+/**
+ * @backupGlobals disabled
+ */
 abstract class DoctrineTestCase extends TestCase
 {
     /** @var  EntityManager */
     protected $em;
-    /** @var  ORMExecutor */
-    protected $executor;
-    /** @var  Loader */
-    protected $loader;
 
+
+    /**
+     * Default preparation for each test
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->prepareForTests();
+
+        $this->em->beginTransaction();
+    }
+
+    public function tearDown()
+    {
+        if ($this->em) {
+            $this->em->rollback();
+        }
+    }
+
+
+    /**
+     * Migrates the database and set the mailer to 'pretend'.
+     * This will cause the tests to run quickly.
+     */
+    private function prepareForTests()
+    {
+        $this->em = $this->app->make(\Doctrine\ORM\EntityManager::class);
+
+        /*$this->executor = new ORMExecutor($this->em, new ORMPurger);
+        $this->loader = new Loader;
+
+        $this->loader->addFixture(new TestFixtures);
+        $this->executor->execute($this->loader->getFixtures());*/
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Bakgat\Notos\NotosServiceProvider::class,
+        ];
+    }
+
+    /*
 
     public function setUp()
     {
         parent::setUp();
+
         $this->em = $this->app->make(\Doctrine\ORM\EntityManager::class);
         $this->executor = new ORMExecutor($this->em, new ORMPurger);
         $this->loader = new Loader;
 
+        //$this->loader->addFixture(new TestFixtures);
+        //$this->executor->execute($this->loader->getFixtures());
 
-        $this->loader->addFixture(new TestFixtures);
-
-        $this->em->beginTransaction();
-
+        //$this->em->beginTransaction();
     }
+
 
     public function tearDown()
     {
@@ -51,5 +94,5 @@ abstract class DoctrineTestCase extends TestCase
             \Bakgat\Notos\NotosServiceProvider::class,
         ];
 
-    }
+    }*/
 }
