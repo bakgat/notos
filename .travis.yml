@@ -10,6 +10,7 @@ before_script:
   - cp .env.travis .env
   - cp config/doctrine.travis.php config/doctrine.php
   - cp bootstrap/autoload.travis.php autoload.php
+  - cp tests/DoctrineTestCase.travis.php tests/DoctrineTestCase.php
   - mysql -e 'create database notos_test;'
   - ./vendor/bin/doctrine orm:schema-tool:create
 
