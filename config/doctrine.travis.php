@@ -26,7 +26,7 @@
      */
     'connections' => [
         // Override your laravel environment database selection here if desired
-         'default' => 'mysql',
+         'default' => 'sqlite',
 
         // Override your laravel values here if desired.
         'mysql' => [
@@ -36,6 +36,10 @@
             'user'  => env('DB_USERNAME', 'root'),
             'password'  => env('DB_PASSWORD', ''),
             'prefix' => ''
+        ],
+        'sqlite' => [
+            'driver' => 'pdo_sqlite',
+            'path' => __DIR__.'/../notostest',
         ],
     ],
 
