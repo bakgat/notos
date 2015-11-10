@@ -10,6 +10,7 @@ namespace Bakgat\Notos\Tests\Domain\Services\Identity;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Group;
+use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Kind;
 use Bakgat\Notos\Domain\Services\Identity\GroupService;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -35,7 +36,7 @@ class GroupServiceTest extends TestCase
         $this->groupRepo = m::mock('Bakgat\Notos\Domain\Model\Identity\GroupRepository');
         $this->kindRepo = m::mock('Bakgat\Notos\Domain\Model\KindRepository');
 
-        $this->groupService = new GroupService($this->groupRepo, $this->kindRepo);
+        $this->groupService = new GroupService($this->kindRepo, $this->groupRepo);
     }
 
     /**
@@ -54,11 +55,14 @@ class GroupServiceTest extends TestCase
         }
 
         $this->kindRepo->shouldReceive('get')
+            ->with('level')
             ->andReturn($kind);
         $this->groupRepo->shouldReceive('groupsOfKind')
+            ->with($kind)
             ->andReturn($collection);
 
         $groups = $this->groupService->groupsOfKind('level');
+
         $this->assertCount(3, $groups);
         $this->assertEquals('group 1', $groups[0]->name()->toString());
     }
