@@ -31,14 +31,12 @@ abstract class DoctrineTestCase extends TestCase
 
         $this->prepareForTests();
 
-        $this->em->beginTransaction();
+        //$this->em->beginTransaction();
     }
 
     public function tearDown()
     {
-        if ($this->em) {
-            $this->em->rollback();
-        }
+
     }
 
 
@@ -49,6 +47,12 @@ abstract class DoctrineTestCase extends TestCase
     private function prepareForTests()
     {
         $this->em = $this->app->make(\Doctrine\ORM\EntityManager::class);
+
+        $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($this->em);
+        $metadatas = $this->em->getMetadataFactory()->getAllMetadata();
+
+        $schemaTool->dropSchema($metadatas);
+        $schemaTool->createSchema($metadatas);
 
         $this->executor = new ORMExecutor($this->em, new ORMPurger);
         $this->loader = new Loader;

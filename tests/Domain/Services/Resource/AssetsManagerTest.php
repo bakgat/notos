@@ -82,6 +82,8 @@ class AssetsManagerTest extends TestCase
     public function tearDown()
     {
         unlink($this->file); //delete the file after each test
+
+        parent::tearDown();
     }
 
     /* ***************************************************
