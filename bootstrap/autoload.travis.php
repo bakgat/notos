@@ -27,3 +27,4 @@ $entityManager = \Doctrine\ORM\EntityManager::create($conn, $config);
 $connection = $entityManager->getConnection();
 
 $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($entityManager);
+$metadatas = $entityManager->getMetadataFactory()->getAllMetadata();
