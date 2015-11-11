@@ -53,7 +53,7 @@ abstract class DoctrineTestCase extends TestCase
         $this->executor = new ORMExecutor($this->em, new ORMPurger);
         $this->loader = new Loader;
 
-        // $this->loader->addFixture(new TestFixtures);
+        //$this->loader->addFixture(new TestFixtures);
         //$this->executor->execute($this->loader->getFixtures());
     }
 

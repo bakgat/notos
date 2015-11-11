@@ -262,10 +262,11 @@ class TestFixtures implements FixtureInterface
         /* ***************************************************
          * BOOKS
          * **************************************************/
-        $i=0;
-        while($i<5) {
-            $n_book = new Name('book ' . ++$i);
-            $isbn = new Isbn('9789027439642');
+        $i = 0;
+        $isbns = ['9782123456803', '9789027439642', '9789023487197', '9780080490984', '9780500093832'];
+        while ($i < 5) {
+            $isbn = new Isbn($isbns[$i++]);
+            $n_book = new Name('book ' . $i);
             $book = Book::register($n_book, $isbn);
             $book->setOrganization($klimtoren);
             $manager->persist($book);

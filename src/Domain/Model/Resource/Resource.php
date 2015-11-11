@@ -60,12 +60,11 @@ class Resource
     }
 
     /**
-     * @param Name name
-     * @return void
+     * @param Name $name
      */
     public function setName(Name $name)
     {
-        $this->name = $name;
+        $this->name = $name->toString();
     }
 
     /**
@@ -73,12 +72,11 @@ class Resource
      */
     public function name()
     {
-        return $this->name;
+        return Name::fromNative($this->name);
     }
 
     /**
-     * @param Resource parent
-     * @return void
+     * @param Resource $parent
      */
     public function setParent(Resource $parent)
     {

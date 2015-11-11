@@ -14,6 +14,7 @@ use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\Party;
 use Bakgat\Notos\Domain\Model\Resource\Book;
 use Bakgat\Notos\Domain\Model\Resource\BookRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 
 class BookDoctrineORMRepository implements BookRepository
@@ -29,32 +30,53 @@ class BookDoctrineORMRepository implements BookRepository
         $this->bookClass = 'Bakgat\Notos\Domain\Model\Resource\Book';
     }
 
+    /**
+     * @param Organization $organization
+     * @return ArrayCollection
+     */
     public function all(Organization $organization)
     {
+
         $qb = $this->em->createQueryBuilder();
         $query = $qb->select('b, a, p')
             ->from($this->bookClass, 'b')
             ->join('b.organization', 'o')
             ->leftJoin('b.authors', 'a')
-            ->leftJoin('b.publishers', 'p');
+            ->leftJoin('b.publishers', 'p')
+            ->where(
+                $qb->expr()->eq('b.organization', ':org')
+            )
+            ->setParameter('org', $organization->id());
 
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * @param Book $book
+     * @return mixed|void
+     */
     public function add(Book $book)
     {
         // TODO: Implement add() method.
     }
 
+    /**
+     * @param Book $book
+     * @return mixed|void
+     */
     public function update(Book $book)
     {
         // TODO: Implement update() method.
     }
 
+    /**
+     * @param $id
+     * @return Book
+     */
     public function bookOfId($id)
     {
         $qb = $this->em->createQueryBuilder();
-        $query = $qb->select('b, a, p, o')
+        $query = $qb->select('b, a, p')
             ->from($this->bookClass, 'b')
             ->leftJoin('b.authors', 'a')
             ->leftJoin('b.publishers', 'p')
@@ -62,9 +84,14 @@ class BookDoctrineORMRepository implements BookRepository
                 $qb->expr()->eq('b.id', '?1')
             )
             ->setParameter(1, $id);
-        return $query->getQuery()->getSingleResult();
+        return $query->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @param Organization $organization
+     * @param Party $author
+     * @return ArrayCollection
+     */
     public function booksOfAuthor(Organization $organization, Party $author)
     {
         $qb = $this->em->createQueryBuilder();
@@ -80,6 +107,11 @@ class BookDoctrineORMRepository implements BookRepository
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * @param Organization $organization
+     * @param Party $publisher
+     * @return ArrayCollection
+     */
     public function booksOfPublisher(Organization $organization, Party $publisher)
     {
         $qb = $this->em->createQueryBuilder();
@@ -93,8 +125,13 @@ class BookDoctrineORMRepository implements BookRepository
         return $query->getQuery()->getResult();
     }
 
-
-    public function bookOfIsbn(Organization $organization, Isbn $isbn) {
+    /**
+     * @param Organization $organization
+     * @param Isbn $isbn
+     * @return Book
+     */
+    public function bookOfIsbn(Organization $organization, Isbn $isbn)
+    {
         $qb = $this->em->createQueryBuilder();
         $query = $qb->select('b')
             ->from($this->bookClass, 'b')
