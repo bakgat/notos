@@ -12,6 +12,7 @@ namespace Bakgat\Notos\Domain\Services\Resource;
 use Bakgat\Notos\Domain\Model\Identity\Exceptions\OrganizationNotFoundException;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Resource\BookRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class BookService
 {
@@ -25,6 +26,11 @@ class BookService
         $this->orgRepo = $organizationRepository;
     }
 
+    /**
+     * @param $orgId
+     * @return ArrayCollection
+     * @throws OrganizationNotFoundException
+     */
     public function all($orgId)
     {
         $organization = $this->orgRepo->organizationOfId($orgId);

@@ -24,6 +24,7 @@ use Bakgat\Notos\Domain\Model\Identity\Email;
 use Bakgat\Notos\Domain\Model\Identity\Gender;
 use Bakgat\Notos\Domain\Model\Identity\Group;
 use Bakgat\Notos\Domain\Model\Identity\HashedPassword;
+use Bakgat\Notos\Domain\Model\Identity\Isbn;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\User;
@@ -33,6 +34,7 @@ use Bakgat\Notos\Domain\Model\Location\Blog;
 use Bakgat\Notos\Domain\Model\Location\URL;
 use Bakgat\Notos\Domain\Model\Location\Website;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelation;
+use Bakgat\Notos\Domain\Model\Resource\Book;
 use DateTime;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -228,7 +230,7 @@ class TestFixtures implements FixtureInterface
             $n_s = new Name($site['name']);
             $u_s = new URL($site['url']);
             $s = Website::register($n_s, $u_s);
-            $s->addTag($tags[rand(0,1)]);
+            $s->addTag($tags[rand(0, 1)]);
 
             $manager->persist($s);
         }
@@ -258,16 +260,28 @@ class TestFixtures implements FixtureInterface
         $manager->persist($blog3);
 
         /* ***************************************************
+         * BOOKS
+         * **************************************************/
+        $i=0;
+        while($i<5) {
+            $n_book = new Name('book ' . ++$i);
+            $isbn = new Isbn('9789027439642');
+            $book = Book::register($n_book, $isbn);
+            $book->setOrganization($klimtoren);
+            $manager->persist($book);
+        }
+
+        /* ***************************************************
          * EVENTS
          * **************************************************/
         $i = 0;
         //5 in the future
-        while($i < 5) {
+        while ($i < 5) {
             $n_event = new Name('event ' . ++$i);
-            $s_int = mt_rand(1462104000,1515758400); // 1/5/2016 - 12/12/2018
-            $s_date = date("Y-m-d H:i:s",$s_int);
+            $s_int = mt_rand(1462104000, 1515758400); // 1/5/2016 - 12/12/2018
+            $s_date = date("Y-m-d H:i:s", $s_int);
             $event = CalendarEvent::register($n_event, $klimtoren, new DateTime($s_date));
-            if($i<4) {
+            if ($i < 4) {
                 $event->addGroup($cg_K1A);
             }
 
@@ -275,12 +289,12 @@ class TestFixtures implements FixtureInterface
         }
 
         //5 in the past
-        while($i < 10) {
+        while ($i < 10) {
             $n_event = new Name('event ' . ++$i);
-            $s_int = mt_rand(957182400,1241179200); // 1/5/2000 - 1/5/2009
-            $s_date = date("Y-m-d H:i:s",$s_int);
+            $s_int = mt_rand(957182400, 1241179200); // 1/5/2000 - 1/5/2009
+            $s_date = date("Y-m-d H:i:s", $s_int);
             $event = CalendarEvent::register($n_event, $klimtoren, new DateTime($s_date));
-            if($i<9) {
+            if ($i < 9) {
                 $event->addGroup($cg_K1A);
             }
 

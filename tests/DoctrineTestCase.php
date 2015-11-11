@@ -50,11 +50,11 @@ abstract class DoctrineTestCase extends TestCase
     {
         $this->em = $this->app->make(\Doctrine\ORM\EntityManager::class);
 
-        /*$this->executor = new ORMExecutor($this->em, new ORMPurger);
+        $this->executor = new ORMExecutor($this->em, new ORMPurger);
         $this->loader = new Loader;
 
-        $this->loader->addFixture(new TestFixtures);
-        $this->executor->execute($this->loader->getFixtures());*/
+        // $this->loader->addFixture(new TestFixtures);
+        //$this->executor->execute($this->loader->getFixtures());
     }
 
     protected function getPackageProviders($app)
