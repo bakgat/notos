@@ -23,6 +23,7 @@ use Bakgat\Notos\Domain\Model\Identity\DomainName;
 use Bakgat\Notos\Domain\Model\Identity\Email;
 use Bakgat\Notos\Domain\Model\Identity\Gender;
 use Bakgat\Notos\Domain\Model\Identity\Group;
+use Bakgat\Notos\Domain\Model\Identity\Guid;
 use Bakgat\Notos\Domain\Model\Identity\HashedPassword;
 use Bakgat\Notos\Domain\Model\Identity\Isbn;
 use Bakgat\Notos\Domain\Model\Identity\Name;
@@ -34,7 +35,9 @@ use Bakgat\Notos\Domain\Model\Location\Blog;
 use Bakgat\Notos\Domain\Model\Location\URL;
 use Bakgat\Notos\Domain\Model\Location\Website;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelation;
+use Bakgat\Notos\Domain\Model\Resource\Asset;
 use Bakgat\Notos\Domain\Model\Resource\Book;
+use Bakgat\Notos\Domain\Model\Resource\Image;
 use DateTime;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -86,6 +89,27 @@ class TestFixtures implements FixtureInterface
 
         $manager->persist($klimtoren);
         $manager->persist($wassenaard);
+
+        /* ***************************************************
+         * ASSETS
+         * **************************************************/
+        $i = 0;
+        //IMAGES
+        while ($i < 5) {
+            $name = new Name('image ' . ++$i);
+            $guid = Guid::generate();
+            $mime = $i % 2 === 0 ? 'image/jpeg' : 'image/png';
+            $image = Asset::register($name, $guid, $mime, $klimtoren);
+            $manager->persist($image);
+        }
+        //PDFs
+        while ($i < 10) {
+            $name = new Name('document ' . ++$i);
+            $guid = Guid::generate();
+            $mime = 'application/pdf';
+            $pdf = Asset::register($name, $guid, $mime, $klimtoren);
+            $manager->persist($pdf);
+        }
 
         /* ***************************************************
          * ROLES

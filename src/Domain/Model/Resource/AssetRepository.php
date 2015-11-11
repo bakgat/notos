@@ -9,13 +9,40 @@
 namespace Bakgat\Notos\Domain\Model\Resource;
 
 
+use Bakgat\Notos\Domain\Model\Identity\Organization;
+use Doctrine\Common\Collections\ArrayCollection;
+
 interface AssetRepository
 {
+    /**
+     * @param Organization $klimtoren
+     * @return ArrayCollection
+     */
+    public function all(Organization $klimtoren);
+
+    /**
+     * @param Asset $asset
+     * @return mixed
+     */
     public function add(Asset $asset);
 
+    /**
+     * @param Asset $asset
+     * @return mixed
+     */
     public function update(Asset $asset);
 
-    public function assetsOfType($mime_part);
+    /**
+     * @param Organization $organization
+     * @param $mime_part
+     * @return ArrayCollection
+     */
+    public function assetsOfType(Organization $organization, $mime_part);
 
+    /**
+     * @param $guid
+     * @return ArrayCollection
+     */
     public function assetOfGuid($guid);
+
 }

@@ -36,9 +36,26 @@ class AssetDoctrineORMRepositoryTest extends DoctrineTestCase
      * @test
      * @group assetrepo
      */
-    public function should_return_3_assets_of_type_jpg()
+    public function should_return_2_assets_of_type_jpg()
     {
+        $klimtoren = $this->getKlimtoren();
+        $assets = $this->assetRepo->assetsOfType($klimtoren, 'image/jpeg');
 
+        $this->assertCount(2, $assets);
+        $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Resource\Asset', $assets[0]);
+    }
+
+    /**
+     * @test
+     * @group assetrepo
+     */
+    public function should_return_5_images()
+    {
+        $klimtoren = $this->getKlimtoren();
+        $assets = $this->assetRepo->assetsOfType($klimtoren, 'image');
+
+        $this->assertCount(5, $assets);
+        $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Resource\Asset', $assets[0]);
     }
 
     /**
@@ -47,9 +64,12 @@ class AssetDoctrineORMRepositoryTest extends DoctrineTestCase
      */
     public function should_return_10_assets_of_klimtoren()
     {
+        $klimtoren = $this->getKlimtoren();
+        $assets = $this->assetRepo->all($klimtoren);
 
+        $this->assertCount(10, $assets);
+        $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Resource\Asset', $assets[0]);
     }
-
 
 
     /* ***************************************************
