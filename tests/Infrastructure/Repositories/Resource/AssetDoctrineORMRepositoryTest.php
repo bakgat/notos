@@ -10,6 +10,7 @@ namespace Bakgat\Notos\Tests\Infrastructure\Repositories\Resource;
 
 
 use Bakgat\Notos\Domain\Model\Identity\DomainName;
+use Bakgat\Notos\Domain\Model\Identity\Guid;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
 use Bakgat\Notos\Domain\Model\Resource\AssetRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Identity\OrganizationDoctrineORMRepository;
@@ -69,6 +70,49 @@ class AssetDoctrineORMRepositoryTest extends DoctrineTestCase
 
         $this->assertCount(10, $assets);
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Resource\Asset', $assets[0]);
+    }
+
+    /**
+     * @test
+     * @group assetrepo
+     */
+    public function should_return_empty_set_of_type_gif()
+    {
+        $klimtoren = $this->getKlimtoren();
+        $assets = $this->assetRepo->assetsOfType($klimtoren, 'image/gif');
+
+        $this->assertEmpty($assets);
+    }
+
+    /**
+     * @test
+     * @group assetrepo
+     */
+    public function should_return_asset_of_guid()
+    {
+        $klimtoren = $this->getKlimtoren();
+        $assets = $this->assetRepo->assetsOfType($klimtoren, 'image/jpeg');
+        $tmp = $assets[0];
+        $guid = $tmp->guid();
+
+        $this->em->clear();
+
+        $asset = $this->assetRepo->assetOfGuid($guid);
+        $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Resource\Asset', $asset);
+        $this->assertTrue($guid->equals($asset->guid()));
+
+    }
+
+    /**
+     * @test
+     * @group assetrepo
+     */
+    public function should_return_null_when_no_guid_found()
+    {
+        $guid = Guid::generate();
+
+        $asset = $this->assetRepo->assetOfGuid($guid);
+        $this->assertNull($asset);
     }
 
 
