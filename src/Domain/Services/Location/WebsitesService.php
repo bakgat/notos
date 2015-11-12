@@ -10,7 +10,7 @@ namespace Bakgat\Notos\Domain\Services\Location;
 
 
 use Bakgat\Notos\Domain\Model\Curricula\CurriculumRepository;
-use Bakgat\Notos\Domain\Model\Descriptive\Tag;
+use Bakgat\Notos\Domain\Model\Location\Exceptions\WebsiteNotFoundException;
 use Bakgat\Notos\Domain\Model\Descriptive\TagRepository;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Location\URL;
@@ -36,21 +36,42 @@ class WebsitesService
     /**
      * Returns all websites
      *
-     * @return mixed
+     * @return ArrayCollection
      */
     public function all()
     {
-        return $this->websitesRepository->all();
+        $websites = $this->websitesRepository->all();
+        return $websites;
     }
 
     /**
      * Find a website by it's id
      * @param $id
-     * @return mixed
+     * @return Website
+     * @throws WebsiteNotFoundException
      */
     public function websiteOfId($id)
     {
-        return $this->websitesRepository->websiteofId($id);
+        $website = $this->websitesRepository->websiteOfId($id);
+        if(!$website) {
+            throw new WebsiteNotFoundException($id);
+        }
+        return $website;
+    }
+
+    /**
+     * Find a website by it's URL
+     * @param URL $url
+     * @return Website
+     * @throws WebsiteNotFoundException
+     */
+    public function websiteOfURL(URL $url)
+    {
+        $website = $this->websitesRepository->websiteOfURL($url);
+        if(!$website) {
+            throw new WebsiteNotFoundException($url);
+        }
+        return $website;
     }
 
     /**
@@ -59,7 +80,8 @@ class WebsitesService
      */
     public function full()
     {
-        return $this->websitesRepository->full();
+        $websites = $this->websitesRepository->full();
+        return $websites;
     }
 
     /**

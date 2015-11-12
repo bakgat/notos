@@ -55,6 +55,11 @@ return [
         'detail' => 'De opgevraagde structuur [%s] uit het leerplan is niet gevonden.'
     ],
 
+    'website_not_found' => [
+        'title' => 'De opgevraagde website werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+        'detail' => 'De opgevraagde website [%s] is niet gevonden.'
+    ],
+
 
     /* ***************************************************
      * PRECONDITION / VALIDATION - 412

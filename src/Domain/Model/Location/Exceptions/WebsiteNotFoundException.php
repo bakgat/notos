@@ -6,17 +6,17 @@
  * Time: 14:35
  */
 
-namespace Bakgat\Notos\Domain\Model\Identity\Exceptions;
+namespace Bakgat\Notos\Domain\Model\Location\Exceptions;
 
 
 use Bakgat\Notos\Exceptions\NotFoundException;
 
-class OrganizationNotFoundException extends NotFoundException
+class WebsiteNotFoundException extends NotFoundException
 {
 
     public function __construct() {
         $args = func_get_args();
-        array_unshift($args, 'org_not_found');
+        array_unshift($args, 'website_not_found');
 
         call_user_func_array(array($this, 'parent::__construct'), $args);
     }

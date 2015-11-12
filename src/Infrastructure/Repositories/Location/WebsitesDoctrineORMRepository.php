@@ -87,7 +87,7 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
      * @param $id
      * @return Website
      */
-    public function websiteofId($id)
+    public function websiteOfId($id)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('w, wo, l, t')
@@ -126,13 +126,13 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
 
     public function clearObjectives(Website $website)
     {
-        $website->clearTags();
+        $website->clearObjectives();
         $this->em->persist($website);
     }
 
     public function clearTags(Website $website)
     {
-        $website->clearObjectives();
+        $website->clearTags();
         $this->em->persist($website);
     }
 }
