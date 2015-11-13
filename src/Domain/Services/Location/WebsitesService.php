@@ -10,12 +10,14 @@ namespace Bakgat\Notos\Domain\Services\Location;
 
 
 use Bakgat\Notos\Domain\Model\Curricula\CurriculumRepository;
+use Bakgat\Notos\Domain\Model\Descriptive\TagName;
 use Bakgat\Notos\Domain\Model\Location\Exceptions\WebsiteNotFoundException;
 use Bakgat\Notos\Domain\Model\Descriptive\TagRepository;
 use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Location\URL;
 use Bakgat\Notos\Domain\Model\Location\Website;
 use Bakgat\Notos\Domain\Model\Location\WebsitesRepository;
+use Bakgat\Notos\Exceptions\UnprocessableEntityException;
 
 class WebsitesService
 {
@@ -53,7 +55,7 @@ class WebsitesService
     public function websiteOfId($id)
     {
         $website = $this->websitesRepository->websiteOfId($id);
-        if(!$website) {
+        if (!$website) {
             throw new WebsiteNotFoundException($id);
         }
         return $website;
@@ -68,7 +70,7 @@ class WebsitesService
     public function websiteOfURL(URL $url)
     {
         $website = $this->websitesRepository->websiteOfURL($url);
-        if(!$website) {
+        if (!$website) {
             throw new WebsiteNotFoundException($url);
         }
         return $website;
@@ -87,23 +89,84 @@ class WebsitesService
     /**
      * Stores a website (with tags and objectives).
      * @param $data
+     * @return Website
      */
     public function add($data)
     {
+        //MANDATORY FIELDS ---------------------------------
+        //TODO: how to collect errors in bag
+        //and throw bag when done
+
+        $this->nameIsRequired($data);
+        $this->urlIsRequired($data);
+
         /** @var Website $website */
         $website = Website::register(new Name($data['name']), new URL($data['url']));
-        if (isset($data['description'])) $website->setDescription($data['description']);
+        if (isset($data['description'])) {
+            $website->setDescription($data['description']);
+        }
 
-        //Sync tags
+        //SYNC TAGS -----------------------------------------
         $website->clearTags();
         if (isset($data['tags'])) {
             foreach ($data['tags'] as $tag) {
-                $t = $this->tagRepository->tagOfNameOrCreate(new Name($tag['name']));
+                $tagName = new TagName($tag['name']);
+                //TODO what if tags are invalid
+                //fail or collect errors / log error???
+                $t = $this->tagRepository->tagOfNameOrCreate($tagName);
                 $website->addTag($t);
             }
         }
 
+        //SYNC OBJECTIVES -----------------------------------
+        $website->clearObjectives();
+        if (isset($data['objectives'])) {
+            foreach ($data['objectives'] as $objective) {
+                $o = $this->curriculumRepository->objectiveOfId($objective['id']);
+                //TODO what if objectiveOfId does return null ???
+                //Fail or log error???
+                $website->addObjective($o);
+            }
+        }
 
+        $this->websitesRepository->add($website);
+        return $website;
+    }
+
+    /**
+     * Updates a website (with tags and objectives) of a given id .
+     * @param $id
+     * @param $data
+     * @return Website
+     * @throws WebsiteNotFoundException
+     */
+    public function update($id, $data)
+    {
+        //MANDATORY FIELDS ---------------------------------
+        $this->nameIsRequired($data);
+        $this->urlIsRequired($data);
+
+
+        /** @var Website $website */
+        $website = $this->websiteOfId($id);
+
+        if (!$website) {
+            throw new WebsiteNotFoundException($id);
+        }
+        $website->setName(new Name($data['name']));
+        $website->setUrl(new URL($data['url']));
+        if (isset($data['description'])) $website->setDescription($data['description']);
+
+        //SYNC TAGS -----------------------------------------
+        $website->clearTags();
+        if (isset($data['tags'])) {
+            foreach ($data['tags'] as $tag) {
+                $t = $this->tagRepository->tagOfNameOrCreate(new TagName($tag['name']));
+                $website->addTag($t);
+            }
+        }
+
+        //SYNC OBJECTIVES -----------------------------------
         $website->clearObjectives();
         if (isset($data['objectives'])) {
             foreach ($data['objectives'] as $objective) {
@@ -111,41 +174,25 @@ class WebsitesService
                 $website->addObjective($o);
             }
         }
+        $this->websitesRepository->update($website);
+        return $website;
 
-        $this->websitesRepository->add($website);
     }
 
     /**
-     * Updates a website (with tags and objectives) of a given id .
      * @param $data
+     * @return mixed
+     * @throws UnprocessableEntityException
      */
-    public function update($id, $data)
+    private function nameIsRequired($data)
     {
-        /** @var Website $website */
-        $website = $this->websiteOfId($id);
-
-        if ($website) {
-            $website->setName(new Name($data['name']));
-            $website->setUrl(new URL($data['url']));
-            if (isset($data['description'])) $website->setDescription($data['description']);
-
-            //Sync tags
-            $website->clearTags();
-            if (isset($data['tags'])) {
-                foreach ($data['tags'] as $tag) {
-                    $t = $this->tagRepository->tagOfNameOrCreate(new Name($tag['name']));
-                    $website->addTag($t);
-                }
-            }
-
-            $website->clearObjectives();
-            if (isset($data['objectives'])) {
-                foreach ($data['objectives'] as $objective) {
-                    $o = $this->curriculumRepository->objectiveOfId($objective['id']);
-                    $website->addObjective($o);
-                }
-            }
-            $this->websitesRepository->update($website);
+        if (!isset($data['name'])) {
+            throw new UnprocessableEntityException();
+        }
+    }
+    private function urlIsRequired($data) {
+        if (!isset($data['url'])) {
+            throw new UnprocessableEntityException();
         }
     }
 

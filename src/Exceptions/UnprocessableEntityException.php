@@ -9,7 +9,7 @@
 namespace Bakgat\Notos\Exceptions;
 
 
-class UnprocessableEntityException
+class UnprocessableEntityException extends NotosException
 {
     protected $status = '422';
 

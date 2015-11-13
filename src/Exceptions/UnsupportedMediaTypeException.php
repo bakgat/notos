@@ -9,7 +9,7 @@
 namespace Bakgat\Notos\Exceptions;
 
 
-class DuplicateException
+class UnsupportedMediaTypeException extends NotosException
 {
     protected $status = '415';
 

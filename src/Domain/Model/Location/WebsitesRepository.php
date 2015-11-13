@@ -39,7 +39,7 @@ interface WebsitesRepository
      * @param $id
      * @return Website
      */
-    public function websiteOfId($id);
+    public function websitefId($id);
 
     /**
      * Find a website by it's url
