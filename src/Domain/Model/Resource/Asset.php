@@ -19,30 +19,35 @@ use JMS\Serializer\Annotation as JMS;
  *
  * @ORM\Entity
  * @ORM\Table(name="assets", indexes={@ORM\Index(columns={"title"})})
- *
+ * @JMS\ExclusionPolicy("none")
  */
 class Asset extends Resource
 {
     /**
      * @ORM\Column(type="string", length=32, unique=true)
+     * @JMS\Groups({"list","detail"})
      */
     private $guid;
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @JMS\Groups({"list","detail"})
      */
     private $title;
     /**
      * @ORM\Column(type="string")
+     * @JMS\Groups({"list","detail"})
      */
     private $mime;
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization", inversedBy="assets")
+     * @JMS\Exclude
      */
     private $organization;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string $path
+     * @JMS\Groups({"list","detail"})
      */
     private $path;
 
@@ -51,6 +56,7 @@ class Asset extends Resource
         parent::__construct($name);
 
         $this->setGuid($guid);
+        $this->setPath($guid->toPath());
         $this->setMime($mime);
         $this->setOrganization($organization);
     }
@@ -61,8 +67,7 @@ class Asset extends Resource
     }
 
     /**
-     * @param Guid guid
-     * @return void
+     * @param Guid $guid
      */
     public function setGuid(Guid $guid)
     {
@@ -112,8 +117,7 @@ class Asset extends Resource
     }
 
     /**
-     * @param Organization organization
-     * @return void
+     * @param Organization $organization
      */
     public function setOrganization(Organization $organization)
     {

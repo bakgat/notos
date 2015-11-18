@@ -24,6 +24,7 @@ class AssetDoctrineORMRepository implements AssetRepository
 
     public function __construct(EntityManager $em)
     {
+
         $this->em = $em;
         $this->assetClass = 'Bakgat\Notos\Domain\Model\Resource\Asset';
     }

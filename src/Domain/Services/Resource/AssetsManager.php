@@ -46,16 +46,13 @@ class AssetsManager
         $name = new Name($file->getClientOriginalName());
         $guid = Guid::generate();
 
-        $path = $this->getPath($guid);
-
         //TODO: pre-test uniqueness (cfr cribbb)
         $asset = Asset::register($name, $guid, $mime, $organization);
         $asset->setTitle($name);
-        $asset->setPath($path);
 
         $this->assetRepo->add($asset);
 
-        $this->disk->put($path, $file);
+        $this->disk->put($asset->path(), $file);
         return $asset;
     }
 
