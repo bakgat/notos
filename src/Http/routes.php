@@ -43,36 +43,40 @@ Route::post('password/reset', [
  * ---------------------- */
 Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
 
+
+
     /*
      * ORGANIZATION SPECIFIC ROUTES
      */
-    Route::group(['prefix' => '/organization'], function () {
+    Route::group(['prefix' => '/organization/{orgId}'], function () {
 
-        Route::group(['prefix' => '/{orgId}'], function () {
-
-            Route::get('/', 'Identity\OrganizationController@edit');
-
-
-            Route::group(['prefix' => '/user', 'namespace' => 'Identity'], function () {
-                include_once __DIR__ . '/Routes/UserRoutes.php';
-            });
-
-            Route::group(['prefix' => '/blogs', 'namespace' => 'Location'], function () {
-                include_once __DIR__ . '/Routes/BlogRoutes.php';
-            });
-
-            Route::group(['prefix' => '/books', 'namespace' => 'Resource'], function () {
-                include_once __DIR__ . '/Routes/BooksRoutes.php';
-            });
-            Route::group(['prefix' => '/meals', 'namespace' => 'Resource'], function () {
-                include_once __DIR__ . '/Routes/MealsRoutes.php';
-            });
-
-            Route::group(['prefix' => '/calendar', 'namespace' => 'Event'], function () {
-                include_once __DIR__ . '/Routes/EventRoutes.php';
-            });
-
+        Route::group(['prefix' => '/upload'], function () {
+            Route::get('/', 'Resource\AssetsController@index');
+            Route::post('/', 'Resource\AssetsController@uploadFile');
+            Route::delete('/file/{guid}', 'Resource\AssetsController@deleteFile');
         });
+
+        Route::get('/', 'Identity\OrganizationController@edit');
+
+        Route::group(['prefix' => '/user', 'namespace' => 'Identity'], function () {
+            include_once __DIR__ . '/Routes/UserRoutes.php';
+        });
+
+        Route::group(['prefix' => '/blogs', 'namespace' => 'Location'], function () {
+            include_once __DIR__ . '/Routes/BlogRoutes.php';
+        });
+
+        Route::group(['prefix' => '/books', 'namespace' => 'Resource'], function () {
+            include_once __DIR__ . '/Routes/BooksRoutes.php';
+        });
+        Route::group(['prefix' => '/meals', 'namespace' => 'Resource'], function () {
+            include_once __DIR__ . '/Routes/MealsRoutes.php';
+        });
+
+        Route::group(['prefix' => '/calendar', 'namespace' => 'Event'], function () {
+            include_once __DIR__ . '/Routes/EventRoutes.php';
+        });
+
     });
 
 
@@ -105,7 +109,8 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
 /* ------------------------
  * UPLOAD
  * ---------------------- */
-Route::group(['prefix' => '/upload', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
-    Route::post('/file', 'Resource\UploadController@uploadFile');
-    Route::delete('/file/{guid}', 'Resource\UploadController@deleteFile');
-});
+/*Route::group(['prefix' => '/upload', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
+    Route::get('/', 'Resource\AssetsController@index');
+    Route::post('/file', 'Resource\AssetsController@uploadFile');
+    Route::delete('/file/{guid}', 'Resource\AssetsController@deleteFile');
+});*/

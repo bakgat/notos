@@ -17,7 +17,10 @@ use Bakgat\Notos\Domain\Model\KindRepository;
 use Bakgat\Notos\Domain\Model\Location\BlogRepository;
 use Bakgat\Notos\Domain\Model\Location\WebsitesRepository;
 use Bakgat\Notos\Domain\Model\Relations\PartyRelationRepository;
+use Bakgat\Notos\Domain\Model\Resource\AssetRepository;
 use Bakgat\Notos\Domain\Model\Resource\BookRepository;
+use Bakgat\Notos\Exceptions\Handler;
+use Bakgat\Notos\Exceptions\NotosExceptionHandler;
 use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CurriculumDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Descriptive\TagDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Event\CalendarDoctrineORMRepository;
@@ -30,6 +33,7 @@ use Bakgat\Notos\Infrastructure\Repositories\ACL\UserRolesDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Curriculum\CourseDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Identity\OrganizationDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Identity\PartyRelationDoctrineORMRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Resource\AssetDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Resource\BookDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Identity\UserDoctrineORMRepository;
 use Bakgat\Notos\Providers\NotosUserProvider;
@@ -47,11 +51,7 @@ class NotosServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /*$this->loadViewsFrom(__DIR__ . '/views', 'notos');
-        $this->publishes([
-            __DIR__ . '/views' => base_path('resources/views'),
-        ]);
-        */
+
         $this->publishes([__DIR__ . '../config/doctrine.php' => config_path('doctrine.php')], 'config');
         $this->publishes([__DIR__ . '../config/errors.php' => config_path('errors.php')], 'config');
 
@@ -65,74 +65,28 @@ class NotosServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Bootstrap the JMS custom annotations for Object to Json mapping
-        \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
-            'JMS\Serializer\Annotation',
-            app_path() . '/../vendor/jms/serializer/src'
-        );
-
-        include __DIR__ . '/Http/routes.php';
-
-        /* ***************************************************
-         * Atrauzzi LaravelDoctrine
-         * **************************************************/
-        $this->app->register(\Atrauzzi\LaravelDoctrine\ServiceProvider::class);
-
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('EntityManager', \Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::class);
 
-        /* ***************************************************
-         * Intervention Image
-         * **************************************************/
-        $this->app->register(\Intervention\Image\ImageServiceProvider::class);
+        $this->registerRoutes();
+        $this->registerJSMAnnotations();
 
-        $loader->alias('Image', \Intervention\Image\Facades\Image::class);
+        $this->registerLaravelDoctrine($loader);
+        $this->registerIntervention($loader);
 
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/doctrine.php', 'doctrine'
-        );
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/errors.php', 'errors'
-        );
+        $this->mergeConfigs();
 
-        /*
-         |----------------------------------------------------------------------------------------------
-         | Repositories
-         |----------------------------------------------------------------------------------------------
-         |
-         |
-         */
-
-
-        $repos = [
-            [UserRepository::class, UserDoctrineORMRepository::class],
-            [OrganizationRepository::class, OrganizationDoctrineORMRepository::class],
-            [PartyRelationRepository::class, PartyRelationDoctrineORMRepository::class],
-            [RoleRepository::class, RoleDoctrineORMRepository::class],
-            [UserRolesRepository::class, UserRolesDoctrineORMRepository::class],
-            [CourseRepository::class, CourseDoctrineORMRepository::class],
-            [WebsitesRepository::class, WebsitesDoctrineORMRepository::class],
-            [BlogRepository::class, BlogDoctrineORMRepository::class],
-            [CurriculumRepository::class, CurriculumDoctrineORMRepository::class],
-            [TagRepository::class, TagDoctrineORMRepository::class],
-            [KindRepository::class, KindCacheRepository::class],
-            [GroupRepository::class, GroupDoctrineORMRepository::class],
-            [BookRepository::class, BookDoctrineORMRepository::class],
-            [CalendarRepository::class, CalendarDoctrineORMRepository::class],
-        ];
+        $repos = $this->getRepositories();
         $this->simpleBindRepositories($repos);
 
-
+        //TODO register exception handler from this package
+        //TODO now it is catched in Handler => app/Exceptions
+        //$this->registerExceptionHandler();
     }
 
-
-    /* ***************************************************
-     * Private methods
-     * **************************************************/
     private function simpleBindRepositories($repos)
     {
         foreach ($repos as $repo) {
-            $this->app->bind($repo[0], function ($app) use($repo) {
+            $this->app->bind($repo[0], function ($app) use ($repo) {
                 return new $repo[1](
                     $app->make(EntityManager::class)
                 );
@@ -150,5 +104,84 @@ class NotosServiceProvider extends ServiceProvider
                 config('auth.model')
             );
         });
+
+
+    }
+
+    private function registerRoutes()
+    {
+        include __DIR__ . '/Http/routes.php';
+    }
+
+    private function registerJSMAnnotations()
+    {
+// Bootstrap the JMS custom annotations for Object to Json mapping
+        \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
+            'JMS\Serializer\Annotation',
+            app_path() . '/../vendor/jms/serializer/src'
+        );
+    }
+
+    /**
+     * @param $loader
+     */
+    private function registerLaravelDoctrine($loader)
+    {
+        $this->app->register(\Atrauzzi\LaravelDoctrine\ServiceProvider::class);
+        $loader->alias('EntityManager', \Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::class);
+    }
+
+    /**
+     * @param $loader
+     */
+    private function registerIntervention($loader)
+    {
+        $this->app->register(\Intervention\Image\ImageServiceProvider::class);
+
+        $loader->alias('Image', \Intervention\Image\Facades\Image::class);
+    }
+
+    private function mergeConfigs()
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/doctrine.php', 'doctrine'
+        );
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/errors.php', 'errors'
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function getRepositories()
+    {
+        $repos = [
+            [UserRepository::class, UserDoctrineORMRepository::class],
+            [OrganizationRepository::class, OrganizationDoctrineORMRepository::class],
+            [PartyRelationRepository::class, PartyRelationDoctrineORMRepository::class],
+            [RoleRepository::class, RoleDoctrineORMRepository::class],
+            [UserRolesRepository::class, UserRolesDoctrineORMRepository::class],
+            [CourseRepository::class, CourseDoctrineORMRepository::class],
+            [WebsitesRepository::class, WebsitesDoctrineORMRepository::class],
+            [BlogRepository::class, BlogDoctrineORMRepository::class],
+            [CurriculumRepository::class, CurriculumDoctrineORMRepository::class],
+            [TagRepository::class, TagDoctrineORMRepository::class],
+            [KindRepository::class, KindCacheRepository::class],
+            [GroupRepository::class, GroupDoctrineORMRepository::class],
+            [BookRepository::class, BookDoctrineORMRepository::class],
+            [CalendarRepository::class, CalendarDoctrineORMRepository::class],
+            [AssetRepository::class, AssetDoctrineORMRepository::class],
+        ];
+        return $repos;
+    }
+
+    private function registerExceptionHandler()
+    {
+        //$this->app->register(NotosExceptionHandler::class);
+        $this->app->bind(
+            \Illuminate\Foundation\Exceptions\Handler::class,
+            NotosExceptionHandler::class
+        );
     }
 }

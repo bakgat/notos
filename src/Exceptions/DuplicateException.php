@@ -12,7 +12,7 @@ namespace Bakgat\Notos\Exceptions;
 class DuplicateException extends NotosException
 {
 
-    protected $status = '422';
+    protected $status = '409';
 
     public function __construct() {
         $args = func_get_args();

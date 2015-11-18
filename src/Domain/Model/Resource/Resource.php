@@ -31,15 +31,18 @@ class Resource
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"list","detail"})
      */
     private $id;
     /**
      * @ORM\Column(type="string")
+     * @JMS\Groups({"list","detail"})
      */
     private $name;
     /**
      * @ORM\OneToOne(targetEntity="Resource")
      * @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     * @JMS\Exclude
      */
     private $parent;
 

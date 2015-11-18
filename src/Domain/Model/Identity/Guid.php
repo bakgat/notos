@@ -19,16 +19,35 @@ class Guid implements ValueObject
 
     public function __construct($value)
     {
-        if(!$this->isValidMd5($value)) {
+        if (!$this->isValidMd5($value)) {
             throw new GuidNotValidException($value);
         }
         $this->value = $value;
 
     }
 
+    /**
+     * Generate a unique identifier
+     * @return static
+     */
     public static function generate()
     {
         return new static(md5(time() . rand(1, 100)));
+    }
+
+    /**
+     * Convert Guid to path string
+     * @return string
+     */
+    public function toPath()
+    {
+        $first = str_split($this->toString(), 4)[0];
+        $splitted = str_split($first);
+        $dir_path = implode('/', $splitted);
+
+        $path = '/' . ltrim($dir_path, '/');
+
+        return $path . '/' . $this->toString();
     }
 
     /**
@@ -73,6 +92,7 @@ class Guid implements ValueObject
     {
         return $this->value;
     }
+
 
     /* ***************************************************
      *

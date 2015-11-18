@@ -48,6 +48,11 @@ abstract class DoctrineTestCase extends TestCase
      */
     private function prepareForTests()
     {
+        \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
+            'JMS\Serializer\Annotation',
+            __DIR__ . '/vendor/jms/serializer/src'
+        );
+
         $this->em = $this->app->make(\Doctrine\ORM\EntityManager::class);
 
         $this->executor = new ORMExecutor($this->em, new ORMPurger);

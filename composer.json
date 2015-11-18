@@ -33,7 +33,8 @@
     "intervention/image": "^2.3@dev",
     "intervention/imagecache": "dev-master",
     "dflydev/apache-mime-types": "^1.0@dev",
-    "doctrine/dbal": "^2.5"
+    "doctrine/dbal": "^2.5",
+    "filp/whoops": "~1.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true
