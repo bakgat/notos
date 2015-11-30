@@ -17,6 +17,8 @@ use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Location\URL;
 use Bakgat\Notos\Domain\Model\Location\Website;
 use Bakgat\Notos\Domain\Model\Location\WebsitesRepository;
+use Bakgat\Notos\Domain\Model\Resource\AssetRepository;
+use Bakgat\Notos\Domain\Services\Resource\AssetsManager;
 use Bakgat\Notos\Exceptions\UnprocessableEntityException;
 
 class WebsitesService
@@ -27,12 +29,18 @@ class WebsitesService
     private $tagRepository;
     /** @var CurriculumRepository $curriculumRepository */
     private $curriculumRepository;
+    /** @var AssetRepository $assetsRepo */
+    private $assetsRepo;
 
-    public function __construct(WebsitesRepository $websitesRepository, TagRepository $tagRepository, CurriculumRepository $curriculumRepository)
+    public function __construct(WebsitesRepository $websitesRepository,
+                                TagRepository $tagRepository,
+                                CurriculumRepository $curriculumRepository,
+                                AssetRepository $assetRepository)
     {
         $this->websitesRepository = $websitesRepository;
         $this->tagRepository = $tagRepository;
         $this->curriculumRepository = $curriculumRepository;
+        $this->assetsRepo = $assetRepository;
     }
 
     /**
@@ -106,6 +114,12 @@ class WebsitesService
             $website->setDescription($data['description']);
         }
 
+        //ADD IMAGE ---------------------)-------------------
+        if (isset($data['image']) && isset($data['image']['guid'])) {
+            $image = $this->assetsRepo->assetOfGuid($data['image']['guid']);
+            $website->setImage($image);
+        }
+
         //SYNC TAGS -----------------------------------------
         $website->clearTags();
         if (isset($data['tags'])) {
@@ -157,6 +171,12 @@ class WebsitesService
         $website->setUrl(new URL($data['url']));
         if (isset($data['description'])) $website->setDescription($data['description']);
 
+        //ADD IMAGE ---------------------)-------------------
+        if (isset($data['image']) && isset($data['image']['guid'])) {
+            $image = $this->assetsRepo->assetOfGuid($data['image']['guid']);
+            $website->setImage($image);
+        }
+
         //SYNC TAGS -----------------------------------------
         $website->clearTags();
         if (isset($data['tags'])) {
@@ -190,7 +210,9 @@ class WebsitesService
             throw new UnprocessableEntityException();
         }
     }
-    private function urlIsRequired($data) {
+
+    private function urlIsRequired($data)
+    {
         if (!isset($data['url'])) {
             throw new UnprocessableEntityException();
         }

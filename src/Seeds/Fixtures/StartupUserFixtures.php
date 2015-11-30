@@ -136,8 +136,8 @@ class StartupUserFixtures implements FixtureInterface
 
 
             //SET RELATION
-            $rel = PartyRelation::register($user, $arr_user['realms'][0], $emp);
-            $this->manager->merge($rel);
+           // $rel = PartyRelation::register($user, $arr_user['realms'][0], $emp);
+            //$this->manager->merge($rel);
 
             //Set Roles
             foreach ($arr_user['roles'] as $role) {

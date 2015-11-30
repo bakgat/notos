@@ -50,8 +50,9 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
     public function full()
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->select('w, wo, l, t')
+        $qb->select('w, wo, l, t, i')
             ->from($this->wsClass, 'w')
+            ->leftJoin('w.image', 'i')
             ->leftJoin('w.objectives', 'wo')
             ->leftJoin('w.tags', 't')
             ->leftJoin('wo.levels', 'l');
@@ -90,8 +91,9 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
     public function websiteOfId($id)
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->select('w, wo, l, t')
+        $qb->select('w, wo, l, t, i')
             ->from($this->wsClass, 'w')
+            ->leftJoin('w.image', 'i')
             ->leftJoin('w.objectives', 'wo')
             ->leftJoin('wo.levels', 'l')
             ->leftJoin('w.tags', 't')
@@ -111,8 +113,9 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
     public function websiteOfURL(URL $URL)
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->select('w, wo, l, t')
+        $qb->select('w, wo, l, t, i')
             ->from($this->wsClass, 'w')
+            ->leftJoin('w.image', 'i')
             ->leftJoin('w.objectives', 'wo')
             ->leftJoin('wo.levels', 'l')
             ->leftJoin('w.tags', 't')

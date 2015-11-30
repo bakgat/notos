@@ -14,6 +14,7 @@ use Bakgat\Notos\Domain\Services\Resource\AssetsManager;
 use Bakgat\Notos\Exceptions\DuplicateException;
 use Bakgat\Notos\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 
 class AssetsController extends Controller
 {
@@ -31,18 +32,53 @@ class AssetsController extends Controller
 
     public function index($orgId)
     {
-        throw new DuplicateException('isbn', $orgId);
+        $assets = $this->assetsManager->all($orgId);
+        return $this->jsonResponse($assets);
     }
 
-    public function uploadFile(Request $request, $orgId)
+    public function ofType($orgId, $type)
     {
-        $organization = $this->orgRepo->organizationOfId($orgId);
-        if (!$organization) {
-            throw new OrganizationNotFoundException($orgId);
+        $assets = $this->assetsManager->assetsOfMimePart($orgId, $type, null);
+        return $this->jsonResponse($assets);
+    }
+
+    public function imagesForWebsite()
+    {
+        $assets = $this->assetsManager->imagesForWebsites();
+        return $this->jsonResponse($assets);
+    }
+
+    public function uploadFile(Request $request, $orgId = null)
+    {
+        $files = [];
+        $response = [];
+
+        if (!$request->file('file')) {
+            throw new UploadException('File not available');
+        }
+        if (is_array($request->file('file'))) {
+            $files = $request->file('file');
+        } else {
+            if (!$request->file('file')->isValid()) {
+                throw new UploadException('File not available');
+            }
+            $files = [$request->file('file')];
         }
 
-        $file = $request->file('asset');
-        $asset = $this->assetsManager->upload($file, $organization);
+        foreach ($files as $file) {
+            $asset = $this->assetsManager->upload($file, $orgId);
+            $response[] = $asset;
+        }
+        return $this->jsonResponse($response, ['detail']);
+    }
+
+    public function importUrl(Request $request, $orgId = null)
+    {
+        if (!$request->get('url')) {
+            throw new \InvalidArgumentException('URL nog set');
+        }
+
+        $asset = $this->assetsManager->import($request->get('url'), $orgId);
         return $this->jsonResponse($asset, ['detail']);
     }
 

@@ -9,6 +9,7 @@
 namespace Bakgat\Notos\Seeds;
 
 
+use Bakgat\Notos\Seeds\Fixtures\AssetsFixtures;
 use Bakgat\Notos\Seeds\Fixtures\CourseFixtures;
 use Bakgat\Notos\Seeds\Fixtures\StartupUserFixtures;
 use Bakgat\Notos\Seeds\Fixtures\WebsiteFixtures;
@@ -29,32 +30,44 @@ class Seed
     /** @var  Loader */
     protected $loader;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->em = App::make(\Doctrine\ORM\EntityManager::class);
 
         $this->executor = new ORMExecutor($this->em, new ORMPurger);
         $this->loader = new Loader;
     }
 
-    public function SeedAll() {
+    public function SeedAll()
+    {
         $this->loader->addFixture(new CourseFixtures);
         $this->loader->addFixture(new WebsiteFixtures);
         $this->loader->addFixture(new StartupUserFixtures);
+        $this->loader->addFixture(new AssetsFixtures);
         $this->executor->execute($this->loader->getFixtures());
     }
 
-    public function SeedCurricula() {
+    public function SeedAssets()
+    {
+        $this->loader->addFixture(new AssetsFixtures);
+        $this->executor->execute($this->loader->getFixtures());
+    }
+
+    public function SeedCurricula()
+    {
         $this->loader->addFixture(new CourseFixtures);
         $this->executor->execute($this->loader->getFixtures());
     }
 
 
-    public function SeedSites() {
+    public function SeedSites()
+    {
         $this->loader->addFixture(new WebsiteFixtures);
         $this->executor->execute($this->loader->getFixtures());
     }
 
-    public function SeedStartup() {
+    public function SeedStartup()
+    {
         $this->loader->addFixture(new StartupUserFixtures);
         $this->executor->execute($this->loader->getFixtures());
     }

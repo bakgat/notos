@@ -95,7 +95,7 @@ class Objective
      *
      * @return mixed
      */
-    public function getId()
+    public function id()
     {
         return $this->id;
     }
@@ -255,5 +255,10 @@ class Objective
     public function addLevelForGroup(Group $group, $level)
     {
         $this->levels[] = new ObjectiveControlLevel($group, $this, $level);
+    }
+
+    public function addLevel(ObjectiveControlLevel $level)
+    {
+        $this->levels[] = $level;
     }
 }

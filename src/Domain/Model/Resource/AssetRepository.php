@@ -15,10 +15,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 interface AssetRepository
 {
     /**
-     * @param Organization $klimtoren
+     * @param Organization $organization
      * @return ArrayCollection
      */
-    public function all(Organization $klimtoren);
+    public function all(Organization $organization);
 
     /**
      * @param Asset $asset
@@ -33,15 +33,15 @@ interface AssetRepository
     public function update(Asset $asset);
 
     /**
-     * @param Organization $organization
+     * @param $organization
      * @param $mime_part
      * @return ArrayCollection
      */
-    public function assetsOfType(Organization $organization, $mime_part);
+    public function assetsOfMime($organization, $mime_part);
 
     /**
      * @param $guid
-     * @return ArrayCollection
+     * @return Asset
      */
     public function assetOfGuid($guid);
 

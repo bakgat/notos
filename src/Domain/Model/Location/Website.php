@@ -11,6 +11,7 @@ namespace Bakgat\Notos\Domain\Model\Location;
 use Bakgat\Notos\Domain\Model\Curricula\Objective;
 use Bakgat\Notos\Domain\Model\Descriptive\Tag;
 use Bakgat\Notos\Domain\Model\Identity\Name;
+use Bakgat\Notos\Domain\Model\Resource\Asset;
 use Bakgat\Notos\Domain\Model\Resource\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,7 +39,7 @@ class Website extends Location
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Resource\Image")
+     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Resource\Asset")
      * @JMS\Groups({"list", "detail","full"})
      */
     private $image;
@@ -112,16 +113,15 @@ class Website extends Location
     }
 
     /**
-     * @param Image image
-     * @return void
+     * @param Asset $image
      */
-    public function setImage(Image $image)
+    public function setImage(Asset $image)
     {
         $this->image = $image;
     }
 
     /**
-     * @return Image
+     * @return Asset
      */
     public function image()
     {
@@ -189,7 +189,8 @@ class Website extends Location
         $this->tags->removeElement($tag);
     }
 
-    public function clearTags() {
+    public function clearTags()
+    {
         $this->tags = new ArrayCollection;
     }
 

@@ -35,7 +35,7 @@ class Asset extends Resource
     private $title;
     /**
      * @ORM\Column(type="string")
-     * @JMS\Groups({"list","detail"})
+     * @JMS\Exclude
      */
     private $mime;
     /**
@@ -46,12 +46,18 @@ class Asset extends Resource
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @JMS\Exclude
      * @var string $path
-     * @JMS\Groups({"list","detail"})
      */
     private $path;
 
-    public function __construct(Guid $guid, Name $name, $mime, Organization $organization)
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string $type
+     */
+    private $type;
+
+    public function __construct(Guid $guid, Name $name, $mime, $organization)
     {
         parent::__construct($name);
 
@@ -61,7 +67,7 @@ class Asset extends Resource
         $this->setOrganization($organization);
     }
 
-    public static function register(Name $name, Guid $guid, $mime, Organization $organization)
+    public static function register(Name $name, Guid $guid, $mime, $organization)
     {
         return new Asset($guid, $name, $mime, $organization);
     }
@@ -117,12 +123,14 @@ class Asset extends Resource
     }
 
     /**
-     * @param Organization $organization
+     * @param $organization
      */
-    public function setOrganization(Organization $organization)
+    public function setOrganization($organization)
     {
         $this->organization = $organization;
-        $organization->addAsset($this);
+        if ($organization) {
+            $organization->addAsset($this);
+        }
     }
 
     /**
@@ -148,5 +156,44 @@ class Asset extends Resource
     public function path()
     {
         return $this->path;
+    }
+
+    /**
+     * @param  type
+     * @return void
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return
+     */
+    public function type()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\Groups({"list","detail"})
+     * @return string
+     */
+    public function webpath()
+    {
+        $base = rtrim(config('assets.uploads.webpath'), '/');
+        return url($base . $this->path);
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\Groups({"list","detail"})
+     * @return string
+     */
+    public function thumbpath()
+    {
+        $base = rtrim(config('assets.uploads.webpath'), '/') . rtrim(config('assets.uploads.thumbs'), '/');
+        return url($base . $this->path);
     }
 }

@@ -12,6 +12,10 @@
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
+Route::get('/info', function () {
+    return phpinfo();
+});
+
 Route::group(['prefix' => '/auth', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
     Route::get('/login', [
         'uses' => 'Identity\AuthController@getLogin',
@@ -44,7 +48,6 @@ Route::post('password/reset', [
 Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'], function () {
 
 
-
     /*
      * ORGANIZATION SPECIFIC ROUTES
      */
@@ -54,27 +57,32 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
             Route::get('/', 'Resource\AssetsController@index');
             Route::post('/', 'Resource\AssetsController@uploadFile');
             Route::delete('/file/{guid}', 'Resource\AssetsController@deleteFile');
+            Route::post('/url', 'Resource\AssetsController@importUrl');
+        });
+
+        Route::group(['prefix' => '/assets', 'namespace' => 'Resource'], function () {
+            require __DIR__ . '/Routes/AssetsRoutes.php';
         });
 
         Route::get('/', 'Identity\OrganizationController@edit');
 
         Route::group(['prefix' => '/user', 'namespace' => 'Identity'], function () {
-            include_once __DIR__ . '/Routes/UserRoutes.php';
+            require __DIR__ . '/Routes/UserRoutes.php';
         });
 
         Route::group(['prefix' => '/blogs', 'namespace' => 'Location'], function () {
-            include_once __DIR__ . '/Routes/BlogRoutes.php';
+            require __DIR__ . '/Routes/BlogRoutes.php';
         });
 
         Route::group(['prefix' => '/books', 'namespace' => 'Resource'], function () {
-            include_once __DIR__ . '/Routes/BooksRoutes.php';
+            require __DIR__ . '/Routes/BooksRoutes.php';
         });
         Route::group(['prefix' => '/meals', 'namespace' => 'Resource'], function () {
-            include_once __DIR__ . '/Routes/MealsRoutes.php';
+            require __DIR__ . '/Routes/MealsRoutes.php';
         });
 
         Route::group(['prefix' => '/calendar', 'namespace' => 'Event'], function () {
-            include_once __DIR__ . '/Routes/EventRoutes.php';
+            require __DIR__ . '/Routes/EventRoutes.php';
         });
 
     });
@@ -84,26 +92,34 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
      * GLOBAL ROUTES
      */
     Route::group(['prefix' => '/group', 'namespace' => 'Identity'], function () {
-        include_once __DIR__ . '/Routes/GroupRoutes.php';
+        require __DIR__ . '/Routes/GroupRoutes.php';
     });
     Route::group(['prefix' => '/realm', 'namespace' => 'Identity'], function () {
-        include_once __DIR__ . '/Routes/RealmRoutes.php';
+        require __DIR__ . '/Routes/RealmRoutes.php';
     });
 
-
+    Route::get('/websites/assets/mime/image', 'Resource\AssetsController@imagesForWebsite');
     Route::group(['prefix' => '/websites', 'namespace' => 'Location'], function () {
-        include_once __DIR__ . '/Routes/WebsitesRoutes.php';
+        require __DIR__ . '/Routes/WebsitesRoutes.php';
     });
+
+
     Route::group(['prefix' => '/tags', 'namespace' => 'Descriptive'], function () {
-        include_once __DIR__ . '/Routes/TagsRoutes.php';
+        require __DIR__ . '/Routes/TagsRoutes.php';
     });
 
     Route::group(['prefix' => '/curricula/{course}', 'namespace' => 'Curricula'], function () {
-        include_once __DIR__ . '/Routes/CurriculaRoutes.php';
+        require __DIR__ . '/Routes/CurriculaRoutes.php';
     });
 
-
     Route::get('/user/profile', 'Identity\UserController@auth');
+
+    Route::group(['prefix' => '/image', 'namespace' => 'Resource'], function () {
+        require __DIR__ . '/Routes/ImageRoutes.php';
+    });
+
+    Route::post('/upload', 'Resource\AssetsController@uploadFile');
+    Route::post('/upload/url', 'Resource\AssetsController@importUrl');
 });
 
 /* ------------------------

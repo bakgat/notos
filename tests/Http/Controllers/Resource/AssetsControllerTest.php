@@ -34,6 +34,64 @@ class AssetsControllerTest extends ControllersTestCase
         $this->orgRepo = $this->mock('Bakgat\Notos\Domain\Model\Identity\OrganizationRepository');
     }
 
+    /**
+     * @test
+     * @group assetscontroller
+     */
+    public function should_return_all_of_klimtoren()
+    {
+        $orgId = 1;
+        $assets = [];
+        $asset = null;
+        for ($i = 0; $i < 10; $i++) {
+            $assets[] = $this->renderAsset();
+            if ($i === 0) {
+                $asset = $assets[$i];
+            }
+        }
+
+        $this->assetsManager->shouldReceive('all')
+            ->with($orgId)
+            ->andReturn($assets);
+
+        $this->get('api/organization/' . $orgId . '/assets');
+        $this->assertResponseStatus(200);
+        $this->seeJson(['path' => $asset->path()]);
+    }
+
+    /**
+     * @test
+     * @group assetscontroller
+     */
+    public function should_return_of_mime_part()
+    {
+        $orgId = 1;
+        $assets = [];
+        $asset = null;
+        $j = 0;
+
+        $mime_part = 'image';
+
+        for ($i = 0; $i < 10; $i++) {
+            $rendered = $this->renderAsset();
+            if (starts_with($rendered->mime(), $mime_part)) {
+                $assets[] = $rendered;
+                if ($j === 0) {
+                    $asset = $rendered;
+                }
+                $j++;
+            }
+        }
+
+        $this->assetsManager->shouldReceive('assetsOfMimePart')
+            ->with($orgId, $mime_part)
+            ->andReturn($assets);
+
+        $this->get('api/organization/' . $orgId . '/assets/mime/' . $mime_part);
+        $this->assertResponseStatus(200);
+        $this->seeJson(['path' => $asset->path()]);
+    }
+
 
     /**
      * @test
@@ -43,15 +101,16 @@ class AssetsControllerTest extends ControllersTestCase
     {
         $uploadedFile = $this->uploadedFiles();
 
+        $orgId = 1;
         $klimtoren = $this->getKlimtoren();
         $asset = $this->getAsset();
 
         $this->orgRepo->shouldReceive('organizationOfId')
-            ->with(1)
+            ->with($orgId)
             ->andReturn($klimtoren);
 
         $this->assetsManager->shouldReceive('upload')
-            ->with($uploadedFile, $klimtoren)
+            ->with($uploadedFile, $orgId)
             ->andReturn($asset);
 
         $this->call('POST', '/api/organization/1/upload/',
@@ -77,15 +136,14 @@ class AssetsControllerTest extends ControllersTestCase
     {
         $this->setExpectedException('Bakgat\Notos\Domain\Model\Identity\Exceptions\OrganizationNotFoundException');
 
+        $orgId = 999999;
         $uploadedFile = $this->uploadedFiles();
 
-        $this->orgRepo->shouldReceive('organizationOfId')
-            ->with(999999)
-            ->andReturnNull();
+        $this->assetsManager->shouldReceive('upload')
+            ->with($uploadedFile, $orgId)
+            ->andThrow('Bakgat\Notos\Domain\Model\Identity\Exceptions\OrganizationNotFoundException');
 
-        $this->call('POST', '/api/organization/999999/upload/', [], [], ['asset' => $uploadedFile]);
-
-        //$this->assertResponseStatus(404);
+        $this->call('POST', '/api/organization/' . $orgId . '/upload/', [], [], ['asset' => $uploadedFile]);
     }
 
     /* ***************************************************
@@ -124,6 +182,21 @@ class AssetsControllerTest extends ControllersTestCase
 
         $asset = new Asset($guid, $name, $mime, $klimtoren);
         $asset->setTitle($name->toString());
+        return $asset;
+    }
+
+    /* ***************************************************
+    * PRIVATE METHODS
+    * **************************************************/
+    private function renderAsset()
+    {
+        $name = new Name('asset ' . rand(0, 1000));
+        $guid = Guid::generate();
+        $mime = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'][rand(0, 3)];
+        $klimtoren = $this->getKlimtoren();
+
+        $asset = Asset::register($name, $guid, $mime, $klimtoren);
+        $asset->setTitle($name);
         return $asset;
     }
 

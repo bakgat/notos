@@ -40,7 +40,7 @@ class AssetDoctrineORMRepositoryTest extends DoctrineTestCase
     public function should_return_2_assets_of_type_jpg()
     {
         $klimtoren = $this->getKlimtoren();
-        $assets = $this->assetRepo->assetsOfType($klimtoren, 'image/jpeg');
+        $assets = $this->assetRepo->assetsOfMime($klimtoren, 'image/jpeg');
 
         $this->assertCount(2, $assets);
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Resource\Asset', $assets[0]);
@@ -53,7 +53,7 @@ class AssetDoctrineORMRepositoryTest extends DoctrineTestCase
     public function should_return_5_images()
     {
         $klimtoren = $this->getKlimtoren();
-        $assets = $this->assetRepo->assetsOfType($klimtoren, 'image');
+        $assets = $this->assetRepo->assetsOfMime($klimtoren, 'image');
 
         $this->assertCount(5, $assets);
         $this->assertInstanceOf('Bakgat\Notos\Domain\Model\Resource\Asset', $assets[0]);
@@ -79,7 +79,7 @@ class AssetDoctrineORMRepositoryTest extends DoctrineTestCase
     public function should_return_empty_set_of_type_gif()
     {
         $klimtoren = $this->getKlimtoren();
-        $assets = $this->assetRepo->assetsOfType($klimtoren, 'image/gif');
+        $assets = $this->assetRepo->assetsOfMime($klimtoren, 'image/gif');
 
         $this->assertEmpty($assets);
     }
@@ -91,7 +91,7 @@ class AssetDoctrineORMRepositoryTest extends DoctrineTestCase
     public function should_return_asset_of_guid()
     {
         $klimtoren = $this->getKlimtoren();
-        $assets = $this->assetRepo->assetsOfType($klimtoren, 'image/jpeg');
+        $assets = $this->assetRepo->assetsOfMime($klimtoren, 'image/jpeg');
         $tmp = $assets[0];
         $guid = $tmp->guid();
 
