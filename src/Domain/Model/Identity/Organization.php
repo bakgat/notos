@@ -95,12 +95,12 @@ class Organization extends Party
     /**
      * Gets the name of the organization
      *
-     * @return Name
+     * @return string
      * @JMS\VirtualProperty
      */
     public function name()
     {
-        return $this->lastName();
+        return $this->lastName()->toString();
     }
 
     /**
