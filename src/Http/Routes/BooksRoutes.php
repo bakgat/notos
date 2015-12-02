@@ -10,3 +10,4 @@ Route::get('/{id}', 'BooksController@edit');
 Route::put('/{id}', 'BooksController@update');
 Route::post('/', 'BooksController@store');
 Route::delete('/{id}', 'BooksController@destroy');
+Route::get('/isbn/{isbn}', 'BooksController@isbn');

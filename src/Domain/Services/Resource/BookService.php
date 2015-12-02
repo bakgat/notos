@@ -88,6 +88,26 @@ class BookService
     }
 
     /**
+     * Find a book by it's isbn
+     *
+     * @param $orgId
+     * @param $isbn
+     * @return Book|null
+     * @throws OrganizationNotFoundException
+     */
+    public function bookOfIsbn($orgId, $isbn)
+    {
+        $isbn = new Isbn($isbn);
+        $organization = $this->orgRepo->organizationOfId($orgId);
+        if (!$organization) {
+            throw new OrganizationNotFoundException($orgId);
+        }
+
+        $book = $this->bookRepo->bookOfIsbn($organization, $isbn);
+        return $book;
+    }
+
+    /**
      * Adds a new book
      *
      * @param $orgId

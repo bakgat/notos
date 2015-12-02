@@ -52,4 +52,10 @@ class BooksController extends Controller
     {
 
     }
+
+    public function isbn($orgId, $isbn)
+    {
+        $book = $this->bookService->bookOfIsbn($orgId, $isbn);
+        return $this->jsonResponse($book);
+    }
 }
