@@ -110,40 +110,14 @@ class WebsitesService
 
         /** @var Website $website */
         $website = Website::register(new Name($data['name']), new URL($data['url']));
-        if (isset($data['description'])) {
-            $website->setDescription($data['description']);
-        }
 
-        //ADD IMAGE ---------------------)-------------------
-        if (isset($data['image']) && isset($data['image']['guid'])) {
-            $image = $this->assetsRepo->assetOfGuid($data['image']['guid']);
-            $website->setImage($image);
-        }
-
-        //SYNC TAGS -----------------------------------------
-        $website->clearTags();
-        if (isset($data['tags'])) {
-            foreach ($data['tags'] as $tag) {
-                $tagName = new TagName($tag['name']);
-                //TODO what if tags are invalid
-                //fail or collect errors / log error???
-                $t = $this->tagRepository->tagOfNameOrCreate($tagName);
-                $website->addTag($t);
-            }
-        }
-
-        //SYNC OBJECTIVES -----------------------------------
-        $website->clearObjectives();
-        if (isset($data['objectives'])) {
-            foreach ($data['objectives'] as $objective) {
-                $o = $this->curriculumRepository->objectiveOfId($objective['id']);
-                //TODO what if objectiveOfId does return null ???
-                //Fail or log error???
-                $website->addObjective($o);
-            }
-        }
+        $this->setDescription($data, $website);
+        $this->addImage($data, $website);
+        $this->syncTags($data, $website);
+        $this->syncObjectives($data, $website);
 
         $this->websitesRepository->add($website);
+
         return $website;
     }
 
@@ -169,35 +143,22 @@ class WebsitesService
         }
         $website->setName(new Name($data['name']));
         $website->setUrl(new URL($data['url']));
-        if (isset($data['description'])) $website->setDescription($data['description']);
 
-        //ADD IMAGE ---------------------)-------------------
-        if (isset($data['image']) && isset($data['image']['guid'])) {
-            $image = $this->assetsRepo->assetOfGuid($data['image']['guid']);
-            $website->setImage($image);
-        }
+        $this->setDescription($data, $website);
+        $this->addImage($data, $website);
+        $this->syncTags($data, $website);
+        $this->syncObjectives($data, $website);
 
-        //SYNC TAGS -----------------------------------------
-        $website->clearTags();
-        if (isset($data['tags'])) {
-            foreach ($data['tags'] as $tag) {
-                $t = $this->tagRepository->tagOfNameOrCreate(new TagName($tag['name']));
-                $website->addTag($t);
-            }
-        }
-
-        //SYNC OBJECTIVES -----------------------------------
-        $website->clearObjectives();
-        if (isset($data['objectives'])) {
-            foreach ($data['objectives'] as $objective) {
-                $o = $this->curriculumRepository->objectiveOfId($objective['id']);
-                $website->addObjective($o);
-            }
-        }
         $this->websitesRepository->update($website);
+
         return $website;
 
     }
+
+
+    /* ***************************************************
+     * PRIVATE METHODS
+     * **************************************************/
 
     /**
      * @param $data
@@ -211,10 +172,77 @@ class WebsitesService
         }
     }
 
+    /**
+     * @param $data
+     * @throws UnprocessableEntityException
+     */
     private function urlIsRequired($data)
     {
         if (!isset($data['url'])) {
             throw new UnprocessableEntityException();
+        }
+    }
+
+    /**
+     * @param $data
+     * @param $website
+     * @return mixed
+     */
+    private function addImage($data, $website)
+    {
+//ADD IMAGE ---------------------)-------------------
+        if (isset($data['image']) && isset($data['image']['guid'])) {
+            $image = $this->assetsRepo->assetOfGuid($data['image']['guid']);
+            $website->setImage($image);
+            return $data;
+        }
+        return $data;
+    }
+
+    /**
+     * @param $data
+     * @param $website
+     * @return mixed
+     */
+    private function setDescription($data, $website)
+    {
+        if (isset($data['description'])) {
+            $website->setDescription($data['description']);
+            return $data;
+        }
+        return $data;
+    }
+
+    /**
+     * @param $data
+     * @param $website
+     * @return mixed
+     */
+    private function syncTags($data, $website)
+    {
+        $website->clearTags();
+        if (isset($data['tags'])) {
+            foreach ($data['tags'] as $tag) {
+                $t = $this->tagRepository->tagOfNameOrCreate(new TagName($tag['name']));
+                $website->addTag($t);
+            }
+            return $data;
+        }
+        return $data;
+    }
+
+    /**
+     * @param $data
+     * @param $website
+     */
+    private function syncObjectives($data, $website)
+    {
+        $website->clearObjectives();
+        if (isset($data['objectives'])) {
+            foreach ($data['objectives'] as $objective) {
+                $o = $this->curriculumRepository->objectiveOfId($objective['id']);
+                $website->addObjective($o);
+            }
         }
     }
 

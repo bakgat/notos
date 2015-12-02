@@ -33,13 +33,14 @@ class KindCacheRepository implements KindRepository
     {
         $uppername = strtoupper($name);
 
+        /*
         //create unique key for kind and uppercased name
         $key = md5('kind.' . $uppername);
         //cache has value return this one
         $cached = Cache::get($key);
         if ($cached) {
             return $cached;
-        }
+        }*/
 
         //find or create in store
         $kind = $this->em->getRepository($this->class)
@@ -49,9 +50,11 @@ class KindCacheRepository implements KindRepository
             $this->em->persist($kind);
             $this->em->flush();
         }
-
-        //cache it for next request
-        Cache::forever($key, $kind);
-        return Cache::get($key);
+        /*
+                //cache it for next request
+                Cache::forever($key, $kind);
+                return Cache::get($key);
+        */
+        return $kind;
     }
 }

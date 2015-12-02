@@ -18,6 +18,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 
+use JMS\Serializer\Annotation as JMS;
+
 /**
  *
  * @ORM\Entity
@@ -32,7 +34,7 @@ class Book extends Resource
      */
     private $description;
     /**
-     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Resource\Image")
+     * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Resource\Asset")
      */
     private $image;
     /**
@@ -53,7 +55,7 @@ class Book extends Resource
      */
     private $authors;
     /**
-     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization")
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Identity\Party")
      * @ORM\JoinTable(name="book_publishers",
      *      joinColumns={@ORM\JoinColumn(name="book_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="publisher_id", referencedColumnName="id")}
@@ -70,8 +72,10 @@ class Book extends Resource
      * @var ArrayCollection
      */
     private $tags;
+
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Organization")
+     * @JMS\Exclude
      */
     private $organization;
 

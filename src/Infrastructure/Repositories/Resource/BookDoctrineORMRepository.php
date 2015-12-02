@@ -57,7 +57,8 @@ class BookDoctrineORMRepository implements BookRepository
      */
     public function add(Book $book)
     {
-        // TODO: Implement add() method.
+        $this->em->persist($book);
+        $this->em->flush();
     }
 
     /**
@@ -66,7 +67,8 @@ class BookDoctrineORMRepository implements BookRepository
      */
     public function update(Book $book)
     {
-        // TODO: Implement update() method.
+        $this->em->persist($book);
+        $this->em->flush();
     }
 
     /**
@@ -142,5 +144,44 @@ class BookDoctrineORMRepository implements BookRepository
             ->setParameter(1, $organization->id())
             ->setParameter(2, $isbn->toString());
         return $query->getQuery()->getOneOrNullResult();
+    }
+
+
+    /**
+     * @param Book $book
+     * @return Book
+     */
+    public function clearAuthors(Book $book)
+    {
+        $book->clearAuthors();
+        $this->em->persist($book);
+        $this->em->flush();
+        return $book;
+    }
+
+    /**
+     * @param Book $book
+     * @return Book
+     */
+    public function clearPublishers(Book $book)
+    {
+        $book->clearPublishers();
+        $this->em->persist($book);
+        $this->em->flush();
+        return $book;
+
+    }
+
+    /**
+     * @param Book $book
+     * @return Book
+     */
+    public function clearTags(Book $book)
+    {
+        $book->clearTags();
+        $this->em->persist($book);
+        $this->em->flush();
+        return $book;
+
     }
 }

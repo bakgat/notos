@@ -49,6 +49,7 @@ class Organization extends Party
     private $assets;
 
 
+
     public function __construct($name)
     {
         parent::__construct($name);
@@ -144,4 +145,5 @@ class Organization extends Party
     {
         $this->assets->removeElement($asset);
     }
+
 }

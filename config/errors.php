@@ -60,6 +60,19 @@ return [
         'detail' => 'De opgevraagde website [%s] is niet gevonden.'
     ],
 
+    'book_not_found' => [
+        'title' => 'Het opgevraagde boek werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+        'detail' => 'Het opgevraagde boek [%s] is niet gevonden.'
+    ],
+    'author_not_found' => [
+        'title' => 'De opgevraagde auteur werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+        'detail' => 'De opgevraagde auteur [%s] is niet gevonden.'
+    ],
+    'publisher_not_found' => [
+        'title' => 'De opgevraagde uitgeverij werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+        'detail' => 'De opgevraagde uitgeverij [%s] is niet gevonden.'
+    ],
+
 
     /* ***************************************************
      * PRECONDITION / VALIDATION - 412

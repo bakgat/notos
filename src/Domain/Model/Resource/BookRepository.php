@@ -10,6 +10,7 @@ namespace Bakgat\Notos\Domain\Model\Resource;
 
 
 use Bakgat\Notos\Domain\Model\Identity\Isbn;
+use Bakgat\Notos\Domain\Model\Identity\Name;
 use Bakgat\Notos\Domain\Model\Identity\Organization;
 use Bakgat\Notos\Domain\Model\Identity\Party;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -60,4 +61,24 @@ interface BookRepository
      * @return Book
      */
     public function bookOfIsbn(Organization $organization, Isbn $isbn);
+
+    /**
+     * @param Book $book
+     * @return Book
+     */
+    public function clearAuthors(Book $book);
+
+    /**
+     * @param Book $book
+     * @return Book
+     */
+    public function clearPublishers(Book $book);
+
+    /**
+     * @param Book $book
+     * @return Book
+     */
+    public function clearTags(Book $book);
+
+
 }

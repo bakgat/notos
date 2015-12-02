@@ -98,6 +98,7 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
         require __DIR__ . '/Routes/RealmRoutes.php';
     });
 
+
     Route::get('/websites/assets/mime/image', 'Resource\AssetsController@imagesForWebsite');
     Route::group(['prefix' => '/websites', 'namespace' => 'Location'], function () {
         require __DIR__ . '/Routes/WebsitesRoutes.php';
@@ -107,6 +108,9 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
     Route::group(['prefix' => '/tags', 'namespace' => 'Descriptive'], function () {
         require __DIR__ . '/Routes/TagsRoutes.php';
     });
+    Route::get('/publishers', 'Identity\PartyController@publishers');
+    Route::get('/authors', 'Identity\PartyController@authors');
+
 
     Route::group(['prefix' => '/curricula/{course}', 'namespace' => 'Curricula'], function () {
         require __DIR__ . '/Routes/CurriculaRoutes.php';

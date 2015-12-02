@@ -12,6 +12,7 @@ use Bakgat\Notos\Domain\Model\Descriptive\TagRepository;
 use Bakgat\Notos\Domain\Model\Event\CalendarRepository;
 use Bakgat\Notos\Domain\Model\Identity\GroupRepository;
 use Bakgat\Notos\Domain\Model\Identity\OrganizationRepository;
+use Bakgat\Notos\Domain\Model\Identity\PartyRepository;
 use Bakgat\Notos\Domain\Model\Identity\UserRepository;
 use Bakgat\Notos\Domain\Model\KindRepository;
 use Bakgat\Notos\Domain\Model\Location\BlogRepository;
@@ -26,6 +27,7 @@ use Bakgat\Notos\Infrastructure\Repositories\Descriptive\TagDoctrineORMRepositor
 use Bakgat\Notos\Infrastructure\Repositories\Event\CalendarDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Identity\GroupDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Identity\KindCacheRepository;
+use Bakgat\Notos\Infrastructure\Repositories\Identity\PartyDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Location\BlogDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\Location\WebsitesDoctrineORMRepository;
 use Bakgat\Notos\Infrastructure\Repositories\ACL\RoleDoctrineORMRepository;
@@ -115,7 +117,7 @@ class NotosServiceProvider extends ServiceProvider
 
     private function registerJSMAnnotations()
     {
-// Bootstrap the JMS custom annotations for Object to Json mapping
+        // Bootstrap the JMS custom annotations for Object to Json mapping
         \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
             'JMS\Serializer\Annotation',
             app_path() . '/../vendor/jms/serializer/src'
@@ -157,6 +159,7 @@ class NotosServiceProvider extends ServiceProvider
     private function getRepositories()
     {
         $repos = [
+            [PartyRepository::class, PartyDoctrineORMRepository::class],
             [UserRepository::class, UserDoctrineORMRepository::class],
             [OrganizationRepository::class, OrganizationDoctrineORMRepository::class],
             [PartyRelationRepository::class, PartyRelationDoctrineORMRepository::class],
