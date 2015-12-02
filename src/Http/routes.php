@@ -99,7 +99,7 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
     });
 
 
-    Route::get('/websites/assets/mime/image', 'Resource\AssetsController@imagesForWebsite');
+    Route::get('/websites/assets/mime/{mime}', 'Resource\AssetsController@imagesForWebsite');
     Route::group(['prefix' => '/websites', 'namespace' => 'Location'], function () {
         require __DIR__ . '/Routes/WebsitesRoutes.php';
     });

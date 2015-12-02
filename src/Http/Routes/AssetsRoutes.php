@@ -7,4 +7,5 @@
  */
 
 Route::get('/', 'AssetsController@index');
-Route::get('/mime/{type}', 'AssetsController@ofType');
+Route::get('/mime/{mime}', 'AssetsController@ofMime');
+Route::get('/mime/{mime}/type/{type}', 'AssetsController@ofMimeAndType');

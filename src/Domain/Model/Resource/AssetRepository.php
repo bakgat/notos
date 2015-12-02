@@ -40,6 +40,14 @@ interface AssetRepository
     public function assetsOfMime($organization, $mime_part);
 
     /**
+     * @param $organization
+     * @param $mime_part
+     * @param $type
+     * @return ArrayCollection
+     */
+    public function assetsOfMimeAndType($organization, $mime_part, $type);
+
+    /**
      * @param $guid
      * @return Asset
      */

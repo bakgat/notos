@@ -115,4 +115,35 @@ class AssetDoctrineORMRepository implements AssetRepository
     }
 
 
+    /**
+     * @param $organization
+     * @param $mime_part
+     * @param $type
+     * @return ArrayCollection
+     */
+    public function assetsOfMimeAndType($organization, $mime_part, $type)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from($this->assetClass, 'a')
+            ->where(
+                $qb->expr()->like('a.mime', ':mimepart'),
+                $qb->expr()->like('a.type', ':type')
+            )
+            ->setParameter('mimepart', '%' . $mime_part . '%')
+            ->setParameter('type', strtolower($type));
+
+
+        if ($organization && $organization instanceof Organization) {
+            $qb->join('a.organization', 'o')
+                ->andWhere($qb->expr()->eq('o.id', ':org'))
+                ->setParameter('org', $organization->id());
+        } else if (!$organization) {
+            $qb->andWhere($qb->expr()->isNull('a.organization'));
+        }
+
+        $qb->orderBy('a.createdAt', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
 }

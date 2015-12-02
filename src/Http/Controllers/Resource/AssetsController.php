@@ -36,16 +36,19 @@ class AssetsController extends Controller
         return $this->jsonResponse($assets);
     }
 
-    public function ofType($orgId, $type)
+    public function ofMime($orgId, $mime)
     {
-        $assets = $this->assetsManager->assetsOfMimePart($orgId, $type, null);
+        $assets = $this->assetsManager->assetsOfMimePart($orgId, $mime);
         return $this->jsonResponse($assets);
     }
-
-    public function imagesForWebsite()
+    public function ofMimeAndType($orgId, $mime, $type)
     {
-        $assets = $this->assetsManager->imagesForWebsites();
+        $assets = $this->assetsManager->assetsOfMimePartAndType($orgId, $mime, $type);
         return $this->jsonResponse($assets);
+    }
+    public function imagesForWebsite() {
+        $images = $this->assetsManager->imagesForWebsites();
+        return $this->jsonResponse($images);
     }
 
     public function uploadFile(Request $request, $orgId = null)

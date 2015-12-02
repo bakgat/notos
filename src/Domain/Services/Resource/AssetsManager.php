@@ -59,9 +59,17 @@ class AssetsManager
         return $assets;
     }
 
+    public function assetsOfMimePartAndType($orgId, $mime_part, $type)
+    {
+        $organization = $this->checkOrganizationExists($orgId);
+
+        $assets = $this->assetRepo->assetsOfMimeAndType($organization, $mime_part, $type);
+        return $assets;
+    }
+
     public function imagesForWebsites()
     {
-        $assets = $this->assetRepo->assetsOfMime(null, 'image');
+        $assets = $this->assetRepo->assetsOfMimeAndType(null, 'image', 'website');
         return $assets;
     }
 
@@ -224,6 +232,8 @@ class AssetsManager
         $asset->setTitle($name);
         return $asset;
     }
+
+
 
 
 }
