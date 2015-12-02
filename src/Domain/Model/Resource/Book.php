@@ -114,16 +114,16 @@ class Book extends Resource
     }
 
     /**
-     * @param Image image
+     * @param Asset image
      * @return void
      */
-    public function setImage(Image $image)
+    public function setImage(Asset $image)
     {
         $this->image = $image;
     }
 
     /**
-     * @return Image
+     * @return Asset
      */
     public function image()
     {
@@ -148,8 +148,7 @@ class Book extends Resource
     }
 
     /**
-     * @param Isbn isbn
-     * @return void
+     * @param Isbn $isbn
      */
     public function setIsbn(Isbn $isbn)
     {
