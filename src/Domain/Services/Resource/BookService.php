@@ -265,6 +265,7 @@ class BookService
     {
         if (isset($data['image']) && isset($data['image']['guid'])) {
             $image = $this->assetsRepo->assetOfGuid($data['image']['guid']);
+
             $book->setImage($image);
         }
     }

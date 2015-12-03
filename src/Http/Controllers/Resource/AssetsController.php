@@ -41,12 +41,15 @@ class AssetsController extends Controller
         $assets = $this->assetsManager->assetsOfMimePart($orgId, $mime);
         return $this->jsonResponse($assets);
     }
+
     public function ofMimeAndType($orgId, $mime, $type)
     {
         $assets = $this->assetsManager->assetsOfMimePartAndType($orgId, $mime, $type);
         return $this->jsonResponse($assets);
     }
-    public function imagesForWebsite() {
+
+    public function imagesForWebsite()
+    {
         $images = $this->assetsManager->imagesForWebsites();
         return $this->jsonResponse($images);
     }
@@ -59,6 +62,7 @@ class AssetsController extends Controller
         if (!$request->file('file')) {
             throw new UploadException('File not available');
         }
+
         if (is_array($request->file('file'))) {
             $files = $request->file('file');
         } else {
@@ -68,8 +72,11 @@ class AssetsController extends Controller
             $files = [$request->file('file')];
         }
 
+        $type = $request->has('type') ? $request->get('type') : null;
+        $orgId = $request->has('organization') ? $request->get('organization')['id'] : null;
+
         foreach ($files as $file) {
-            $asset = $this->assetsManager->upload($file, $orgId);
+            $asset = $this->assetsManager->upload($file, $orgId, $type);
             $response[] = $asset;
         }
         return $this->jsonResponse($response, ['detail']);
@@ -81,7 +88,11 @@ class AssetsController extends Controller
             throw new \InvalidArgumentException('URL nog set');
         }
 
-        $asset = $this->assetsManager->import($request->get('url'), $orgId);
+        $url = $request->get('url');
+        $type = $request->has('type') ? $request->get('type') : null;
+        $orgId = $request->has('organization') ? $request->get('organization')['id'] : null;
+
+        $asset = $this->assetsManager->import($url, $orgId, $type);
         return $this->jsonResponse($asset, ['detail']);
     }
 

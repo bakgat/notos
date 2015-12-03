@@ -78,7 +78,7 @@ class AssetsManager
      * @param $orgId
      * @return Asset
      */
-    public function upload($file, $orgId)
+    public function upload($file, $orgId, $type = null)
     {
         if ($orgId) {
             $organization = $this->checkOrganizationExists($orgId);
@@ -86,7 +86,7 @@ class AssetsManager
             $organization = null;
         }
 
-        $asset = $this->buildAsset($file, $organization);
+        $asset = $this->buildAsset($file, $organization, $type);
         $this->assetRepo->add($asset);
 
         $this->disk->put($asset->path(), $file);
@@ -96,7 +96,7 @@ class AssetsManager
         return $asset;
     }
 
-    public function import($url, $orgId)
+    public function import($url, $orgId, $type = null)
     {
         if ($orgId) {
             $organization = $this->checkOrganizationExists($orgId);
@@ -109,7 +109,7 @@ class AssetsManager
         $link_array = explode('/', $url);
         $name = end($link_array);
 
-        $asset = $this->buildAssetFromImage($image, $organization, $name);
+        $asset = $this->buildAssetFromImage($image, $organization, $name, $type);
 
         $this->disk->makeDirectory($this->getPathOnly($asset->guid()));
         $this->disk->makeDirectory(config('assets.uploads.thumbs') . $this->getPathOnly($asset->guid()));
@@ -210,7 +210,7 @@ class AssetsManager
      * @param $organization
      * @return Asset
      */
-    private function buildAsset($file, $organization)
+    private function buildAsset($file, $organization, $type)
     {
         $ext = strtolower($file->getClientOriginalExtension());
         $mime = $this->mimeDetect->findType($ext);
@@ -219,10 +219,13 @@ class AssetsManager
 
         $asset = Asset::register($name, $guid, $mime, $organization);
         $asset->setTitle($name);
+        if (isset($type)) {
+            $asset->setType($type);
+        }
         return $asset;
     }
 
-    private function buildAssetFromImage(\Intervention\Image\Image $image, $organization, $name)
+    private function buildAssetFromImage(\Intervention\Image\Image $image, $organization, $name, $type)
     {
         $mime = $image->mime();
         $name = new Name($name);
@@ -230,10 +233,11 @@ class AssetsManager
 
         $asset = Asset::register($name, $guid, $mime, $organization);
         $asset->setTitle($name);
+        if (isset($type)) {
+            $asset->setType($type);
+        }
         return $asset;
     }
-
-
 
 
 }
