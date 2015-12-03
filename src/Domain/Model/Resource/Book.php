@@ -85,6 +85,10 @@ class Book extends Resource
 
         $this->setIsbn($isbn);
 
+        $this->authors = new ArrayCollection;
+        $this->publishers = new ArrayCollection;
+        $this->tags = new ArrayCollection;
+
     }
 
     public static function register(Name $name, Isbn $isbn)

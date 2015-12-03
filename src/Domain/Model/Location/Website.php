@@ -71,6 +71,8 @@ class Website extends Location
         parent::__construct($name);
         $this->setUrl($url);
 
+        $this->objectives = new ArrayCollection;
+        $this->tags = new ArrayCollection;
     }
 
     public static function register(Name $name, URL $url)
