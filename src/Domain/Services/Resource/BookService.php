@@ -9,6 +9,7 @@
 namespace Bakgat\Notos\Domain\Services\Resource;
 
 
+use Bakgat\Notos\Domain\Model\Descriptive\TagName;
 use Bakgat\Notos\Domain\Model\Descriptive\TagRepository;
 use Bakgat\Notos\Domain\Model\Resource\Exceptions\BookNotFoundException;
 use Bakgat\Notos\Domain\Model\Identity\Exceptions\OrganizationNotFoundException;
@@ -311,7 +312,7 @@ class BookService
         $this->bookRepo->clearTags($book);
         if (isset($data['tags'])) {
             foreach ($data['tags'] as $tag) {
-                $t = $this->tagRepository->tagOfNameOrCreate(new Name($tag));
+                $t = $this->tagRepository->tagOfNameOrCreate(new TagName($tag['name']));
                 $book->addTag($t);
             }
         }
