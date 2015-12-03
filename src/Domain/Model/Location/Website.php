@@ -187,12 +187,13 @@ class Website extends Location
     public function removeTag(Tag $tag)
     {
         $this->tags->removeElement($tag);
-
     }
 
     public function clearTags()
     {
-        $this->tags = new ArrayCollection;
+        foreach ($this->tags as $tag) {
+            $this->removeTag($tag);
+        }
     }
 
 
