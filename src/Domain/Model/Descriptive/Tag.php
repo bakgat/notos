@@ -35,10 +35,12 @@ class Tag
 
     /**
      * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Location\Website", mappedBy="tags")
+     * @JMS\Exclude
      */
     private $websites;
     /**
      * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Resource\Book", mappedBy="tags")
+     * @JMS\Exclude
      */
     private $books;
 
@@ -104,5 +106,9 @@ class Tag
      */
     public function addBook(Book $book) {
         $this->books[] = $book;
+    }
+
+    public function removeBook(Book $book) {
+
     }
 }

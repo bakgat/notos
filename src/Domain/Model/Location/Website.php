@@ -187,6 +187,7 @@ class Website extends Location
     public function removeTag(Tag $tag)
     {
         $this->tags->removeElement($tag);
+
     }
 
     public function clearTags()

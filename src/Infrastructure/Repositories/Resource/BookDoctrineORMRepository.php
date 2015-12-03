@@ -38,11 +38,12 @@ class BookDoctrineORMRepository implements BookRepository
     {
 
         $qb = $this->em->createQueryBuilder();
-        $query = $qb->select('b, a, p')
+        $query = $qb->select('b, a, p', 't')
             ->from($this->bookClass, 'b')
             ->join('b.organization', 'o')
             ->leftJoin('b.authors', 'a')
             ->leftJoin('b.publishers', 'p')
+            ->leftJoin('b.tags', 't')
             ->where(
                 $qb->expr()->eq('b.organization', ':org')
             )

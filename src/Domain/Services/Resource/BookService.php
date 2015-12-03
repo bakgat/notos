@@ -277,7 +277,7 @@ class BookService
      */
     private function syncAuthors($data, Book $book)
     {
-        $this->bookRepo->clearAuthors($book);
+        $book->clearAuthors();
         if (isset($data['authors'])) {
             foreach ($data['authors'] as $author) {
                 $auth = $this->findOrCreateAuthor($author);
@@ -294,7 +294,7 @@ class BookService
      */
     private function syncPublishers($data, Book $book)
     {
-        $this->bookRepo->clearPublishers($book);
+        $book->clearPublishers();
         if (isset($data['publishers'])) {
             foreach ($data['publishers'] as $publisher) {
                 $pub = $this->findOrCreatePublisher($publisher);
@@ -309,13 +309,15 @@ class BookService
      */
     private function syncTags($data, Book $book)
     {
-        $this->bookRepo->clearTags($book);
+        $book->clearTags();
         if (isset($data['tags'])) {
             foreach ($data['tags'] as $tag) {
                 $t = $this->tagRepository->tagOfNameOrCreate(new TagName($tag['name']));
                 $book->addTag($t);
             }
+            return $data;
         }
+        return $data;
     }
 
     /**

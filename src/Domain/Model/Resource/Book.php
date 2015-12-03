@@ -69,7 +69,6 @@ class Book extends Resource
      *      joinColumns={@ORM\JoinColumn(name="book_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
      *      ))
-     * @var ArrayCollection
      */
     private $tags;
 
@@ -85,9 +84,6 @@ class Book extends Resource
         parent::__construct($name);
 
         $this->setIsbn($isbn);
-
-        $this->authors = new ArrayCollection;
-        $this->publishers = new ArrayCollection;
 
     }
 
@@ -206,7 +202,9 @@ class Book extends Resource
      */
     public function clearAuthors()
     {
-        $this->authors = new ArrayCollection;
+        foreach ($this->authors as $author) {
+            $this->removeAuthor($author);
+        }
     }
 
     /**
@@ -243,7 +241,9 @@ class Book extends Resource
      */
     public function clearPublishers()
     {
-        $this->publishers = new ArrayCollection;
+        foreach ($this->publishers as $publisher) {
+            $this->removePublisher($publisher);
+        }
     }
 
     public function tags()
@@ -264,8 +264,11 @@ class Book extends Resource
 
     public function clearTags()
     {
-        $this->tags = new ArrayCollection;
+        foreach ($this->tags as $tag) {
+            $this->removeTag($tag);
+        }
     }
+
 
     /**
      * @param Organization organization
