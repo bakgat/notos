@@ -24,16 +24,17 @@ class ObjectiveControlLevel
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"list","detail"})
      */
     private $id;
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Group")
-     * @JMS\Groups({"list", "detail", "full"})
      */
     private $group;
     /**
      * @ORM\ManyToOne(targetEntity="Objective", inversedBy="levels")
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @JMS\Exclude
      */
     private $objective;
     /**

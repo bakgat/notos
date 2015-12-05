@@ -24,7 +24,7 @@ class Group extends Party
 {
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @JMS\Groups({"list"})
+     * @JMS\Groups({"detail", "list"})
      */
     private $description;
     /**
@@ -48,19 +48,19 @@ class Group extends Party
      * @param Name $name
      * @return $this
      */
-    public function setName(Name $name) {
+    public function setName(Name $name)
+    {
         $this->setLastName($name);
-        return $this;
     }
 
     /**
-     * Gets the name of the organization
+     * Gets the name of the Group
      *
-     * @return Name
      * @JMS\VirtualProperty
      * @JMS\Groups({"list","detail"})
      */
-    public function name() {
+    public function name()
+    {
         return $this->lastName();
     }
 
@@ -68,13 +68,13 @@ class Group extends Party
      * @param  description
      * @return void
      */
-    public function setDescription( $description)
+    public function setDescription($description)
     {
         $this->description = $description;
     }
 
     /**
-     * @return 
+     * @return
      */
     public function description()
     {

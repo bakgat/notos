@@ -31,7 +31,7 @@ class Curriculum
     private $course;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="smallint")
      */
     private $year_published;
 

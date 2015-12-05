@@ -78,7 +78,6 @@ class Book extends Resource
      */
     private $organization;
 
-
     public function __construct(Name $name, Isbn $isbn)
     {
         parent::__construct($name);
