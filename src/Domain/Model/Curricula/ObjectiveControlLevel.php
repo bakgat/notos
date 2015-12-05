@@ -29,6 +29,7 @@ class ObjectiveControlLevel
     private $id;
     /**
      * @ORM\ManyToOne(targetEntity="Bakgat\Notos\Domain\Model\Identity\Group")
+     * @JMS\Groups({"list","detail", "full"})
      */
     private $group;
     /**
