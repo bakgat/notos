@@ -183,7 +183,7 @@ class Asset extends Resource
     public function webpath()
     {
         $base = rtrim(config('assets.uploads.webpath'), '/');
-        return url($base . $this->path);
+        return env('IMAGE_BASE_URL') . $base . $this->path;
     }
 
     /**
@@ -194,6 +194,6 @@ class Asset extends Resource
     public function thumbpath()
     {
         $base = rtrim(config('assets.uploads.webpath'), '/') . rtrim(config('assets.uploads.thumbs'), '/');
-        return url($base . $this->path);
+        return env('IMAGE_BASE_URL') . $base . $this->path;
     }
 }
