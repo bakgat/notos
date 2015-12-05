@@ -36,11 +36,12 @@ class Party
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"list","detail", "full"})
+     * @JMS\Groups({"list","detail"})
      */
     protected $id;
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @JMS\Groups({"list","detail"})
      */
     protected $firstName;
     /**

@@ -29,6 +29,7 @@ class Group extends Party
     private $description;
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @JMS\Exclude
      */
     private $avatar;
 
@@ -57,7 +58,6 @@ class Group extends Party
      * Gets the name of the Group
      *
      * @JMS\VirtualProperty
-     * @JMS\Groups({"list","detail"})
      */
     public function name()
     {
