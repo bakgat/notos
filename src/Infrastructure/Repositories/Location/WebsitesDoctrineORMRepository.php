@@ -38,7 +38,8 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('w')
-            ->from($this->wsClass, 'w');
+            ->from($this->wsClass, 'w')
+            ->addOrderBy('w.id', 'desc');;
         return $qb->getQuery()->getResult();
     }
 
