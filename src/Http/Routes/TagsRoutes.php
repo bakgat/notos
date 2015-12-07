@@ -7,3 +7,4 @@
  * Time: 23:00
  */
 Route::get('/', 'TagController@index');
+Route::get('/type/{type}', 'TagController@index');

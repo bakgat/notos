@@ -23,9 +23,13 @@ class TagController extends Controller
         $this->tagService = $tagService;
     }
 
-    public function index()
+    public function index($type = null)
     {
-        return $this->jsonResponse($this->tagService->all(), ['list']);
+        if ($type) {
+            return $this->jsonResponse($this->tagService->allOfType($type), ['list']);
+        } else {
+            return $this->jsonResponse($this->tagService->all(), ['list']);
+        }
     }
 
 }

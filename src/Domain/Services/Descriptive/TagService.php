@@ -28,6 +28,11 @@ class TagService
         return $this->tagRepo->all();
     }
 
+    public function allOfType($type)
+    {
+        return $this->tagRepo->allOfType($type);
+    }
+
     public function add($name)
     {
         $lower = strtolower($name);

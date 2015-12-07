@@ -39,6 +39,20 @@ class TagDoctrineORMRepository implements TagRepository
             ->findAll();
     }
 
+
+    public function allOfType($type)
+    {
+        if ($type === 'website') {
+            $qb = $this->em->createQueryBuilder();
+            $qb->select('t')
+                ->from($this->class, 't')
+                ->join('t.websites', 'w');
+
+            return $qb->getQuery()->getResult();
+        }
+        return $this->all();
+    }
+
     /**
      * Add a tag
      * @param Tag $tag

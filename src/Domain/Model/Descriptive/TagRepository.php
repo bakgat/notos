@@ -18,6 +18,14 @@ interface TagRepository
     public function all();
 
     /**
+     * Get all tags used in another table of type
+     *
+     * @param $type
+     * @return mixed
+     */
+    public function allOfType($type);
+
+    /**
      * Add a tag
      * @param Tag $tag
      * @return mixed
@@ -55,4 +63,5 @@ interface TagRepository
      * @return Tag
      */
     public function tagOfNameOrCreate(TagName $name);
+
 }
