@@ -9,6 +9,8 @@
 namespace Bakgat\Notos\Http\Controllers\Location;
 
 
+use Bakgat\Notos\Domain\Model\Location\Exceptions\URLNotValidException;
+use Bakgat\Notos\Domain\Model\Location\URL;
 use Bakgat\Notos\Domain\Services\Location\WebsitesService;
 use Bakgat\Notos\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -46,5 +48,13 @@ class WebsitesController extends Controller
     public function update($id, Request $request){
         $data = $request->all();
         $this->websitesService->update($id, $data);
+    }
+
+    public function ofUrl(Request $request) {
+        $url = new URL($request->get('url'));
+        $website  = $this->websitesService->checkURL($url);
+        if($website) {
+            return $this->jsonResponse($website);
+        }
     }
 }

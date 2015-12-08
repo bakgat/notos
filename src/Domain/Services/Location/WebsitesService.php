@@ -85,6 +85,17 @@ class WebsitesService
     }
 
     /**
+     * Check if the website exists in datastore
+     *
+     * @param URL $url
+     * @return Website
+     */
+    public function checkURL(URL $url) {
+        $website = $this->websitesRepository->websiteOfURL($url);
+        return $website;
+    }
+
+    /**
      * Returns a list of websites with fields loaded fully (JMS\Groups({"full"}))
      * @return mixed
      */

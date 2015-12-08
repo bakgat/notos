@@ -13,3 +13,5 @@ Route::post('/', 'WebsitesController@store');
 Route::put('/{id}', 'WebsitesController@update');
 Route::delete('/{id}', 'WebsitesController@destroy');
 
+Route::post('/url', 'WebsitesController@ofUrl');
+
