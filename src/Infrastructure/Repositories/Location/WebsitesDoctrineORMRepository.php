@@ -26,7 +26,6 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
     {
         $this->em = $em;
         $this->wsClass = 'Bakgat\Notos\Domain\Model\Location\Website';
-
     }
 
     /**
@@ -39,7 +38,7 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
         $qb = $this->em->createQueryBuilder();
         $qb->select('w')
             ->from($this->wsClass, 'w')
-            ->addOrderBy('w.id', 'desc');;
+            ->addOrderBy('w.id', 'desc');
         return $qb->getQuery()->getResult();
     }
 

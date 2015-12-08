@@ -162,7 +162,9 @@ class Website extends Location
 
     public function clearObjectives()
     {
-        $this->objectives = new ArrayCollection;
+        foreach ($this->objectives as $objective) {
+            $this->removeObjective($objective);
+        }
     }
 
     /**
