@@ -44,6 +44,7 @@ class Organization extends Party
 
     /**
      * @ORM\OneToMany(targetEntity="Bakgat\Notos\Domain\Model\Resource\Asset", mappedBy="organization")
+     * @JMS\Exclude
      * @var ArrayCollection
      */
     private $assets;
