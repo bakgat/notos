@@ -39,6 +39,10 @@ return [
         'title' => 'De opgevraagde gebruiker werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
         'detail' => 'De gebruiker [%s] is niet gevonden.'
     ],
+    'group_not_found' => [
+        'title' => 'De opgevraagde groep werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',
+        'detail' => 'De opgevraagde groep [%s] is niet gevonden.'
+    ],
 
     'role_not_found' => [
         'title' => 'De opgevraagde rol werd niet gevonden, maar kan weer beschikbaar zijn in de toekomst. Latere verzoeken van de klant zijn toegestaan.',

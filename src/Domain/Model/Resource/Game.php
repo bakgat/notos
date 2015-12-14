@@ -24,7 +24,7 @@ use JMS\Serializer\Annotation as JMS;
 /**
  *
  * @ORM\Entity
- * @ORM\Table(name="games", indexes={@ORM\Index(columns={"isbn"})})
+ * @ORM\Table(name="games")
  *
  */
 class Game extends Resource
@@ -39,19 +39,19 @@ class Game extends Resource
      */
     private $image;
     /**
-     * @ORM\Colulmn(type="smallint",nullable=true)
+     * @ORM\Column(type="smallint",nullable=true)
      */
     private $min_age;
     /**
-     * @ORM\Colulmn(type="smallint",nullable=true)
+     * @ORM\Column(type="smallint",nullable=true)
      */
     private $max_age;
     /**
-     * @ORM\Colulmn(type="smallint",nullable=true)
+     * @ORM\Column(type="smallint",nullable=true)
      */
     private $min_number_players;
     /**
-     * @ORM\Colulmn(type="smallint",nullable=true)
+     * @ORM\Column(type="smallint",nullable=true)
      */
     private $max_number_players;
 
@@ -65,7 +65,7 @@ class Game extends Resource
      */
     private $publishers;
     /**
-     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Descriptive\Tag", inversedBy="games")
+     * @ORM\ManyToMany(targetEntity="Bakgat\Notos\Domain\Model\Descriptive\Tag")
      * @ORM\JoinTable(name="game_tags",
      *      joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
@@ -83,10 +83,7 @@ class Game extends Resource
      * @ORM\Column(type="smallint")
      */
     private $year_published;
-    /**
-     * @ORM\OneToMany(targetEntity="Game", mappedBy="id")
-     */
-    private $related;
+
     /**
      * @ORM\Column(type="string")
      */
@@ -261,39 +258,6 @@ class Game extends Resource
     public function year_published()
     {
         return $this->year_published;
-    }
-
-    /**
-     * @param ArrayCollection $related
-     */
-    public function setRelated(ArrayCollection $related)
-    {
-        $this->related = $related;
-    }
-
-    public function addRelated(Game $game)
-    {
-        $this->related[] = $game;
-    }
-
-    public function removeRelated(Game $game)
-    {
-        $this->related->removeElement($game);
-    }
-
-    public function clearRelated()
-    {
-        foreach ($this->related as $game) {
-            $this->related->removeElemnt($game);
-        }
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function related()
-    {
-        return $this->related;
     }
 
     /**

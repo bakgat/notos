@@ -17,9 +17,10 @@ interface GroupRepository
      * Get all groups of a kind
      *
      * @param Kind $kind
+     * @param integer|null $orgId
      * @return mixed
      */
-    public function groupsOfKind(Kind $kind);
+    public function groupsOfKind(Kind $kind, $orgId = null);
 
     /**
      * Find a group by it's name
@@ -34,4 +35,23 @@ interface GroupRepository
      * @return Group
      */
     public function groupOfId($id);
+
+    /**
+     * @param Group $group
+     * @return mixed
+     */
+    public function add(Group $group);
+
+    /**
+     * @param Group $group
+     * @return mixed
+     */
+    public function update(Group $group);
+
+    /**
+     * @param Group $group
+     * @return mixed
+     */
+    public function remove(Group $group);
+
 }

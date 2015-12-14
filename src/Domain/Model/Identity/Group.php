@@ -32,6 +32,15 @@ class Group extends Party
      * @JMS\Exclude
      */
     private $avatar;
+    /**
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="children")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Group", mappedBy="parent")
+     */
+    private $children;
 
     public function __construct($name)
     {
@@ -97,5 +106,57 @@ class Group extends Party
     public function avatar()
     {
         return $this->avatar;
+    }
+
+    /**
+     * @param Group parent
+     * @return void
+     */
+    public function setParent(Group $parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * @return Group
+     */
+    public function parent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function children()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param Group $child
+     */
+    public function addChild(Group $child)
+    {
+        $this->children[] = $child;
+        $child->setParent($this);
+    }
+
+    /**
+     * @param Group $child
+     */
+    public function removeChild(Group $child)
+    {
+        $this->removeElement($child);
+    }
+
+    /**
+     * Clears all children
+     */
+    public function clearChildren()
+    {
+        foreach ($this->children as $child) {
+            $this->removeChild($child);
+        }
     }
 }

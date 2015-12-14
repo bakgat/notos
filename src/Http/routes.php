@@ -64,10 +64,11 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
             require __DIR__ . '/Routes/AssetsRoutes.php';
         });
 
-        Route::get('/', 'Identity\OrganizationController@edit');
-
         Route::group(['prefix' => '/user', 'namespace' => 'Identity'], function () {
             require __DIR__ . '/Routes/UserRoutes.php';
+        });
+        Route::group(['prefix' => '/group', 'namespace' => 'Identity'], function () {
+            require __DIR__ . '/Routes/GroupRoutes.php';
         });
 
         Route::group(['prefix' => '/blogs', 'namespace' => 'Location'], function () {
@@ -85,15 +86,18 @@ Route::group(['prefix' => '/api', 'namespace' => 'Bakgat\Notos\Http\Controllers'
             require __DIR__ . '/Routes/EventRoutes.php';
         });
 
+        Route::get('/', 'Identity\OrganizationController@edit');
+
     });
 
 
     /*
      * GLOBAL ROUTES
      */
-    Route::group(['prefix' => '/group', 'namespace' => 'Identity'], function () {
-        require __DIR__ . '/Routes/GroupRoutes.php';
-    });
+
+    Route::get('/group/levels', 'Identity\GroupController@indexLevels');
+
+
     Route::group(['prefix' => '/realm', 'namespace' => 'Identity'], function () {
         require __DIR__ . '/Routes/RealmRoutes.php';
     });
