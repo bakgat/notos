@@ -51,7 +51,8 @@ class CalendarDoctrineORMRepository implements CalendarRepository
                     $qb->expr()->gt('c.end', '?2')
                 ))
             ->setParameter(1, $organization->id())
-            ->setParameter(2, new DateTime);
+            ->setParameter(2, new DateTime)
+            ->orderBy('c.start');
         return $qb->getQuery()->getResult();
     }
 
