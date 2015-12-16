@@ -68,8 +68,8 @@ class CalendarService
             $event->setDescription($data['description']);
         }
 
-        if (isset($data['classgroups'])) {
-            foreach ($data['classgroups'] as $classgroup) {
+        if (isset($data['groups'])) {
+            foreach ($data['groups'] as $classgroup) {
                 $cg = $this->groupRepo->groupOfId($classgroup['id']);
                 $event->addGroup($cg);
             }
@@ -106,8 +106,8 @@ class CalendarService
         }
 
         $event->clearGroups();
-        if (isset($data['classgroups'])) {
-            foreach ($data['classgroups'] as $classgroup) {
+        if (isset($data['groups'])) {
+            foreach ($data['groups'] as $classgroup) {
                 $cg = $this->groupRepo->groupOfId($classgroup['id']);
                 $event->addGroup($cg);
             }
