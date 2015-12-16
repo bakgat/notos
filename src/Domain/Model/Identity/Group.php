@@ -67,7 +67,6 @@ class Group extends Party
      * Gets the name of the Group
      *
      * @JMS\VirtualProperty
-     * @JMS\Groups({"list","detail","full"})
      */
     public function name()
     {
