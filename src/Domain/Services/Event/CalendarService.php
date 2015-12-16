@@ -83,7 +83,39 @@ class CalendarService
 
     public function update($id, $data)
     {
+        $event = $this->eventOfId($id);
+        if (!$event) {
+            throw new CalendarEventNotFoundException($id);
+        }
 
+        $name = new Name($data['name']);
+        $event->setName($name);
+
+        if (isset($data['start'])) {
+            $start = new DateTime($data['start']);
+
+            $event->setStart($start);
+        }
+        if (isset($data['end'])) {
+            $end = new DateTime($data['end']);
+            $event->setEnd($end);
+        }
+
+        if (isset($data['description'])) {
+            $event->setDescription($data['description']);
+        }
+
+        $event->clearGroups();
+        if (isset($data['classgroups'])) {
+            foreach ($data['classgroups'] as $classgroup) {
+                $cg = $this->groupRepo->groupOfId($classgroup['id']);
+                $event->addGroup($cg);
+            }
+        }
+
+        $this->calendarRepo->update($event);
+
+        return $event;
     }
 
     public function remove($id)

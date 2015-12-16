@@ -102,6 +102,13 @@ class CalendarEvent extends Event
         return $this->groups;
     }
 
+    public function clearGroups()
+    {
+        foreach ($this->groups as $group) {
+            $this->removeGroup($group);
+        }
+    }
+
     /**
      * @param  description
      * @return void
@@ -152,4 +159,6 @@ class CalendarEvent extends Event
     {
         return $this->allDay;
     }
+
+
 }
