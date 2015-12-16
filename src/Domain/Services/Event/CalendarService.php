@@ -68,10 +68,13 @@ class CalendarService
             $event->setDescription($data['description']);
         }
 
-        foreach ($data['classgroups'] as $classgroup) {
-            $cg = $this->groupRepo->groupOfId($classgroup['id']);
-            $event->addGroup($cg);
+        if (isset($data['classgroups'])) {
+            foreach ($data['classgroups'] as $classgroup) {
+                $cg = $this->groupRepo->groupOfId($classgroup['id']);
+                $event->addGroup($cg);
+            }
         }
+
 
         $this->calendarRepo->add($event);
 
