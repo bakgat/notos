@@ -38,7 +38,15 @@ abstract class Controller extends BaseController
 
     public function jsonResponse($data, $groups = null)
     {
-        $headers = ['Content-type' => 'application/json; charset=utf-8'];
+        /*'Access-Control-Allow-Origin' , '*')
+                                   ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+        ->header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Origin'*/
+        $headers = [
+            'Content-type' => 'application/json; charset=utf-8',
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers' => 'Content-Type, X-Auth-Token, Origin'
+        ];
 
         return Response::create(
             $this->json($data, $groups),
