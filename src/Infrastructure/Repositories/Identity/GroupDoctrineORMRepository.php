@@ -89,8 +89,10 @@ EOT;
 
         $rsm = new ResultSetMappingBuilder($this->em);
         $rsm->addEntityResult('Bakgat\Notos\Domain\Model\Identity\Party', 'p');
+        $rsm->addEntityResult('Bakgat\Notos\Domain\Model\Identity\Group', 'g');
         $rsm->addFieldResult('p', 'id', 'id');
         $rsm->addFieldResult('p', 'lastName', 'lastName');
+        $rsm->addFieldResult('g', 'description', 'description');
 
         $qb = $this->em->createNativeQuery($sql, $rsm)
             ->setParameter(1, $kind->id());
@@ -99,7 +101,7 @@ EOT;
             $qb->setParameter(2, $orgId);
         }
 
-        $groups = $qb->getResult();
+        $groups = $qb->getScalarResult();
 
         return $groups;
     }
