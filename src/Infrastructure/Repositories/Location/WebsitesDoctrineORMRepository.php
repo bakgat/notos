@@ -38,7 +38,11 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
         $qb = $this->em->createQueryBuilder();
         $qb->select('w')
             ->from($this->wsClass, 'w')
-            ->addOrderBy('w.id', 'desc');
+            ->where(
+                $qb->expr()->eq('w.suggestion', '?1')
+            )
+            ->addOrderBy('w.id', 'desc')
+            ->setParameter(1, false);
         return $qb->getQuery()->getResult();
     }
 
@@ -56,7 +60,11 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
             ->leftJoin('w.objectives', 'wo')
             ->leftJoin('wo.levels', 'l')
             ->leftJoin('w.tags', 't')
-            ->addOrderBy('w.id', 'desc');
+            ->where(
+                $qb->expr()->eq('w.suggestion', '?1')
+            )
+            ->addOrderBy('w.id', 'desc')
+            ->setParameter(1, false);
 
         return $qb->getQuery()->getResult();
     }

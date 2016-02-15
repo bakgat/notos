@@ -66,6 +66,11 @@ class Website extends Location
      */
     private $tags;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default"=false})
+     */
+    private $suggestion;
+
     public function __construct(Name $name, URL $url)
     {
         parent::__construct($name);
@@ -73,6 +78,7 @@ class Website extends Location
 
         $this->objectives = new ArrayCollection;
         $this->tags = new ArrayCollection;
+        $this->setSuggestion(false);
     }
 
     public static function register(Name $name, URL $url)
@@ -200,5 +206,20 @@ class Website extends Location
         }
     }
 
+    /**
+     * @param  suggestion
+     * @return void
+     */
+    public function setSuggestion($suggestion)
+    {
+        $this->suggestion = $suggestion;
+    }
 
+    /**
+     * @return
+     */
+    public function suggestion()
+    {
+        return $this->suggestion;
+    }
 }
