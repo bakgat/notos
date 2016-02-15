@@ -32,8 +32,10 @@ class WebsitesController extends Controller
     {
         return $this->jsonResponse($this->websitesService->all(), ['list']);
     }
-    public function fullIndex() {
-        return $this->jsonResponse($this->websitesService->full(), ['full','list']);
+
+    public function fullIndex()
+    {
+        return $this->jsonResponse($this->websitesService->full(), ['full', 'list']);
     }
 
     public function edit($id)
@@ -41,19 +43,32 @@ class WebsitesController extends Controller
         return $this->jsonResponse($this->websitesService->websiteOfId($id), ['detail']);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $data = $request->all();
         $website = $this->websitesService->add($data);
     }
-    public function update($id, Request $request){
+
+    public function update($id, Request $request)
+    {
         $data = $request->all();
         $this->websitesService->update($id, $data);
     }
 
-    public function ofUrl(Request $request) {
+    public function suggest(Request $request)
+    {
+        $data = $request->all();
+        $url = new URL($data['url']);
+        $description = $data['description'];
+        return $this->jsonResponse($url);
+        //$this->websitesService->suggest($url, $description);
+    }
+
+    public function ofUrl(Request $request)
+    {
         $url = new URL($request->get('url'));
-        $website  = $this->websitesService->checkURL($url);
-        if($website) {
+        $website = $this->websitesService->checkURL($url);
+        if ($website) {
             return $this->jsonResponse($website);
         }
     }
