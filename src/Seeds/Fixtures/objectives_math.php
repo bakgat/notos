@@ -6,6 +6,382 @@
  * Time: 14:47
  */
 return array(
+    array('name' => 'meetkunde', 'kind' => 'subcourse',
+        'children' => array(
+            array('name' => 'ruimtelijke oriëntatie', 'kind' => 'chapter',
+                'obj' => array(
+                    array('name' => 'Ervaringen opdoen in verband met omsluiting en ze verwoorden met termen als: in, uit, binnen, buiten, open, gesloten, tussen, rondom...',
+                        'code' => 'WIS MK1',
+                        'level' => '11240000'
+                    ), //MK1
+                    array('name' => 'Een patroon in een rij herkennen en die rij voort zetten en verwoorden met termen als: eerste, tweede, middelste, voorlaatste, laatste ...',
+                        'code' => 'WIS MK2',
+                        'level' => '01240000'
+                    ), //MK2
+                    array('name' => 'De positie verkennen en bepalen:',
+                        'code' => 'WIS MK3',
+                        'obj' => array(
+                            array('name' => 'van voorwerpen in de ruimte tegenover zichzelf', 'code' => 'WIS MK3.a', 'level' => '11240000'),
+                            array('name' => 'van zichzelf tegenover referentiepunten in de ruimte', 'code' => 'WIS MK3.b', 'level' => '01240000'),
+                            array('name' => 'van voorwerpen tegenover elkaar', 'code' => 'WIS MK3.c', 'level' => '01240000'),
+                            array('name' => 'en daarbij de positie verwoorden met termen als op, naast, voor, achter, boven, onder, op elkaar ...', 'code' => 'WIS MK3.d', 'level' => '11240000'),
+                            array('name' => 'en daarbij de positie verwoorden met termen als ver weg, dicht bij, tegen, tegenover …', 'code' => 'WIS MK3.e', 'level' => '01240000'),
+                            array('name' => 'en daarbij de positie verwoorden met termen als links, rechts', 'code' => 'WIS MK3.f', 'level' => '01240000'),
+                        )), //MK3
+                    array('name' => 'De richting van de beweging verkennen en bepalen:',
+                        'code' => 'WIS MK4',
+                        'obj' => array(
+                            array('name' => 'van zichzelf', 'code' => 'WIS MK4.a', 'level' => '11240000'),
+                            array('name' => 'van voorwerpen tegenover zichzelf', 'code' => 'WIS MK4.b', 'level' => '11240000'),
+                            array('name' => 'van zichzelf tegenover referentiepunten in de ruimte', 'code' => 'WIS MK4.c', 'level' => '01240000'),
+                            array('name' => 'van voorwerpen in de ruimte tegenover andere voorwerpen ', 'code' => 'WIS MK4.d', 'level' => '01240000'),
+                            array('name' => 'en daarbij de zin van de beweging verwoorden met termen als omhoog, omlaag, vooruit, achteruit ...', 'code' => 'WIS MK4.e', 'level' => '11240000'),
+                            array('name' => 'en daarbij de zin van de beweging verwoorden met termen als naar mij toe, van mij weg, dichterbij komen, opzij, langs, door, over ...', 'code' => 'WIS MK4.f', 'level' => '01240000'),
+                            array('name' => 'en daarbij de zin van de beweging verwoorden met termen als in de richting van, schuin ... ', 'code' => 'WIS MK4.g', 'level' => '01240000'),
+                        )), //MK4
+                    array('name' => 'De plaats en/of de richting precies bepalen vanuit een referentiepunt (bijv. het tweede appartement van links op de derde verdieping)',
+                        'code' => 'WIS MK5',
+                        'level' => '011111244'
+                    ), //MK5
+                    array('name' => 'Verkennen en verwoorden wat men ziet vanuit andere gezichtspunten:',
+                        'code' => 'WIS MK6',
+                        'obj' => array(
+                            array('name' => 'als men zich werkelijk verplaatst in de ruimte',
+                                'code' => 'WIS MK6.a', 'level' => '01244000'),
+                            array('name' => 'als men zich mentaal verplaatst in de ruimte',
+                                'code' => 'WIS MK6.b', 'level' => '00001112'),
+                            array('name' => 'en daarbij termen gebruiken als richting, plaats ...',
+                                'code' => 'WIS MK6.c', 'level' => '01111200'),
+                            array('name' => 'en daarbij termen gebruiken als vooraanzicht, zijaanzicht, bovenaanzicht …',
+                                'code' => 'WIS MK6.d', 'level' => '00001124'),
+                        )), //MK6
+                    array('name' => 'De relatie leggen tussen driedimensionale situaties en hun voorstellingen om zich te oriënteren in de ruimte met:',
+                        'code' => 'WIS MK7',
+                        'obj' => array(
+                            array('name' => 'tekeningen, foto\'s, maquettes, plattegronden',
+                                'code' => 'WIS MK7.a', 'level' => '01111200'),
+                            array('name' => 'kaarten, gegevens over afstand en richting',
+                                'code' => 'WIS MK7.b', 'level' => '00000112'),
+                            array('name' => 'en daarbij termen gebruiken als afstand ...',
+                                'code' => 'WIS MK7.c', 'level' => '01112000'),
+                            array('name' => 'en daarbij termen gebruiken als patroon, plattegrond …',
+                                'code' => 'WIS MK7.d', 'level' => '00001244'),
+                        )), //MK7
+                    array('name' => 'Pictogrammen die onder meer een richting aanduiden, lezen en gebruiken',
+                        'code' => 'WIS MK8',
+                        'level' => '01244400'
+                    ), //MK8
+                )),
+            array('name' => 'vormleer', 'kind' => 'chapter',
+                'obj' => array(
+                    array('name' => 'Punten, lijnen en oppervlakken ervaren, ontdekken en herkennen door zich te bewegen in de ruimte, te kijken naar en te handelen met voorwerpen en meetkundige figuren en daarbij termen gebruiken (zonder ze te definiëren) als:',
+                        'code' => 'WIS MK9',
+                        'obj' => array(
+                            array('name' => 'recht, gebogen (krom), gebroken ...',
+                                'code' => 'WIS MK9.a', 'level' => '01240000'),
+                            array('name' => 'vorm',
+                                'code' => 'WIS MK9.b', 'level' => '01240000'),
+                            array('name' => 'oppervlak, lijn, punt, lijnstuk, ...',
+                                'code' => 'WIS MK9.c', 'level' => '00124000'),
+                            array('name' => 'rechte',
+                                'code' => 'WIS MK9.d', 'level' => '00012000'),
+                            array('name' => 'horizontaal, verticaal ...',
+                                'code' => 'WIS MK9.e', 'level' => '00001200'),
+                            array('name' => 'vlak, vlakke figuur',
+                                'code' => 'WIS MK9.f', 'level' => '00001120'),
+                        )), //MK9
+                    array('name' => 'Een punt, een rechte en een lijnstuk tekenen en noteren (bijv. rechte a, punt A, lijnstuk [AB])',
+                        'code' => 'WIS MK10',
+                        'level' => '00012000'
+                    ), //MK10
+                    array('name' => 'Volgende punten, lijnen en oppervlakken herkennen en benoemen:',
+                        'code' => 'WIS MK11',
+                        'obj' => array(
+                            array('name' => 'zijde, overstaande zijde(n), omtrek, hoogte, basis',
+                                'code' => 'WIS MK11.a', 'level' => '00012000'),
+                            array('name' => 'diagonaal',
+                                'code' => 'WIS MK11.b', 'level' => '00001200'),
+                            array('name' => 'straal, middelpunt',
+                                'code' => 'WIS MK11.c', 'level' => '00000200'),
+                            array('name' => 'diameter',
+                                'code' => 'WIS MK11.d', 'level' => '00000002'),
+                            array('name' => 'zijvlak, bovenvlak, grondvlak',
+                                'code' => 'WIS MK11.e', 'level' => '00000112'),
+                        )), //MK11
+                    array('name' => 'Het begrip hoek ervaren, ontdekken en herkennen door zich te bewegen in de ruimte, te kijken naar en te handelen met voorwerpen en meetkundige figuren en die ervaringen verwoorden (bijv. puntig, afgerond)',
+                        'code' => 'WIS MK12',
+                        'level' => '011112000'
+                    ), //MK12
+                    array('name' => 'Bij vlakke hoeken volgende termen correct gebruiken (zonder ze te definiëren):',
+                        'code' => 'WIS MK13',
+                        'obj' => array(
+                            array('name' => 'hoek, hoekpunt, benen',
+                                'code' => 'WIS MK13.a', 'level' => '000120000'),
+                            array('name' => 'overstaande hoeken in vierhoeken',
+                                'code' => 'WIS MK13.b', 'level' => '00001200'),
+                            array('name' => 'en rechte, stompe en scherpe hoeken herkennen en benoemen',
+                                'code' => 'WIS MK13.c', 'level' => '00012000'),
+                            array('name' => 'en rechte, stompe en scherpe hoeken tekenen',
+                                'code' => 'WIS MK13.d', 'level' => '00002000'),
+                            array('name' => 'en rechte, stompe en scherpe hoeken noteren',
+                                'code' => 'WIS MK13.e', 'level' => '00001200'),
+                            array('name' => 'en rechte, stome en scherpe hoeken classificeren',
+                                'code' => 'WIS MK13.f', 'level' => '00001200'),
+                        )), //MK13
+                    array('name' => 'Meetkundige vormen onderzoeken en globaal herkennen door zich: te bewegen in de ruimte, te kijken naar en te handelen (bijv. beleggen, puzzelen, vouwen, knippen, tekenen, rubriceren) met voorwerpen uit de omgeving (bijv. natuur, huizen, wegen, gebruiksvoorwerpen, kunstproducten) en met vlakke figuren en daarbij termen gebruiken als: rond, driehoekig, vierhoekig ...',
+                        'code' => 'WIS MK14',
+                        'level' => '01112000'
+                    ), //MK14
+                    array('name' => 'Vlakke figuren vergelijken en classificeren volgens zelfgekozen kenmerken',
+                        'code' => 'WIS MK15',
+                        'level' => '01112444'
+                    ), //MK15
+                    array('name' => 'Bij vierhoeken de eigenschappen van de zijden (evenwijdigheid en gelijke lengte) en de hoeken (soorten hoeken en gelijke grootte) onderzoeken (leggen, vouwen, knippen...) en verwoorden en de vierhoeken benoemen met de termen:',
+                        'code' => 'WIS MK16',
+                        'obj' => array(
+                            array('name' => 'vierkant, rechthoek',
+                                'code' => 'WIS MK16.a', 'level' => '00012400'),
+                            array('name' => 'ruit, parallellogram, trapezium',
+                                'code' => 'WIS MK16.b', 'level' => '00001240'),
+                        )), //MK16
+                    array('name' => 'Vierhoeken tekenen:',
+                        'code' => 'WIS MK17',
+                        'obj' => array(
+                            array('name' => 'vierkant, rechthoek',
+                                'code' => 'WIS MK17.a', 'level' => '00001200'),
+                            array('name' => 'ruit, parallellogram, trapezium',
+                                'code' => 'WIS MK17.b', 'level' => '00000124'),
+                        )), //MK17
+                    array('name' => 'De diagonalen van vierhoeken tekenen en de eigenschappen ervan (even lang, snijden elkaar middendoor, snijden elkaar loodrecht) onderzoeken en verwoorden:',
+                        'code' => 'WIS MK18',
+                        'obj' => array(
+                            array('name' => 'vierkant, rechthoek',
+                                'code' => 'WIS MK18.a', 'level' => '00001112'),
+                            array('name' => 'ruit, parallellogram, trapezium',
+                                'code' => 'WIS MK18.b', 'level' => '00000012'),
+                        )), //MK18
+                    array('name' => 'Vierhoeken:',
+                        'code' => 'WIS MK19',
+                        'obj' => array(
+                            array('name' => 'vergelijken volgens de eigenschappen van zijden en hoeken',
+                                'code' => 'WIS MK19.a', 'level' => '00012400'),
+                            array('name' => '	classificeren volgens toenemend of afnemend aantal eigenschappen',
+                                'code' => 'WIS MK19.b', 'level' => '00000012'),
+                        )), //MK19
+                    array('name' => 'Bij driehoeken de eigenschappen van de zijden (gelijke lengte) en de hoeken (soorten hoeken en gelijke grootte) onderzoeken (leggen, vouwen, knippen...) en verwoorden en de driehoeken benoemen (gelijkbenige, ongelijkbenige, gelijkzijdige, scherphoekige, rechthoekige, stomphoekige).',
+                        'code' => 'WIS MK20',
+                        'level' => '00001240'
+                    ), //MK20
+                    array('name' => 'Driehoeken tekenen',
+                        'code' => 'WIS MK21',
+                        'level' => '00000124'
+                    ), //MK21
+                    array('name' => 'Driehoeken',
+                        'code' => 'WIS MK22',
+                        'obj' => array(
+                            array('name' => 'vergelijken volgens de eigenschappen van zijden en hoeken',
+                                'code' => 'WIS MK22.a', 'level' => '00001200'),
+                            array('name' => 'classificeren',
+                                'code' => 'WIS MK22.b', 'level' => '00000012'),
+                        )), //MK22
+                    array('name' => 'Cirkels herkennen en benoemen',
+                        'code' => 'WIS MK23',
+                        'obj' => array(
+                            array('name' => 'Cirkels herkennen en benoemen, de eigenschap van de cirkel (elk punt van de omtrek van een cirkel ligt evenver van het middelpunt) onderzoeken (meten, vouwen, knippen...) en verwoorden',
+                                'code' => 'WIS MK23.a', 'level' => '00000240'),
+                            array('name' => 'en een cirkel tekenen met een passer.',
+                                'code' => 'WIS MK23.b', 'level' => '00000240'),
+                        )), //MK23
+                    array('name' => 'De veelheoeken onder vlakke figuren aanwijzen:',
+                        'code' => 'WIS MK24',
+                        'obj' => array(
+                            array('name' => 'op basis van het aantal zijden en daarbij termen gebruiken als: driehoek, vierhoek, vijfhoek, zeshoek..., veelhoek',
+                                'code' => 'WIS MK24.a', 'level' => '00001240'),
+                            array('name' => 'op basis van de zijden en de hoeken en daarbij de term regelmatige veelhoek (veelhoek waarvan alle zijden gelijk zijn en waarvan alle hoeken gelijk zijn) gebruiken',
+                                'code' => 'WIS MK24.b', 'level' => '00000012'),
+                        )), //MK24
+                    array('name' => 'Vlakke figuren omstructureren (opdelen in en/of omvormen naar gekende vlakke figuren).',
+                        'code' => 'WIS MK25',
+                        'level' => '01111120'
+                    ), //MK25
+                    array('name' => 'Meetkundige vormen onderzoeken en globaal herkennen door te kijken naar en te handelen met voorwerpen uit de omgeving (natuur, huizen, gebruiksvoorwerpen, kunstproducten, enz.) en daarbij termen gebruiken als: plat, recht, rond, gebogen, hoekig ...',
+                        'code' => 'WIS MK26',
+                        'level' => '01111120'
+                    ), //MK26
+                    array('name' => 'Op basis van hun eigenschappen de volgende ruimtefiguren herkennen en daarbij volgende termen gebruiken: veelvlak (kubus, balk, piramide), bol, cilinder en kegel.',
+                        'code' => 'WIS MK27',
+                        'level' => '00000012'
+                    ), //MK27
+                )),
+            array('name' => 'meetkundige relaties', 'kind' => 'chapter',
+                'obj' => array(
+                    array('name' => 'Evenwijdigheid ontdekken:',
+                        'code' => 'WIS MK28',
+                        'obj' => array(
+                            array('name' => 'in de omgeving',
+                                'code' => 'WIS MK28.a', 'level' => '00112000'),
+                            array('name' => 'in lvakke figuren en ruimtefiguren',
+                                'code' => 'WIS MK28.b', 'level' => '00012000'),
+                            array('name' => 'als het resultaat van verschuivingen',
+                                'code' => 'WIS MK28.c', 'level' => '00001200'),
+                        )), //MK28
+                    array('name' => 'Evenwijdige en snijdende rechten en lijnstukken herkennen, benoemen en daarbij gebruik maken van de termen evenwijdig en snijdend.',
+                        'code' => 'WIS MK29',
+                        'level' => '00012000'
+                    ), //MK29
+                    array('name' => 'Met een geodriehoek en andere hulpmiddelen (geen passer):',
+                        'code' => 'WIS MK30',
+                        'obj' => array(
+                            array('name' => 'twee evenwijdige rechten/lijnstukken tekenen',
+                                'code' => 'WIS MK30.a', 'level' => '00002000'),
+                            array('name' => 'door een punt buiten een rechte/lijnstuk de/het evenwijdige rechte/lijnstuk tekenen aan die/dat rechte/lijnstuk',
+                                'code' => 'WIS MK30.b', 'level' => '00001200'),
+                        )), //MK30
+                    array('name' => 'Het symbool van de evenwijdigheid (//) lezen en noteren.',
+                        'code' => 'WIS MK31',
+                        'level' => '00000200'
+                    ), //MK31
+                    array('name' => 'Loodrechte stand ontdekken:',
+                        'code' => 'WIS MK32',
+                        'obj' => array(
+                            array('name' => 'in de omgeving',
+                                'code' => 'WIS MK32.a', 'level' => '00112000'),
+                            array('name' => '	in vlakke figuren en ruimtefiguren',
+                                'code' => 'WIS MK32.b', 'level' => '00012000'),
+                        )), //MK32
+                    array('name' => 'Rechten en lijnstukken die loodrecht op elkaar staan, herkennen, benoemen en daarbij gebruik maken van de term loodrecht.',
+                        'code' => 'WIS MK33',
+                        'level' => '00012000'
+                    ), //MK33
+                    array('name' => 'Met een geodriehoek en andere hulpmiddelen (geen passer):',
+                        'code' => 'WIS MK34',
+                        'obj' => array(
+                            array('name' => 'twee lijnstukken/rechten tekenen die elkaar loodrecht snijden',
+                                'code' => 'WIS MK34.a', 'level' => '00002000'),
+                            array('name' => 'de loodlijn tekenen door een punt buiten een rechte/lijnstuk op die/dat rechte/lijnstuk',
+                                'code' => 'WIS MK34.b', 'level' => '00001200'),
+                            array('name' => 'de loodlijn tekenen in een punt van een rechte/lijnstuk op die/dat rechte/lijnstuk',
+                                'code' => 'WIS MK34.c', 'level' => '00001200'),
+                        )), //MK34
+                    array('name' => 'Het symbool van de loodrechte stand lezen en noteren.',
+                        'code' => 'WIS MK35',
+                        'level' => '00000200'
+                    ), //MK35
+                    array('name' => 'Spiegelbeelden ontdekken in de omgeving en in vlakke figuren:',
+                        'code' => 'WIS MK36',
+                        'obj' => array(
+                            array('name' => 'door een spiegel te gebruiken, door te vouwen',
+                                'code' => 'WIS MK36.a', 'level' => '01111240'),
+                            array('name' => 'door te meten',
+                                'code' => 'WIS MK36.b', 'level' => '00000120'),
+                            array('name' => 'en daarbij de termen spiegelbeeld, spiegeling en spiegel(as) gebruiken.',
+                                'code' => 'WIS MK36.c', 'level' => '01111120'),
+                        )), //MK36
+                    array('name' => 'Symmetrie en asymmetrie ontdekken:',
+                        'code' => 'WIS MK37',
+                        'obj' => array(
+                            array('name' => 'in de omgeving',
+                                'code' => 'WIS MK37.a', 'level' => '01111200'),
+                            array('name' => 'in vlakke figuren',
+                                'code' => 'WIS MK37.b', 'level' => '00011120'),
+                            array('name' => 'en symmetrie ontdekken als het resultaat van een spiegeling,',
+                                'code' => 'WIS MK37.c', 'level' => '00001124'),
+                            array('name' => 'symmetrieassen ontdekken en daarbij de termen symmetrie, symmetrisch en symmetrieas gebruiken',
+                                'code' => 'WIS MK37.d', 'level' => '00011120'),
+                        )), //MK37
+                    array('name' => 'Op geruit papier tekenen:',
+                        'code' => 'WIS MK38',
+                        'obj' => array(
+                            array('name' => 'eenvoudige symmetrische figuren',
+                                'code' => 'WIS MK38.a', 'level' => '00001120'),
+                            array('name' => 'spiegelbeelden van eenvoudige figuren',
+                                'code' => 'WIS MK38.b', 'level' => '00000012'),
+                        )), //MK38
+                    array('name' => 'Gelijkheid van vorm én grootte ontdekken en verwoorden:',
+                        'code' => 'WIS MK39',
+                        'obj' => array(
+                            array('name' => 'in de omgeving',
+                                'code' => 'WIS MK39.a', 'level' => '01112000'),
+                            array('name' => 'in vlakke figuren',
+                                'code' => 'WIS MK39.b', 'level' => '00011200'),
+                        )), //MK39
+                    array('name' => 'Eenvoudige figuren van gelijke vorm én grootte tekenen op geruit papier.',
+                        'code' => 'WIS MK40',
+                        'level' => '00011200'
+                    ), //MK40
+                    array('name' => 'Gelijkvormigheid ontdekken en verwoorden:',
+                        'code' => 'WIS MK41',
+                        'obj' => array(
+                            array('name' => 'in de omgeving',
+                                'code' => 'WIS MK41.a', 'level' => '01111200'),
+                            array('name' => 'in vlakke figuren',
+                                'code' => 'WIS MK41.b', 'level' => '00011120'),
+                        )), //MK41
+                    array('name' => 'Eenvoudige gelijkvormige figuren tekenen op geruit papier.',
+                        'code' => 'WIS MK42',
+                        'level' => '00000124'
+                    ), //MK42
+                )),
+            array('name' => 'toepassingen', 'kind' => 'chapter',
+                'obj' => array(
+                    array('name' => 'Figuren vervormen (bijv. uitrekken, inkrimpen) en de vervormingen verwoorden',
+                        'code' => 'WIS MK43',
+                        'level' => '01111120'
+                    ), //MK43
+                    array('name' => 'Constructies uitvoeren met voorschriften op foto of tekening (bijv. constructieplan bij bouwdoos, ontwikkeling van kubus, een plattegrond) of met verbaal gegeven voorschriften',
+                        'code' => 'WIS MK44',
+                        'level' => '01111112'
+                    ), //MK44
+                    array('name' => 'In een concrete situatie oplossingen vinden voor een ruimtelijk probleem',
+                        'code' => 'WIS MK45',
+                        'level' => '01111112'
+                    ), //MK45
+                    array('name' => 'Schaduwbeelden',
+                        'code' => 'WIS MK46',
+                        'obj' => array(
+                            array('name' => 'werken met schaduwbeelden',
+                                'code' => 'WIS MK46.a', 'level' => '01111000'),
+                            array('name' => 'en ze verklaren',
+                                'code' => 'WIS MK46.b', 'level' => '00000112'),
+                        )), //MK46
+                    array('name' => 'Kijklijnen',
+                        'code' => 'WIS MK47',
+                        'obj' => array(
+                            array('name' => 'ervaren in de werkelijkheid ',
+                                'code' => 'WIS MK47.a', 'level' => '00112000'),
+                            array('name' => 'aangeven op een schets of een foto',
+                                'code' => 'WIS MK47.b', 'level' => '00001124'),
+                            array('name' => 'gebruiken om de plaats van de waarnemer te bepalen',
+                                'code' => 'WIS MK47.c', 'level' => '00001112'),
+                        )), //MK47
+                    array('name' => 'Bij tekenopdrachten een efficiënte werkwijze en geschikte hulpmiddelen (bijv. geodriehoek, passer, meetlat...) kiezen en gebruiken.',
+                        'code' => 'WIS MK48',
+                        'level' => '00011112'
+                    ), //MK48
+                    array('name' => 'Patronen herkennen in complexe figuren (bijv. in behangpapier).',
+                        'code' => 'WIS MK49',
+                        'level' => '00001120'
+                    ), //MK49
+                    array('name' => 'Zelf geschikte hulpmiddelen maken bij meetkundige activiteiten (bijv. een rechte hoek vouwen uit een blad papier).',
+                        'code' => 'WIS MK50',
+                        'level' => '00001112'
+                    ), //MK50
+                    array('name' => 'Eigenschappen van meetkundige figuren en van ruimtefiguren gebruiken, om vraagstukken op te lossen.',
+                        'code' => 'WIS MK51',
+                        'level' => '00001112'
+                    ), //MK51
+                    array('name' => 'Bij een opdracht bepalen wanneer een vlugge werkschets en/of een nauwkeurige tekening wenselijk en bruikbaar is.',
+                        'code' => 'WIS MK52',
+                        'level' => '00000112'
+                    ), //MK52
+                    array('name' => 'Vlakke figuren tekenen volgens een gegeven verhouding.',
+                        'code' => 'WIS MK53',
+                        'level' => '00000112'
+                    ), //MK53
+                )
+            ),
+        )), //MK
+
     array('name' => 'algemene doelen', 'kind' => 'chapter',
         'obj' => array(
             array('name' => 'Fundamentele wiskundige kennis, inzichten en vaardigheden verwerven.',
@@ -877,16 +1253,7 @@ return array(
                 )),
         )), //B
 
-    array('name' => 'meetkunde', 'kind' => 'subcourse',
-        'children' => array(
-            array('name' => 'ruimtelijke oriëntatie', 'kind'=>'chapter',
-                array('name' => 'Ervaringen opdoen in verband met omsluiting en ze verwoorden met termen als: in, uit, binnen, buiten, open, gesloten, tussen, rondom...',
-                    'code' => 'WIS MK1',
-                    'level' => '11240000'
-                ), //MK1
 
-            ),
-        )), //MK
 
     array('name' => 'meten en metend rekenen', 'kind' => 'subcourse',
         'children' => array(
