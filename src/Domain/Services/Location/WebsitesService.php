@@ -20,6 +20,7 @@ use Bakgat\Notos\Domain\Model\Location\WebsitesRepository;
 use Bakgat\Notos\Domain\Model\Resource\AssetRepository;
 use Bakgat\Notos\Domain\Services\Resource\AssetsManager;
 use Bakgat\Notos\Exceptions\UnprocessableEntityException;
+use Faker\Provider\Uuid;
 
 class WebsitesService
 {
@@ -90,7 +91,8 @@ class WebsitesService
      * @param URL $url
      * @return Website
      */
-    public function checkURL(URL $url) {
+    public function checkURL(URL $url)
+    {
         $website = $this->websitesRepository->websiteOfURL($url);
         return $website;
     }
@@ -126,6 +128,28 @@ class WebsitesService
         $this->addImage($data, $website);
         $this->syncTags($data, $website);
         $this->syncObjectives($data, $website);
+
+        $this->websitesRepository->add($website);
+
+        return $website;
+    }
+
+    /**
+     * Adds a suggested website
+     *
+     * @param $data
+     * @return Website
+     * @throws UnprocessableEntityException
+     */
+    public function suggest($data)
+    {
+        $wn = Uuid::uuid();
+        $this->urlIsRequired($data);
+
+        $website = Website::register(new Name($wn), new URL($data['url']));
+        $website->setSuggestion(true);
+
+        $this->setDescription($data, $website);
 
         $this->websitesRepository->add($website);
 

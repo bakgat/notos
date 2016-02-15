@@ -47,12 +47,16 @@ class WebsitesController extends Controller
     {
         $data = $request->all();
         $website = $this->websitesService->add($data);
+
+        return $this->jsonResponse($website);
     }
 
     public function update($id, Request $request)
     {
         $data = $request->all();
-        $this->websitesService->update($id, $data);
+        $website = $this->websitesService->update($id, $data);
+
+        return $this->jsonResponse($website);
     }
 
     public function suggest(Request $request)
@@ -60,8 +64,10 @@ class WebsitesController extends Controller
         $data = $request->all();
         $url = new URL($data['url']);
         $description = $data['description'];
-        return $this->jsonResponse($url);
-        //$this->websitesService->suggest($url, $description);
+
+        $website = $this->websitesService->suggest($url, $description);
+
+        return $this->jsonResponse($website);
     }
 
     public function ofUrl(Request $request)
