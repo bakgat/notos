@@ -54,7 +54,7 @@ class WebsitesDoctrineORMRepository implements WebsitesRepository
             ->from($this->wsClass, 'w')
             ->leftJoin('w.image', 'i')
             ->leftJoin('w.objectives', 'wo')
-            ->join('wo.levels', 'l')
+            ->leftJoin('wo.levels', 'l')
             ->leftJoin('w.tags', 't')
             ->addOrderBy('w.id', 'desc');
 
