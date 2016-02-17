@@ -62,10 +62,8 @@ class WebsitesController extends Controller
     public function suggest(Request $request)
     {
         $data = $request->all();
-        $url = new URL($data['url']);
-        $description = $data['description'];
 
-        $website = $this->websitesService->suggest($url, $description);
+        $website = $this->websitesService->suggest($data);
 
         return $this->jsonResponse($website);
     }
