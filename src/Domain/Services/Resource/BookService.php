@@ -132,6 +132,7 @@ class BookService
 
         $this->setDescription($data, $book);
         $this->addImage($data, $book);
+        $this->setAgeRange($data, $book);
         $this->syncAuthors($data, $book);
         $this->syncPublishers($data, $book);
         $this->syncTags($data, $book);
@@ -162,7 +163,7 @@ class BookService
         $book->setName($name);
         $book->setIsbn($isbn);
         $this->setDescription($data, $book);
-
+        $this->setAgeRange($data, $book);
         $this->addImage($data, $book);
         $this->syncAuthors($data, $book);
         $this->syncPublishers($data, $book);
@@ -330,6 +331,15 @@ class BookService
     {
         if (isset($data['description']))
             $book->setDescription($data['description']);
+        return $data;
+    }
+
+    private function setAgeRange($data, Book $book)
+    {
+        if(isset($data['min_age']))
+            $book->setMinAge($data['min_age']);
+        if(isset($data['max_age']))
+            $book->setMaxAge($data['max_age']);
         return $data;
     }
 }

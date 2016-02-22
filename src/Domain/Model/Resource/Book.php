@@ -77,6 +77,14 @@ class Book extends Resource
      * @JMS\Exclude
      */
     private $organization;
+    /**
+     * @ORM\Column(type="smallint",nullable=true)
+     */
+    private $min_age;
+    /**
+     * @ORM\Column(type="smallint",nullable=true)
+     */
+    private $max_age;
 
     public function __construct(Name $name, Isbn $isbn)
     {
@@ -152,6 +160,40 @@ class Book extends Resource
     public function setIsbn(Isbn $isbn)
     {
         $this->isbn = $isbn;
+    }
+
+    /**
+     * @param minAge
+     * @return void
+     */
+    public function setMinAge($minAge)
+    {
+        $this->min_age = $minAge;
+    }
+
+    /**
+     * @return
+     */
+    public function minAge()
+    {
+        return $this->min_age;
+    }
+
+    /**
+     * @param maxAge
+     * @return void
+     */
+    public function setMaxAge($maxAge)
+    {
+        $this->max_age = $maxAge;
+    }
+
+    /**
+     * @return
+     */
+    public function maxAge()
+    {
+        return $this->max_age;
     }
 
     /**
